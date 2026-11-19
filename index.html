@@ -792,22 +792,22 @@
                     <div>
                         <h3 class="font-extrabold text-base sm:text-lg text-slate-900 flex items-center gap-2">
                             <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
-                            <span>Impor &amp; Ekspor Presensi Excel (.xlsx)</span>
+                            <span>Template Presensi &amp; Impor/Ekspor Excel (.xlsx)</span>
                         </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Mendukung format matrik tanggal <strong>1–31</strong> maupun format kolom <strong>Nama, Tanggal, Bulan, Kode, Jam, Keterangan</strong>.</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Format baris <strong>Nama</strong> dengan kolom tanggal <strong>1–akhir bulan</strong> dan rekap <strong>H, I, S, A</strong> sebagai template utama unggah presensi.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <button type="button" onclick="downloadAttendanceTemplateXls()" class="px-3.5 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="download" class="w-4 h-4"></i>
-                            <span>Template Presensi (.xlsx)</span>
+                            <span>Unduh Template Presensi (.xlsx)</span>
                         </button>
                         <button type="button" onclick="exportMonthlyAttendanceXls()" class="px-3.5 py-2.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="file-output" class="w-4 h-4"></i>
-                            <span>Ekspor Presensi Bulan Ini (.xlsx)</span>
+                            <span>Ekspor Template Terisi (.xlsx)</span>
                         </button>
                         <label class="px-4 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs">
                             <i data-lucide="upload" class="w-4 h-4"></i>
-                            <span>Impor Presensi (.xlsx/.xls)</span>
+                            <span>Unggah Template Presensi (.xlsx/.xls)</span>
                             <input type="file" accept=".xlsx,.xls,.csv" onchange="handleImportAttendanceXls(event)" class="hidden">
                         </label>
                     </div>
@@ -1367,7 +1367,7 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mim1-slinga-kelas3';
+        let appId = typeof __app_id !== 'undefined' ? __app_id : 'mim1-slinga-kelas3';
         let cloudDb = null;
         let cloudUser = null;
         let isApplyingRemoteSnapshot = false;
@@ -2590,39 +2590,53 @@
             const monthNum = parseInt(monthPart, 10);
             const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
             const monthPrefix = `${yearPart}-${monthPart}`;
+            const labelBulan = `${getMonthNameIndonesian(monthPart)} ${yearPart}`;
 
             const aoa = [];
-            aoa.push([`FORMAT PRESENSI BULANAN KELAS 3 MIM 1 SLINGA — ${getMonthNameIndonesian(monthPart).toUpperCase()} ${yearPart}`]);
-            aoa.push(['Isi H (Hadir), I (Izin), S (Sakit), atau A (Alpa) pada kolom tanggal 1 s.d. akhir bulan lalu unggah kembali.']);
+            aoa.push([`TEMPLATE PRESENSI KELAS 3 MIM 1 SLINGA — BULAN ${labelBulan.toUpperCase()}`]);
+            aoa.push(['Petunjuk: Isi kode H (Hadir), I (Izin), S (Sakit), atau A (Alpa) pada kolom tanggal (1–30/31), lalu unggah kembali file ini. Kolom REKAP otomatis terhitung.']);
             aoa.push([]);
 
-            const headerRow = ['No', 'Nama'];
-            for (let d = 1; d <= daysInMonth; d++) headerRow.push(d);
-            headerRow.push('H', 'I', 'S', 'A');
-            aoa.push(headerRow);
+            const groupRow = ['No', 'Nama', ...Array(daysInMonth).fill(''), 'Rekap', '', '', ''];
+            groupRow[2] = `Tanggal (${labelBulan})`;
+            const colRow = ['', '', ...Array.from({ length: daysInMonth }, (_, i) => i + 1), 'H', 'I', 'S', 'A'];
+            aoa.push(groupRow);
+            aoa.push(colRow);
 
             appState.students.forEach((st, idx) => {
-                let h = 0, i = 0, s = 0, a = 0;
+                const rowNum = idx + 6;
+                const firstDayColLetter = XLSX.utils.encode_col(2);
+                const lastDayColLetter = XLSX.utils.encode_col(2 + daysInMonth - 1);
                 const row = [idx + 1, st.name];
+
                 for (let d = 1; d <= daysInMonth; d++) {
                     const dayKey = `${monthPrefix}-${String(d).padStart(2, '0')}`;
                     const code = String(st.attendance?.[dayKey]?.status || '').trim().toUpperCase();
-                    if (code === 'H') h++;
-                    else if (code === 'I') i++;
-                    else if (code === 'S') s++;
-                    else if (code === 'A') a++;
-                    row.push(code);
+                    row.push(['H', 'I', 'S', 'A'].includes(code) ? code : '');
                 }
-                row.push(h, i, s, a);
+
+                ['H', 'I', 'S', 'A'].forEach(kode => {
+                    row.push({ f: `COUNTIF(${firstDayColLetter}${rowNum}:${lastDayColLetter}${rowNum},"${kode}")` });
+                });
                 aoa.push(row);
             });
 
             const ws = XLSX.utils.aoa_to_sheet(aoa);
-            ws['!cols'] = [{ wch: 5 }, { wch: 30 }, ...Array(daysInMonth).fill({ wch: 4.5 }), { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }];
+            const totalCols = 2 + daysInMonth + 4;
+            ws['!merges'] = [
+                { s: { r: 0, c: 0 }, e: { r: 0, c: totalCols - 1 } },
+                { s: { r: 1, c: 0 }, e: { r: 1, c: totalCols - 1 } },
+                { s: { r: 3, c: 0 }, e: { r: 4, c: 0 } },
+                { s: { r: 3, c: 1 }, e: { r: 4, c: 1 } },
+                { s: { r: 3, c: 2 }, e: { r: 3, c: 2 + daysInMonth - 1 } },
+                { s: { r: 3, c: 2 + daysInMonth }, e: { r: 3, c: totalCols - 1 } }
+            ];
+            ws['!cols'] = [{ wch: 5 }, { wch: 30 }, ...Array(daysInMonth).fill({ wch: 4.5 }), { wch: 5.5 }, { wch: 5.5 }, { wch: 5.5 }, { wch: 5.5 }];
+
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Presensi_Bulanan');
+            XLSX.utils.book_append_sheet(wb, ws, 'Template_Presensi');
             XLSX.writeFile(wb, `Template_Presensi_${monthPrefix}_MIM1Slinga.xlsx`);
-            showToast(`Template Excel Presensi (${getMonthNameIndonesian(monthPart)} ${yearPart}) berhasil diunduh!`, 'success');
+            showToast(`Template Excel Presensi (${labelBulan}) berhasil diunduh!`, 'success');
         }
 
         function exportMonthlyAttendanceXls() {
