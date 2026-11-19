@@ -99,7 +99,7 @@
     <div id="toastContainer" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
     <!-- =====================================================================
-         1. HALAMAN DEPAN (LOGIN SISWA, SCAN QR KIOSK TANPA LOGIN, & WALI KELAS)
+1. HALAMAN DEPAN (LOGIN SISWA, SCAN QR KIOSK TANPA LOGIN, & WALI KELAS)
          ===================================================================== -->
     <div id="loginPage" class="min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl border border-slate-200/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12 animate-fade-up">
@@ -142,13 +142,13 @@
                             <div class="w-7 h-7 rounded-xl bg-mimgold-400/20 text-mimgold-300 flex items-center justify-center shrink-0">
                                 <i data-lucide="shield-check" class="w-4 h-4"></i>
                             </div>
-                            <span><strong>Privasi Siswa:</strong> Akses mandiri biodata, foto, rapor &amp; materi</span>
+                            <span><strong>Privasi Siswa:</strong> Akses mandiri biodata, foto, rapor & materi</span>
                         </div>
                         <div class="flex items-center gap-2.5 bg-white/10 px-3.5 py-2.5 rounded-2xl border border-white/10">
                             <div class="w-7 h-7 rounded-xl bg-sky-400/20 text-sky-300 flex items-center justify-center shrink-0">
                                 <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
                             </div>
-                            <span><strong>Integrasi Excel &amp; PDF:</strong> Impor/ekspor data siswa, absen &amp; nilai</span>
+                            <span><strong>Integrasi Excel & PDF:</strong> Impor/ekspor data siswa, absen & nilai</span>
                         </div>
                     </div>
                 </div>
@@ -251,7 +251,7 @@
                             <div class="w-12 h-12 rounded-2xl bg-white/10 text-mimgold-400 flex items-center justify-center mx-auto mb-2">
                                 <i data-lucide="scan-line" class="w-6 h-6"></i>
                             </div>
-                            <p class="text-xs font-bold text-white">Kamera Pemindai QR &amp; Barcode Siap</p>
+                            <p class="text-xs font-bold text-white">Kamera Pemindai QR & Barcode Siap</p>
                             <p class="text-[11px] text-slate-400 mt-1">Tekan "Mulai Kamera" di bawah atau scan dengan Barcode Scanner USB</p>
                         </div>
                     </div>
@@ -316,7 +316,7 @@
                 <form id="teacherLoginForm" onsubmit="handleTeacherLogin(event)" class="space-y-4 hidden">
                     <div>
                         <h2 class="text-xl font-extrabold text-slate-900">Masuk Mode Wali Kelas (Admin)</h2>
-                        <p class="text-xs text-slate-500 mt-1">Kelola data siswa, impor/ekspor Excel, foto massal, presensi, nilai 12 mapel, materi, &amp; logo madrasah.</p>
+                        <p class="text-xs text-slate-500 mt-1">Kelola data siswa, impor/ekspor Excel, foto massal, presensi, nilai 12 mapel, materi, & logo madrasah.</p>
                     </div>
 
                     <div>
@@ -326,7 +326,7 @@
                             <input type="password" id="teacherPinInput" required placeholder="Masukkan PIN (Default: 123456)"
                                 class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-mono font-bold tracking-widest text-slate-900 focus:bg-white focus:ring-2 focus:ring-mimblue-500 outline-none transition">
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-1.5">PIN bawaan sistem: <strong class="text-slate-600">123456</strong> (dapat diubah di menu Pengaturan Logo &amp; Kelas).</p>
+                        <p class="text-[11px] text-slate-400 mt-1.5">PIN bawaan sistem: <strong class="text-slate-600">123456</strong> (dapat diubah di menu Pengaturan Logo & Kelas).</p>
                     </div>
 
                     <button type="submit" class="w-full py-3.5 px-6 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
@@ -339,7 +339,7 @@
     </div>
 
     <!-- =====================================================================
-         2. DASHBOARD SISWA
+2. DASHBOARD SISWA
          ===================================================================== -->
     <div id="studentDashboard" class="hidden flex-col min-h-screen">
         <header class="islamic-pattern-bg text-white shadow-lg sticky top-0 z-30">
@@ -350,7 +350,7 @@
                     </div>
                     <div class="min-w-0">
                         <h1 class="text-sm sm:text-base font-extrabold font-display truncate text-white">Info Kelas 3 MIM 1 Slinga</h1>
-                        <p class="text-[11px] text-mimgold-300 font-semibold truncate">Portal Akademik &amp; Presensi Siswa</p>
+                        <p class="text-[11px] text-mimgold-300 font-semibold truncate">Portal Akademik & Presensi Siswa</p>
                     </div>
                 </div>
 
@@ -379,10 +379,10 @@
                     </div>
                     <div>
                         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-mimblue-50 text-mimblue-700 text-[11px] font-extrabold mb-1">
-                            <span>Kelas 3 &bull; MIM 1 Slinga</span>
+                            <span>Kelas 3 • MIM 1 Slinga</span>
                         </div>
                         <h2 id="heroStudentName" class="text-xl sm:text-2xl font-extrabold text-slate-900">Abdul Aziz</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">NIS: <strong id="heroStudentNis" class="font-mono text-mimblue-700">kelas3_1</strong> &bull; Wali Kelas: <span id="heroHomeroomName" class="font-semibold text-slate-700">ALFAM ATTHAMI</span></p>
+                        <p class="text-xs text-slate-500 mt-0.5">NIS: <strong id="heroStudentNis" class="font-mono text-mimblue-700">kelas3_1</strong> • Wali Kelas: <span id="heroHomeroomName" class="font-semibold text-slate-700">ALFAM ATTHAMI</span></p>
                     </div>
                 </div>
 
@@ -405,7 +405,7 @@
             <div class="flex overflow-x-auto gap-2 pb-1">
                 <button id="sTabBtn-biodata" onclick="switchStudentTab('biodata')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer">
                     <i data-lucide="user-circle" class="w-4 h-4"></i>
-                    <span>Biodata &amp; Foto</span>
+                    <span>Biodata & Foto</span>
                 </button>
                 <button id="sTabBtn-attendance" onclick="switchStudentTab('attendance')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="calendar-check" class="w-4 h-4"></i>
@@ -435,7 +435,7 @@
                         </div>
                         <button type="button" id="toggleEditBioBtn" onclick="toggleStudentBioEdit(true)" class="px-4 py-2.5 rounded-2xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-xs">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
-                            <span>Edit Biodata &amp; Foto</span>
+                            <span>Edit Biodata & Foto</span>
                         </button>
                     </div>
 
@@ -631,7 +631,7 @@
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <div>
                             <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Rapor Nilai 12 Mata Pelajaran</h3>
-                            <p class="text-xs text-slate-500">Menampilkan rincian 10 Tugas/Ulangan (bobot 60%) &amp; nilai ASAS/ASAT (bobot 40%).</p>
+                            <p class="text-xs text-slate-500">Menampilkan rincian 10 Tugas/Ulangan (bobot 60%) & nilai ASAS/ASAT (bobot 40%).</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <select id="studentGradeSemesterSelect" onchange="renderStudentGrades()" class="px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-mimblue-800 outline-none">
@@ -667,7 +667,7 @@
                     </div>
 
                     <div id="studentTaskDetailsBox" class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                        <h4 class="text-xs font-extrabold text-mimblue-800 uppercase tracking-wider">Rincian 10 Tugas/Ulangan &amp; Materi</h4>
+                        <h4 class="text-xs font-extrabold text-mimblue-800 uppercase tracking-wider">Rincian 10 Tugas/Ulangan & Materi</h4>
                         <div id="studentTaskDetailsContent" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs"></div>
                     </div>
                 </div>
@@ -677,7 +677,7 @@
             <div id="sTabContent-materials" class="student-tab-content hidden animate-fade-up space-y-4">
                 <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Modul &amp; Ringkasan Materi Kelas 3</h3>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Modul & Ringkasan Materi Kelas 3</h3>
                         <p class="text-xs text-slate-500">Pilih mata pelajaran untuk membaca atau mengunduh materi dalam format PDF, Word (DOC), atau PNG.</p>
                     </div>
                     <div id="studentMaterialSubjectPills" class="flex flex-wrap gap-1.5"></div>
@@ -690,7 +690,7 @@
             <div id="sTabContent-qrcard" class="student-tab-content hidden animate-fade-up">
                 <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 flex flex-col items-center space-y-5">
                     <div class="text-center">
-                        <h3 class="text-lg font-extrabold text-slate-900">Kartu Identitas &amp; QR Presensi Siswa</h3>
+                        <h3 class="text-lg font-extrabold text-slate-900">Kartu Identitas & QR Presensi Siswa</h3>
                         <p class="text-xs text-slate-500">Gunakan kartu ini untuk dipindai saat datang ke kelas di gerbang/kiosk presensi.</p>
                     </div>
 
@@ -729,7 +729,7 @@
     </div>
 
     <!-- =====================================================================
-         3. DASHBOARD WALI KELAS / ADMIN
+3. DASHBOARD WALI KELAS / ADMIN
          ===================================================================== -->
     <div id="teacherDashboard" class="hidden flex-col min-h-screen">
         <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-30">
@@ -747,7 +747,7 @@
                                 <span>Cloud Tersinkron</span>
                             </span>
                         </div>
-                        <p class="text-[11px] text-slate-400 truncate">MIM 1 Slinga &bull; Manajemen Siswa, Presensi, Nilai &amp; Materi</p>
+                        <p class="text-[11px] text-slate-400 truncate">MIM 1 Slinga • Manajemen Siswa, Presensi, Nilai & Materi</p>
                     </div>
                 </div>
 
@@ -762,19 +762,19 @@
             <div class="flex overflow-x-auto gap-2 pb-1">
                 <button id="tTabBtn-students" onclick="switchTeacherTab('students')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer">
                     <i data-lucide="users" class="w-4 h-4"></i>
-                    <span>1. Data Siswa, XLS &amp; Foto</span>
+                    <span>1. Data Siswa, XLS & Foto</span>
                 </button>
                 <button id="tTabBtn-attendance" onclick="switchTeacherTab('attendance')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="calendar-check" class="w-4 h-4"></i>
-                    <span>2. Presensi &amp; Impor XLS</span>
+                    <span>2. Presensi & Impor XLS</span>
                 </button>
                 <button id="tTabBtn-qrcards" onclick="switchTeacherTab('qrcards')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="qr-code" class="w-4 h-4"></i>
-                    <span>3. Daftar Hadir 1–31 &amp; Kartu QR</span>
+                    <span>3. Daftar Hadir 1–31 & Kartu QR</span>
                 </button>
                 <button id="tTabBtn-grades" onclick="switchTeacherTab('grades')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="award" class="w-4 h-4"></i>
-                    <span>4. Nilai 12 Mapel &amp; XLS</span>
+                    <span>4. Nilai 12 Mapel & XLS</span>
                 </button>
                 <button id="tTabBtn-materials" onclick="switchTeacherTab('materials')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="book-open" class="w-4 h-4"></i>
@@ -782,33 +782,42 @@
                 </button>
                 <button id="tTabBtn-settings" onclick="switchTeacherTab('settings')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="settings" class="w-4 h-4"></i>
-                    <span>6. Logo &amp; Kelas</span>
+                    <span>6. Logo & Kelas</span>
                 </button>
             </div>
 
             <!-- TAB ADMIN 1: PRESENSI HARIAN, SCAN QR, & IMPOR/EKSPOR XLS -->
             <div id="tTabContent-attendance" class="teacher-tab-content hidden animate-fade-up space-y-6">
-                <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div>
-                        <h3 class="font-extrabold text-base sm:text-lg text-slate-900 flex items-center gap-2">
-                            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
-                            <span>Template Presensi &amp; Impor/Ekspor Excel (.xlsx)</span>
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Format baris <strong>Nama</strong> dengan kolom tanggal <strong>1–akhir bulan</strong> dan rekap <strong>H, I, S, A</strong> sebagai template utama unggah presensi.</p>
+                <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-extrabold text-base sm:text-lg text-slate-900 flex items-center gap-2">
+                                <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
+                                <span>Template Presensi Per Bulan & Impor/Ekspor Excel (.xlsx / .xls)</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Pilih <strong>Bulan & Tahun</strong> terlebih dahulu untuk mengunduh template bulan tersebut atau mengunggah rekap presensi bulan-bulan terdahulu.</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200">
+                            <label for="attendanceTemplateMonthPicker" class="text-xs font-extrabold text-slate-700 pl-1">Bulan Template:</label>
+                            <input type="month" id="attendanceTemplateMonthPicker" onchange="syncAttendanceMonthPickers(this.value)"
+                                class="px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-extrabold text-mimblue-800 outline-none focus:ring-2 focus:ring-mimblue-500">
+                        </div>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
+
+                    <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
                         <button type="button" onclick="downloadAttendanceTemplateXls()" class="px-3.5 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="download" class="w-4 h-4"></i>
-                            <span>Unduh Template Presensi (.xlsx)</span>
+                            <span>Unduh Template Bulan Terpilih (.xlsx)</span>
                         </button>
                         <button type="button" onclick="exportMonthlyAttendanceXls()" class="px-3.5 py-2.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="file-output" class="w-4 h-4"></i>
-                            <span>Ekspor Template Terisi (.xlsx)</span>
+                            <span>Ekspor Presensi Terisi (.xlsx)</span>
                         </button>
                         <label class="px-4 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs">
                             <i data-lucide="upload" class="w-4 h-4"></i>
-                            <span>Unggah Template Presensi (.xlsx/.xls)</span>
-                            <input type="file" accept=".xlsx,.xls,.csv" onchange="handleImportAttendanceXls(event)" class="hidden">
+                            <span>Unggah Presensi (.xlsx / .xls / .csv)</span>
+                            <input type="file" accept=".xlsx,.xls,.csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="handleImportAttendanceXls(event)" class="hidden">
                         </label>
                     </div>
                 </div>
@@ -836,8 +845,8 @@
                     <div class="lg:col-span-8 bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
                         <div class="flex flex-wrap items-center justify-between gap-3">
                             <div class="flex items-center gap-2.5">
-                                <label class="text-xs font-bold text-slate-700">Tanggal:</label>
-                                <input type="date" id="teacherAttendanceDate" onchange="renderTeacherAttendanceTable()"
+                                <label class="text-xs font-bold text-slate-700">Tanggal Input Harian:</label>
+                                <input type="date" id="teacherAttendanceDate" onchange="handleTeacherDailyDateChange(this.value)"
                                     class="px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-mimblue-800 outline-none">
                             </div>
                             <button type="button" onclick="markAllPresentForDate()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
@@ -869,13 +878,13 @@
                 <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
                     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                         <div>
-                            <h3 class="font-extrabold text-base sm:text-lg text-slate-900">Input Nilai (10 Tugas/Ulangan &amp; ASAS/ASAT) + Excel (.xlsx)</h3>
+                            <h3 class="font-extrabold text-base sm:text-lg text-slate-900">Input Nilai (10 Tugas/Ulangan & ASAS/ASAT) + Excel (.xlsx)</h3>
                             <p class="text-xs text-slate-500 mt-0.5">Kelola 10 kolom Tugas/Ulangan beserta nama Tugas/Materi, nilai ASAS/ASAT, serta ekspor/impor rekap <strong>Nama, Mapel, Nilai</strong>.</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
                             <button type="button" onclick="downloadGradesTemplateXls()" class="px-3.5 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                                 <i data-lucide="download" class="w-4 h-4"></i>
-                                <span>Template 10 Tugas &amp; ASAS (.xlsx)</span>
+                                <span>Template 10 Tugas & ASAS (.xlsx)</span>
                             </button>
                             <button type="button" onclick="exportAllSubjectsSummaryXls()" class="px-3.5 py-2.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                                 <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
@@ -908,7 +917,7 @@
                     <div class="p-4 rounded-2xl bg-mimblue-50/70 border border-mimblue-100 space-y-2.5">
                         <div class="flex items-center justify-between">
                             <p class="text-xs font-extrabold text-mimblue-900">Nama Tugas / Materi (Tugas/Ulangan 1 s.d. 10)</p>
-                            <span class="text-[11px] text-mimblue-700 font-semibold">Otomatis tersimpan untuk mapel &amp; semester terpilih</span>
+                            <span class="text-[11px] text-mimblue-700 font-semibold">Otomatis tersimpan untuk mapel & semester terpilih</span>
                         </div>
                         <div id="tenAssignmentTopicsGrid" class="grid grid-cols-2 sm:grid-cols-5 gap-2"></div>
                     </div>
@@ -949,7 +958,7 @@
                         <div>
                             <h3 class="font-extrabold text-base sm:text-lg text-slate-900 flex items-center gap-2">
                                 <i data-lucide="users" class="w-5 h-5 text-mimblue-700"></i>
-                                <span>Manajemen Data Siswa (Manual &amp; Excel .xlsx)</span>
+                                <span>Manajemen Data Siswa (Manual & Excel .xlsx)</span>
                             </h3>
                             <p class="text-xs text-slate-500 mt-0.5">Tambah siswa baru secara manual atau impor daftar siswa dari Excel apabila pergantian tahun pelajaran.</p>
                         </div>
@@ -974,7 +983,7 @@
                         <div class="flex flex-wrap items-center gap-3">
                             <span class="text-xs font-extrabold text-slate-700">Mode Impor Excel:</span>
                             <select id="importStudentModeSelect" class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 outline-none">
-                                <option value="upsert">Tambah &amp; Perbarui Siswa yang Ada (Merge)</option>
+                                <option value="upsert">Tambah & Perbarui Siswa yang Ada (Merge)</option>
                                 <option value="replace">Ganti Seluruh Daftar Siswa Baru (Tahun Ajaran Baru)</option>
                             </select>
                         </div>
@@ -996,7 +1005,7 @@
                         <div>
                             <h3 class="font-extrabold text-base text-slate-900 flex items-center gap-2">
                                 <i data-lucide="images" class="w-5 h-5 text-amber-600"></i>
-                                <span>Impor &amp; Ekspor Massal Foto Siswa (.ZIP / Multi-File)</span>
+                                <span>Impor & Ekspor Massal Foto Siswa (.ZIP / Multi-File)</span>
                             </h3>
                             <p class="text-xs text-slate-500 mt-0.5">
                                 Ekspor seluruh pas foto siswa ke dalam satu arsip <strong>.ZIP</strong>, atau impor banyak foto sekaligus (pilih banyak gambar <code class="px-1.5 py-0.5 bg-slate-100 rounded text-mimblue-700 font-bold">kelas3_1.jpg</code> / nama siswa, maupun file <strong>.ZIP</strong>).
@@ -1046,7 +1055,7 @@
                                     <th class="py-3 px-3">NIS</th>
                                     <th class="py-3 px-3">Nama Lengkap</th>
                                     <th class="py-3 px-3">L/P</th>
-                                    <th class="py-3 px-3">Orang Tua &amp; HP</th>
+                                    <th class="py-3 px-3">Orang Tua & HP</th>
                                     <th class="py-3 px-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -1062,7 +1071,7 @@
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <div class="flex items-center gap-3">
                             <h3 class="font-extrabold text-base sm:text-lg text-slate-900">Daftar Hadir Siswa Kelas 3 (Tanggal 1–31)</h3>
-                            <input type="month" id="adminMonthlyRecapPicker" onchange="renderAdminMonthlyRecapTable()"
+                            <input type="month" id="adminMonthlyRecapPicker" onchange="syncAttendanceMonthPickers(this.value)"
                                 class="px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-mimblue-800 outline-none">
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
@@ -1082,7 +1091,7 @@
                             <img class="madrasah-logo-img w-14 h-14 object-contain shrink-0" alt="Logo">
                             <div class="text-center flex-1">
                                 <h4 class="text-sm sm:text-base font-extrabold text-mimblue-800 uppercase">DAFTAR HADIR SISWA KELAS 3 MI MUHAMMADIYAH 1 SLINGA</h4>
-                                <p id="adminMonthlyRecapSubtitle" class="text-xs font-bold text-slate-600 uppercase">TAHUN PELAJARAN 2025/2026 &bull; BULAN JANUARI</p>
+                                <p id="adminMonthlyRecapSubtitle" class="text-xs font-bold text-slate-600 uppercase">TAHUN PELAJARAN 2025/2026 • BULAN JANUARI</p>
                             </div>
                         </div>
 
@@ -1168,7 +1177,7 @@
             <div id="tTabContent-settings" class="teacher-tab-content hidden animate-fade-up">
                 <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 max-w-3xl space-y-6">
                     <div>
-                        <h3 class="font-extrabold text-lg text-slate-900">Pengaturan Logo Madrasah &amp; Identitas Kelas</h3>
+                        <h3 class="font-extrabold text-lg text-slate-900">Pengaturan Logo Madrasah & Identitas Kelas</h3>
                         <p class="text-xs text-slate-500 mt-0.5">Ganti logo madrasah cukup dengan mengunggah file gambar (PNG/JPG/SVG) tanpa menyentuh kode.</p>
                     </div>
 
@@ -1217,7 +1226,7 @@
     </div>
 
     <!-- =====================================================================
-         4. MODAL TAMBAH / EDIT SISWA MANUAL (ADMIN)
+4. MODAL TAMBAH / EDIT SISWA MANUAL (ADMIN)
          ===================================================================== -->
     <div id="studentFormModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/70 backdrop-blur-xs p-4 overflow-y-auto">
         <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-7 border border-slate-200 my-auto animate-fade-up">
@@ -1295,7 +1304,7 @@
     </div>
 
     <!-- =====================================================================
-         5. MODAL PRATINJAU & UNDUH MATERI PELAJARAN (PDF / DOCX / PNG)
+5. MODAL PRATINJAU & UNDUH MATERI PELAJARAN (PDF / DOCX / PNG)
          ===================================================================== -->
     <div id="materialPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/75 backdrop-blur-xs p-4 overflow-y-auto">
         <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full p-5 sm:p-7 border border-slate-200 my-auto space-y-5 animate-fade-up">
@@ -1341,7 +1350,7 @@
     </div>
 
     <!-- =====================================================================
-         6. MODAL KONFIRMASI KUSTOM
+6. MODAL KONFIRMASI KUSTOM
          ===================================================================== -->
     <div id="customConfirmModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/70 backdrop-blur-xs p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center space-y-4 animate-fade-up">
@@ -1360,7 +1369,7 @@
     </div>
 
     <!-- =====================================================================
-         7. JAVASCRIPT LENGKAP + PROTEKSI DATA ADMIN DI CLOUD
+7. JAVASCRIPT LENGKAP + PROTEKSI DATA ADMIN DI CLOUD
          ===================================================================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -2185,1777 +2194,4 @@
             st.birthPlace = document.getElementById('bioEditBirthPlace').value.trim();
             st.birthDate = document.getElementById('bioEditBirthDate').value;
             st.parentName = document.getElementById('bioEditParent').value.trim();
-            st.phone = document.getElementById('bioEditPhone').value.trim();
-            st.address = document.getElementById('bioEditAddress').value.trim();
-            if (appState.tempUploadedPhoto) {
-                st.photo = appState.tempUploadedPhoto;
-            }
-
-            saveDatabase();
-            renderStudentDashboard();
-            showToast('Biodata dan pas foto Anda berhasil diperbarui!', 'success');
-        }
-
-        function renderStudentAttendanceReport() {
-            const st = getCurrentStudent();
-            if (!st) return;
-
-            const monthVal = document.getElementById('studentAttendanceMonthPicker').value || new Date().toISOString().slice(0, 7);
-            const [year, month] = monthVal.split('-');
-            const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            const monthLabel = `${monthNames[parseInt(month, 10) - 1]} ${year}`;
-
-            document.getElementById('attReportName').textContent = st.name;
-            document.getElementById('attReportNis').textContent = st.nis;
-            document.getElementById('attReportMonthLabel').textContent = monthLabel;
-            document.getElementById('attReportTeacher').textContent = appState.settings.teacherName;
-            document.getElementById('attReportSignTeacher').textContent = appState.settings.teacherName;
-
-            const entries = Object.entries(st.attendance || {})
-                .filter(([date]) => date.startsWith(monthVal))
-                .sort((a, b) => a[0].localeCompare(b[0]));
-
-            let countH = 0, countS = 0, countI = 0, countA = 0;
-            entries.forEach(([, val]) => {
-                if (val.status === 'H') countH++;
-                if (val.status === 'S') countS++;
-                if (val.status === 'I') countI++;
-                if (val.status === 'A') countA++;
-            });
-
-            document.getElementById('attCountH').textContent = countH;
-            document.getElementById('attCountS').textContent = countS;
-            document.getElementById('attCountI').textContent = countI;
-            document.getElementById('attCountA').textContent = countA;
-
-            const statusBadge = {
-                H: '<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">Hadir (H)</span>',
-                S: '<span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">Sakit (S)</span>',
-                I: '<span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold">Izin (I)</span>',
-                A: '<span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold">Alpa (A)</span>'
-            };
-
-            const tbody = document.getElementById('studentAttendanceTableBody');
-            if (entries.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-400">Belum ada catatan presensi pada bulan ${monthLabel}.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = entries.map(([dateStr, rec], idx) => {
-                const detailInfo = [rec.note || '', rec.scanTime ? `Jam ${rec.scanTime}` : ''].filter(Boolean).join(' • ') || '-';
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-2.5 px-4 font-bold text-slate-600">${idx + 1}</td>
-                        <td class="py-2.5 px-4 font-bold text-slate-900">${dateStr}</td>
-                        <td class="py-2.5 px-4">${statusBadge[rec.status] || rec.status}</td>
-                        <td class="py-2.5 px-4 text-slate-600">${detailInfo}</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function getPredikat(score) {
-            if (score >= 90) return { letter: 'A', cls: 'bg-emerald-100 text-emerald-800' };
-            if (score >= 80) return { letter: 'B', cls: 'bg-mimblue-100 text-mimblue-800' };
-            if (score >= 75) return { letter: 'C', cls: 'bg-amber-100 text-amber-800' };
-            return { letter: 'D', cls: 'bg-rose-100 text-rose-800' };
-        }
-
-        function renderStudentGrades() {
-            const st = getCurrentStudent();
-            if (!st) return;
-
-            const sem = document.getElementById('studentGradeSemesterSelect').value;
-            const pillsEl = document.getElementById('studentSubjectPills');
-            const allSubjects = ['ALL', ...SUBJECTS_LIST];
-
-            pillsEl.innerHTML = allSubjects.map(subj => {
-                const active = appState.selectedSubjectFilter === subj;
-                return `<button type="button" onclick="appState.selectedSubjectFilter='${subj.replace(/'/g, "\\'")}'; renderStudentGrades();"
-                    class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-mimblue-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                    ${subj === 'ALL' ? 'Semua 12 Mapel' : subj}
-                </button>`;
-            }).join('');
-
-            const filtered = appState.selectedSubjectFilter === 'ALL'
-                ? SUBJECTS_LIST
-                : SUBJECTS_LIST.filter(s => s === appState.selectedSubjectFilter);
-
-            const tbody = document.getElementById('studentGradesTableBody');
-            tbody.innerHTML = filtered.map((subj, idx) => {
-                const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
-                const avgTask = computeTaskAverage(rec).toFixed(1);
-                const finalScore = computeGradeFinalScore(rec).toFixed(1);
-                const pred = getPredikat(parseFloat(finalScore));
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-3 px-3 font-bold text-slate-500">${idx + 1}</td>
-                        <td class="py-3 px-4 font-extrabold text-slate-900">${subj}</td>
-                        <td class="py-3 px-3 text-center font-semibold">${avgTask}</td>
-                        <td class="py-3 px-3 text-center font-semibold">${rec.asas}</td>
-                        <td class="py-3 px-3 text-center font-extrabold text-mimblue-800">${finalScore}</td>
-                        <td class="py-3 px-3 text-center"><span class="px-2.5 py-0.5 rounded-md font-extrabold ${pred.cls}">${pred.letter}</span></td>
-                        <td class="py-3 px-4 text-slate-500">${rec.note || '-'}</td>
-                    </tr>
-                `;
-            }).join('');
-
-            const detailsEl = document.getElementById('studentTaskDetailsContent');
-            if (detailsEl) {
-                detailsEl.innerHTML = filtered.map(subj => {
-                    const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
-                    const topics = appState.assignmentTopics?.[sem]?.[subj] || Array.from({ length: 10 }, (_, i) => `Tugas/Materi ${i + 1}`);
-                    const itemsHtml = rec.tasks.map((val, i) => `
-                        <div class="flex items-center justify-between gap-2 py-0.5 border-b border-slate-100 last:border-0">
-                            <span class="text-slate-600 truncate" title="${topics[i]}">${topics[i]}</span>
-                            <strong class="text-slate-900 shrink-0">${val}</strong>
-                        </div>
-                    `).join('');
-                    return `
-                        <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-1">
-                            <p class="font-extrabold text-mimblue-800 text-xs">${subj}</p>
-                            <div class="space-y-0.5 text-[11px]">${itemsHtml}</div>
-                        </div>
-                    `;
-                }).join('');
-            }
-        }
-
-        function renderStudentMaterials() {
-            const pillsEl = document.getElementById('studentMaterialSubjectPills');
-            const allSubjects = ['ALL', ...SUBJECTS_LIST];
-            pillsEl.innerHTML = allSubjects.map(subj => {
-                const active = appState.selectedMaterialSubjectFilter === subj;
-                return `<button type="button" onclick="appState.selectedMaterialSubjectFilter='${subj.replace(/'/g, "\\'")}'; renderStudentMaterials();"
-                    class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-mimblue-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                    ${subj === 'ALL' ? 'Semua Mapel' : subj}
-                </button>`;
-            }).join('');
-
-            const filtered = appState.selectedMaterialSubjectFilter === 'ALL'
-                ? appState.materials
-                : appState.materials.filter(m => m.subject === appState.selectedMaterialSubjectFilter);
-
-            const grid = document.getElementById('studentMaterialsGrid');
-            if (filtered.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-8">Belum ada materi untuk mata pelajaran ini.</p>`;
-                return;
-            }
-
-            grid.innerHTML = filtered.map(mat => `
-                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-mimblue-400 transition flex flex-col justify-between gap-4">
-                    <div>
-                        <span class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[11px] font-extrabold">${mat.subject}</span>
-                        <h4 class="font-extrabold text-sm text-slate-900 mt-2">${mat.title}</h4>
-                        <p class="text-xs text-slate-500 mt-1.5 line-clamp-3">${mat.content}</p>
-                    </div>
-                    <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="w-full py-2.5 px-4 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
-                        <i data-lucide="eye" class="w-4 h-4"></i>
-                        <span>Baca &amp; Unduh (PDF/DOCX/PNG)</span>
-                    </button>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function renderPersonalStudentQrCard() {
-            const st = getCurrentStudent();
-            if (!st) return;
-
-            document.getElementById('personalQrStudentPhoto').src = st.photo;
-            document.getElementById('personalQrStudentName').textContent = st.name;
-            document.getElementById('personalQrStudentNis').textContent = `NIS: ${st.nis}`;
-
-            const qrBox = document.getElementById('personalQrCodeBox');
-            qrBox.innerHTML = '';
-            new QRCode(qrBox, {
-                text: `MIM1SLINGA|${st.nis}`,
-                width: 150,
-                height: 150,
-                colorDark: '#07399C',
-                colorLight: '#ffffff'
-            });
-            updateGlobalBrandingUI();
-        }
-
-        function initTeacherDashboard() {
-            const dateInput = document.getElementById('teacherAttendanceDate');
-            if (!dateInput.value) dateInput.value = new Date().toISOString().split('T')[0];
-
-            const subjSelect = document.getElementById('teacherGradeSubjectSelect');
-            subjSelect.innerHTML = SUBJECTS_LIST.map(s => `<option value="${s}">${s}</option>`).join('');
-
-            const matSelect = document.getElementById('newMatSubject');
-            matSelect.innerHTML = SUBJECTS_LIST.map(s => `<option value="${s}">${s}</option>`).join('');
-
-            switchTeacherTab('students');
-            updateGlobalBrandingUI();
-        }
-
-        function switchTeacherTab(tabName) {
-            if (tabName !== 'attendance') stopAdminQrScanner();
-
-            document.querySelectorAll('.teacher-tab-btn').forEach(btn => {
-                btn.className = 'teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer';
-            });
-            document.getElementById(`tTabBtn-${tabName}`).className = 'teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer';
-
-            document.querySelectorAll('.teacher-tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`tTabContent-${tabName}`).classList.remove('hidden');
-
-            if (tabName === 'attendance') renderTeacherAttendanceTable();
-            if (tabName === 'grades') renderTeacherGradesTable();
-            if (tabName === 'students') renderTeacherStudentsTable();
-            if (tabName === 'qrcards') {
-                const recapPicker = document.getElementById('adminMonthlyRecapPicker');
-                if (recapPicker && !recapPicker.value) recapPicker.value = new Date().toISOString().slice(0, 7);
-                renderAdminMonthlyRecapTable();
-                renderAll26QrCards();
-            }
-            if (tabName === 'materials') renderTeacherMaterialsGrid();
-            if (tabName === 'settings') renderTeacherSettingsForm();
-
-            updateGlobalBrandingUI();
-            lucide.createIcons();
-        }
-
-        function startAdminQrScanner() {
-            if (appState.isAdminScannerRunning) return;
-            document.getElementById('adminQrPlaceholder').classList.add('hidden');
-            try {
-                appState.adminQrScanner = new Html5Qrcode('adminQrReaderBox');
-                appState.adminQrScanner.start(
-                    { facingMode: 'environment' },
-                    { fps: 10, qrbox: { width: 180, height: 180 } },
-                    (decodedText) => {
-                        const nis = extractNisFromScanPayload(decodedText);
-                        recordAdminAttendanceByNis(nis);
-                    },
-                    () => {}
-                ).then(() => {
-                    appState.isAdminScannerRunning = true;
-                }).catch(() => {
-                    document.getElementById('adminQrPlaceholder').classList.remove('hidden');
-                    showToast('Kamera tidak tersedia.', 'error');
-                });
-            } catch (e) {}
-        }
-
-        function stopAdminQrScanner() {
-            if (appState.adminQrScanner && appState.isAdminScannerRunning) {
-                appState.adminQrScanner.stop().then(() => {
-                    appState.isAdminScannerRunning = false;
-                    document.getElementById('adminQrPlaceholder')?.classList.remove('hidden');
-                }).catch(() => {});
-            }
-        }
-
-        function handleAdminManualNisScan(e) {
-            e.preventDefault();
-            const input = document.getElementById('adminManualScanInput');
-            const nis = extractNisFromScanPayload(input.value);
-            if (nis) recordAdminAttendanceByNis(nis);
-            input.value = '';
-        }
-
-        function recordAdminAttendanceByNis(nis) {
-            const st = appState.students.find(s => s.nis.toLowerCase() === nis.toLowerCase());
-            if (!st) {
-                showToast(`NIS "${nis}" tidak ditemukan!`, 'error');
-                return;
-            }
-            const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
-            const timeNow = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            st.attendance[dateStr] = { status: 'H', note: 'Hadir tepat waktu', scanTime: timeNow };
-            saveDatabase();
-            playScanSuccessBeep();
-            renderTeacherAttendanceTable();
-            showToast(`${st.name} (${st.nis}) tercatat Hadir!`, 'success');
-        }
-
-        function renderTeacherAttendanceTable() {
-            const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
-            const tbody = document.getElementById('teacherAttendanceTableBody');
-
-            tbody.innerHTML = appState.students.map((st, idx) => {
-                const rec = st.attendance?.[dateStr] || { status: '', note: '' };
-                const btnStatus = (code, label, activeCls) => {
-                    const isActive = rec.status === code;
-                    return `<button type="button" onclick="setStudentAttendance('${st.nis}', '${code}')"
-                        class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold border transition cursor-pointer ${isActive ? activeCls : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-100'}">${label}</button>`;
-                };
-
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-2.5 px-3 font-bold text-slate-500">${idx + 1}</td>
-                        <td class="py-2.5 px-3 font-mono font-bold text-mimblue-700">${st.nis}</td>
-                        <td class="py-2.5 px-3 font-bold text-slate-900">${st.name}</td>
-                        <td class="py-2.5 px-3">
-                            <div class="flex items-center justify-center gap-1">
-                                ${btnStatus('H', 'H', 'bg-emerald-600 text-white border-emerald-600')}
-                                ${btnStatus('S', 'S', 'bg-amber-500 text-white border-amber-500')}
-                                ${btnStatus('I', 'I', 'bg-blue-600 text-white border-blue-600')}
-                                ${btnStatus('A', 'A', 'bg-rose-600 text-white border-rose-600')}
-                            </div>
-                        </td>
-                        <td class="py-2.5 px-3">
-                            <input type="text" value="${rec.note || ''}" onchange="setStudentAttendanceNote('${st.nis}', this.value)" placeholder="Catatan..."
-                                class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] outline-none">
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function setStudentAttendance(nis, status) {
-            const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
-            const st = appState.students.find(s => s.nis === nis);
-            if (!st) return;
-            const prevNote = st.attendance?.[dateStr]?.note || '';
-            const prevScanTime = st.attendance?.[dateStr]?.scanTime || '';
-            st.attendance[dateStr] = {
-                status,
-                scanTime: prevScanTime,
-                note: prevNote || (status === 'H' ? 'Hadir tepat waktu' : '')
-            };
-            saveDatabase();
-            renderTeacherAttendanceTable();
-        }
-
-        function setStudentAttendanceNote(nis, note) {
-            const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
-            const st = appState.students.find(s => s.nis === nis);
-            if (!st) return;
-            if (!st.attendance[dateStr]) st.attendance[dateStr] = { status: 'H', note, scanTime: '' };
-            else st.attendance[dateStr].note = note;
-            saveDatabase();
-        }
-
-        function markAllPresentForDate() {
-            const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
-            appState.students.forEach(st => {
-                const prevScanTime = st.attendance?.[dateStr]?.scanTime || '';
-                st.attendance[dateStr] = { status: 'H', note: 'Hadir tepat waktu', scanTime: prevScanTime };
-            });
-            saveDatabase();
-            renderTeacherAttendanceTable();
-            showToast(`Seluruh ${appState.students.length} siswa ditandai Hadir pada ${dateStr}!`, 'success');
-        }
-
-        function getMonthNameIndonesian(monthNumberStr) {
-            const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            const idx = parseInt(monthNumberStr, 10) - 1;
-            return monthNames[idx] || 'Januari';
-        }
-
-        function parseMonthNameToNumber(bulanVal) {
-            const clean = String(bulanVal || '').trim().toLowerCase();
-            if (/^\d{1,2}$/.test(clean)) return String(parseInt(clean, 10)).padStart(2, '0');
-            const map = {
-                januari: '01', jan: '01',
-                februari: '02', feb: '02',
-                maret: '03', mar: '03',
-                april: '04', apr: '04',
-                mei: '05',
-                juni: '06', jun: '06',
-                juli: '07', jul: '07',
-                agustus: '08', agu: '08', ags: '08',
-                september: '09', sep: '09',
-                oktober: '10', okt: '10',
-                november: '11', nov: '11',
-                desember: '12', des: '12'
-            };
-            return map[clean] || null;
-        }
-
-        function findStudentByNameOrNis(rawName, rawNis = '') {
-            const nameClean = String(rawName || '').trim().toLowerCase();
-            const nisClean = String(rawNis || '').trim().toLowerCase();
-            return appState.students.find(s =>
-                (nameClean && s.name.toLowerCase() === nameClean) ||
-                (nisClean && s.nis.toLowerCase() === nisClean)
-            ) || null;
-        }
-
-        function getActiveAttendanceYearMonth() {
-            const recapVal = document.getElementById('adminMonthlyRecapPicker')?.value || '';
-            if (/^\d{4}-\d{2}$/.test(recapVal)) {
-                return recapVal;
-            }
-            const dateVal = document.getElementById('teacherAttendanceDate')?.value || '';
-            if (/^\d{4}-\d{2}-\d{2}$/.test(dateVal)) {
-                return dateVal.slice(0, 7);
-            }
-            return new Date().toISOString().slice(0, 7);
-        }
-
-        function downloadAttendanceTemplateXls() {
-            if (typeof XLSX === 'undefined') {
-                showToast('Library Excel belum siap, coba beberapa detik lagi.', 'error');
-                return;
-            }
-            const monthPrefix = getActiveAttendanceYearMonth();
-            const [yearPart, monthPart] = monthPrefix.split('-');
-            const yearNum = parseInt(yearPart, 10);
-            const monthNum = parseInt(monthPart, 10);
-            const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
-            const labelBulan = `${getMonthNameIndonesian(monthPart)} ${yearPart}`;
-
-            const aoa = [];
-            aoa.push([`TEMPLATE PRESENSI KELAS 3 MIM 1 SLINGA — BULAN ${labelBulan.toUpperCase()}`]);
-            aoa.push(['Petunjuk: Isi kode H (Hadir), I (Izin), S (Sakit), atau A (Alpa) pada kolom tanggal (1–30/31), lalu unggah kembali file ini. Kolom REKAP otomatis terhitung.']);
-            aoa.push([]);
-
-            const groupRow = ['No', 'Nama', ...Array(daysInMonth).fill(''), 'Rekap', '', '', ''];
-            groupRow[2] = `Tanggal (${labelBulan})`;
-            const colRow = ['', '', ...Array.from({ length: daysInMonth }, (_, i) => i + 1), 'H', 'I', 'S', 'A'];
-            aoa.push(groupRow);
-            aoa.push(colRow);
-
-            appState.students.forEach((st, idx) => {
-                const rowNum = idx + 6;
-                const firstDayColLetter = XLSX.utils.encode_col(2);
-                const lastDayColLetter = XLSX.utils.encode_col(2 + daysInMonth - 1);
-                const row = [idx + 1, st.name];
-
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const dayKey = `${monthPrefix}-${String(d).padStart(2, '0')}`;
-                    const code = String(st.attendance?.[dayKey]?.status || '').trim().toUpperCase();
-                    row.push(['H', 'I', 'S', 'A'].includes(code) ? code : '');
-                }
-
-                ['H', 'I', 'S', 'A'].forEach(kode => {
-                    row.push({ f: `COUNTIF(${firstDayColLetter}${rowNum}:${lastDayColLetter}${rowNum},"${kode}")` });
-                });
-                aoa.push(row);
-            });
-
-            const ws = XLSX.utils.aoa_to_sheet(aoa);
-            const totalCols = 2 + daysInMonth + 4;
-            ws['!merges'] = [
-                { s: { r: 0, c: 0 }, e: { r: 0, c: totalCols - 1 } },
-                { s: { r: 1, c: 0 }, e: { r: 1, c: totalCols - 1 } },
-                { s: { r: 3, c: 0 }, e: { r: 4, c: 0 } },
-                { s: { r: 3, c: 1 }, e: { r: 4, c: 1 } },
-                { s: { r: 3, c: 2 }, e: { r: 3, c: 2 + daysInMonth - 1 } },
-                { s: { r: 3, c: 2 + daysInMonth }, e: { r: 3, c: totalCols - 1 } }
-            ];
-            ws['!cols'] = [{ wch: 5 }, { wch: 30 }, ...Array(daysInMonth).fill({ wch: 4.5 }), { wch: 5.5 }, { wch: 5.5 }, { wch: 5.5 }, { wch: 5.5 }];
-
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Template_Presensi');
-            XLSX.writeFile(wb, `Template_Presensi_${monthPrefix}_MIM1Slinga.xlsx`);
-            showToast(`Template Excel Presensi (${labelBulan}) berhasil diunduh!`, 'success');
-        }
-
-        function exportMonthlyAttendanceXls() {
-            if (typeof XLSX === 'undefined') return;
-            downloadAttendanceTemplateXls();
-        }
-
-        function handleImportAttendanceXls(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const wb = XLSX.read(data, { type: 'array' });
-                    const sheet = wb.Sheets[wb.SheetNames[0]];
-                    const aoa = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
-
-                    const activeYm = getActiveAttendanceYearMonth();
-                    const [defaultYear, defaultMonth] = activeYm.split('-');
-                    const defaultDay = (document.getElementById('teacherAttendanceDate')?.value || `${activeYm}-01`).split('-')[2] || '01';
-                    let activeYear = defaultYear;
-                    let activeMonth = defaultMonth;
-
-                    // Deteksi bulan & tahun dari judul/header sheet maupun nama file
-                    const fileNameLower = String(file.name || '').toLowerCase();
-                    const fileYmMatch = fileNameLower.match(/(202\d|203\d)[-_](0[1-9]|1[0-2])/);
-                    if (fileYmMatch) {
-                        activeYear = fileYmMatch[1];
-                        activeMonth = fileYmMatch[2];
-                    }
-
-                    const monthNamesList = ['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember'];
-                    for (let r = 0; r < Math.min(6, aoa.length); r++) {
-                        const joined = (aoa[r] || []).join(' ').toLowerCase();
-                        const yearMatch = joined.match(/\b(202\d|203\d)\b/);
-                        if (yearMatch) activeYear = yearMatch[1];
-                        for (const mName of monthNamesList) {
-                            if (joined.includes(mName)) {
-                                activeMonth = parseMonthNameToNumber(mName) || activeMonth;
-                                break;
-                            }
-                        }
-                    }
-
-                    let headerRowIdx = -1;
-                    let nameColIdx = -1;
-                    const dayColMap = {};
-
-                    for (let r = 0; r < aoa.length; r++) {
-                        const row = aoa[r] || [];
-                        let foundNameCol = -1;
-                        const foundDays = {};
-                        row.forEach((cell, cIdx) => {
-                            const txt = String(cell || '').trim().toLowerCase();
-                            if (txt === 'nama' || txt === 'nama siswa' || txt === 'nama_siswa') {
-                                foundNameCol = cIdx;
-                            } else if (/^\d{1,2}$/.test(txt)) {
-                                const dayNum = parseInt(txt, 10);
-                                if (dayNum >= 1 && dayNum <= 31) foundDays[cIdx] = dayNum;
-                            }
-                        });
-                        if (foundNameCol !== -1 && Object.keys(foundDays).length >= 3) {
-                            headerRowIdx = r;
-                            nameColIdx = foundNameCol;
-                            Object.assign(dayColMap, foundDays);
-                            break;
-                        }
-                    }
-
-                    let updatedCount = 0;
-                    const maxDaysInDetectedMonth = new Date(parseInt(activeYear, 10), parseInt(activeMonth, 10), 0).getDate();
-
-                    if (headerRowIdx !== -1) {
-                        for (let r = headerRowIdx + 1; r < aoa.length; r++) {
-                            const row = aoa[r] || [];
-                            const rawNama = String(row[nameColIdx] || '').trim();
-                            if (!rawNama) continue;
-                            const st = findStudentByNameOrNis(rawNama);
-                            if (!st) continue;
-                            if (!st.attendance) st.attendance = {};
-
-                            Object.entries(dayColMap).forEach(([cIdxStr, dayNum]) => {
-                                if (dayNum > maxDaysInDetectedMonth) return;
-                                const cIdx = parseInt(cIdxStr, 10);
-                                const rawVal = String(row[cIdx] || '').trim().toUpperCase();
-                                if (!rawVal) return;
-                                const code = rawVal.charAt(0);
-                                if (['H', 'I', 'S', 'A'].includes(code)) {
-                                    const dateKey = `${activeYear}-${activeMonth}-${String(dayNum).padStart(2, '0')}`;
-                                    const prev = st.attendance[dateKey] || {};
-                                    st.attendance[dateKey] = {
-                                        status: code,
-                                        scanTime: prev.scanTime || '',
-                                        note: prev.note || (code === 'H' ? 'Hadir tepat waktu' : '')
-                                    };
-                                    updatedCount++;
-                                }
-                            });
-                        }
-                    } else {
-                        const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-                        rows.forEach(row => {
-                            const st = findStudentByNameOrNis(row.Nama || row.Nama_Siswa, row.NIS || row.nis);
-                            if (!st) return;
-                            if (!st.attendance) st.attendance = {};
-
-                            let dateStr = `${activeYear}-${activeMonth}-${String(parseInt(defaultDay, 10) || 1).padStart(2, '0')}`;
-                            const rawTanggal = String(row.Tanggal || row.Tanggal_YYYY_MM_DD || '').trim();
-                            const rawBulan = String(row.Bulan || '').trim();
-
-                            if (/^\d{4}-\d{2}-\d{2}$/.test(rawTanggal)) {
-                                dateStr = rawTanggal;
-                            } else if (rawTanggal) {
-                                const dayNum = String(parseInt(rawTanggal, 10) || parseInt(defaultDay, 10)).padStart(2, '0');
-                                const monthNum = parseMonthNameToNumber(rawBulan) || activeMonth;
-                                dateStr = `${activeYear}-${monthNum}-${dayNum}`;
-                            }
-
-                            const rawStatus = String(row.Kode || row.Status_H_S_I_A || row.Status || 'H').trim().toUpperCase().charAt(0);
-                            const validStatus = ['H', 'S', 'I', 'A'].includes(rawStatus) ? rawStatus : 'H';
-                            const jam = String(row.Jam || row.Jam_Masuk || '').trim();
-                            const ket = String(row.Keterangan || '').trim() || (validStatus === 'H' ? 'Hadir tepat waktu' : '');
-
-                            st.attendance[dateStr] = {
-                                status: validStatus,
-                                scanTime: jam,
-                                note: ket
-                            };
-                            updatedCount++;
-                        });
-                    }
-
-                    const importedYm = `${activeYear}-${activeMonth}`;
-                    const recapPicker = document.getElementById('adminMonthlyRecapPicker');
-                    if (recapPicker) recapPicker.value = importedYm;
-                    const attDateInput = document.getElementById('teacherAttendanceDate');
-                    if (attDateInput && !attDateInput.value.startsWith(importedYm)) {
-                        attDateInput.value = `${importedYm}-01`;
-                    }
-
-                    saveDatabase();
-                    renderTeacherAttendanceTable();
-                    renderAdminMonthlyRecapTable();
-                    showToast(`Berhasil mengimpor ${updatedCount} data presensi (${getMonthNameIndonesian(activeMonth)} ${activeYear})!`, 'success');
-                } catch (err) {
-                    showToast('Format file Excel presensi tidak valid!', 'error');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value = '';
-        }
-
-        function renderTeacherGradesTable() {
-            const subj = document.getElementById('teacherGradeSubjectSelect').value;
-            const sem = document.getElementById('teacherGradeSemesterSelect').value;
-
-            if (!appState.assignmentTopics) appState.assignmentTopics = createDefaultAssignmentTopics();
-            if (!appState.assignmentTopics[sem]) appState.assignmentTopics[sem] = {};
-            if (!Array.isArray(appState.assignmentTopics[sem][subj])) {
-                appState.assignmentTopics[sem][subj] = Array.from({ length: 10 }, (_, i) => `Tugas/Materi ${i + 1}`);
-            }
-
-            const topicsGrid = document.getElementById('tenAssignmentTopicsGrid');
-            if (topicsGrid) {
-                topicsGrid.innerHTML = appState.assignmentTopics[sem][subj].map((topicVal, idx) => `
-                    <div class="bg-white p-2 rounded-xl border border-mimblue-200">
-                        <label class="block text-[10px] font-extrabold text-mimblue-700 mb-0.5">Tugas/Ulangan ${idx + 1}</label>
-                        <input type="text" value="${topicVal}" onchange="updateAssignmentTopicName(${idx}, this.value)"
-                            placeholder="Nama Tugas / Materi"
-                            class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-semibold text-slate-800 outline-none focus:border-mimblue-500">
-                    </div>
-                `).join('');
-            }
-
-            const tbody = document.getElementById('teacherGradesTableBody');
-            tbody.innerHTML = appState.students.map((st, idx) => {
-                const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
-                const finalScore = computeGradeFinalScore(rec).toFixed(1);
-                const pred = getPredikat(parseFloat(finalScore));
-
-                const taskCells = rec.tasks.map((score, tIdx) => `
-                    <td class="py-1.5 px-1 text-center">
-                        <input type="number" min="0" max="100" value="${score}"
-                            onchange="updateStudentTaskScore('${st.nis}', ${tIdx}, this.value)"
-                            class="w-12 text-center py-1 bg-slate-50 border border-slate-300 rounded-lg font-bold text-[11px]">
-                    </td>
-                `).join('');
-
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-2 px-2.5 font-bold text-slate-500">${idx + 1}</td>
-                        <td class="py-2 px-2.5 font-mono font-bold text-mimblue-700 whitespace-nowrap">${st.nis}</td>
-                        <td class="py-2 px-3 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
-                        ${taskCells}
-                        <td class="py-1.5 px-2 text-center bg-mimblue-50/50">
-                            <input type="number" min="0" max="100" value="${rec.asas}"
-                                onchange="updateStudentAsasOrNote('${st.nis}', 'asas', this.value)"
-                                class="w-14 text-center py-1 bg-white border border-mimblue-300 rounded-lg font-extrabold text-mimblue-900 text-xs">
-                        </td>
-                        <td class="py-2 px-2.5 text-center font-extrabold text-emerald-800 bg-emerald-50/50">${finalScore}</td>
-                        <td class="py-2 px-2 text-center"><span class="px-2 py-0.5 rounded-md font-extrabold ${pred.cls}">${pred.letter}</span></td>
-                        <td class="py-1.5 px-3"><input type="text" value="${rec.note || ''}" onchange="updateStudentAsasOrNote('${st.nis}', 'note', this.value)" class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px]"></td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function updateAssignmentTopicName(topicIdx, value) {
-            const subj = document.getElementById('teacherGradeSubjectSelect').value;
-            const sem = document.getElementById('teacherGradeSemesterSelect').value;
-            if (!appState.assignmentTopics[sem][subj]) {
-                appState.assignmentTopics[sem][subj] = Array.from({ length: 10 }, (_, i) => `Tugas/Materi ${i + 1}`);
-            }
-            appState.assignmentTopics[sem][subj][topicIdx] = value.trim() || `Tugas/Materi ${topicIdx + 1}`;
-            saveDatabase();
-        }
-
-        function updateStudentTaskScore(nis, taskIdx, value) {
-            const subj = document.getElementById('teacherGradeSubjectSelect').value;
-            const sem = document.getElementById('teacherGradeSemesterSelect').value;
-            const st = appState.students.find(s => s.nis === nis);
-            if (!st) return;
-
-            if (!st.grades) st.grades = { Ganjil: {}, Genap: {} };
-            if (!st.grades[sem]) st.grades[sem] = {};
-            const rec = normalizeGradeRecord(st.grades[sem][subj]);
-            rec.tasks[taskIdx] = Math.max(0, Math.min(100, Number(value) || 0));
-            st.grades[sem][subj] = rec;
-
-            saveDatabase();
-            renderTeacherGradesTable();
-        }
-
-        function updateStudentAsasOrNote(nis, field, value) {
-            const subj = document.getElementById('teacherGradeSubjectSelect').value;
-            const sem = document.getElementById('teacherGradeSemesterSelect').value;
-            const st = appState.students.find(s => s.nis === nis);
-            if (!st) return;
-
-            if (!st.grades) st.grades = { Ganjil: {}, Genap: {} };
-            if (!st.grades[sem]) st.grades[sem] = {};
-            const rec = normalizeGradeRecord(st.grades[sem][subj]);
-
-            if (field === 'note') {
-                rec.note = value;
-            } else {
-                rec.asas = Math.max(0, Math.min(100, Number(value) || 0));
-            }
-            st.grades[sem][subj] = rec;
-
-            saveDatabase();
-            renderTeacherGradesTable();
-        }
-
-        function downloadGradesTemplateXls() {
-            if (typeof XLSX === 'undefined') {
-                showToast('Library Excel belum siap.', 'error');
-                return;
-            }
-            const subj = document.getElementById('teacherGradeSubjectSelect').value;
-            const sem = document.getElementById('teacherGradeSemesterSelect').value;
-            const topics = appState.assignmentTopics?.[sem]?.[subj] || Array.from({ length: 10 }, (_, i) => `Tugas/Materi ${i + 1}`);
-
-            const rows = appState.students.map(st => {
-                const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
-                const rowObj = {
-                    Nama: st.name,
-                    Mapel: subj,
-                    Semester: sem
-                };
-                for (let i = 0; i < 10; i++) {
-                    rowObj[`Tugas_Ulangan_${i + 1}_${topics[i]}`] = rec.tasks[i];
-                }
-                rowObj['ASAS_ASAT'] = rec.asas;
-                rowObj['Nilai'] = Number(computeGradeFinalScore(rec).toFixed(1));
-                rowObj['Catatan'] = rec.note || '';
-                return rowObj;
-            });
-
-            const ws = XLSX.utils.json_to_sheet(rows);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Template_Nilai');
-            XLSX.writeFile(wb, `Template_Nilai_${subj.replace(/[^a-zA-Z0-9]/g, '_')}_${sem}.xlsx`);
-            showToast(`Template Excel Nilai (${subj}) berhasil diunduh!`, 'success');
-        }
-
-        function exportAllSubjectsSummaryXls() {
-            if (typeof XLSX === 'undefined') return;
-            const sem = document.getElementById('teacherGradeSemesterSelect').value;
-            const rows = [];
-
-            appState.students.forEach(st => {
-                SUBJECTS_LIST.forEach(subj => {
-                    const finalScore = Number(computeGradeFinalScore(st.grades?.[sem]?.[subj]).toFixed(1));
-                    rows.push({
-                        Nama: st.name,
-                        Mapel: subj,
-                        Nilai: finalScore
-                    });
-                });
-            });
-
-            const ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [{ wch: 30 }, { wch: 24 }, { wch: 12 }];
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, `Nilai_${sem}`);
-            XLSX.writeFile(wb, `Rekap_Nilai_Semua_Mapel_${sem}_MIM1Slinga.xlsx`);
-            showToast(`Ekspor nilai semua mapel (Nama, Mapel, Nilai) Semester ${sem} berhasil!`, 'success');
-        }
-
-        function handleImportGradesXls(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const wb = XLSX.read(data, { type: 'array' });
-                    const sheet = wb.Sheets[wb.SheetNames[0]];
-                    const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-
-                    const fallbackSubj = document.getElementById('teacherGradeSubjectSelect').value;
-                    const fallbackSem = document.getElementById('teacherGradeSemesterSelect').value;
-                    let updatedCount = 0;
-
-                    rows.forEach(row => {
-                        const rawNama = String(row.Nama || row.Nama_Siswa || '').trim().toLowerCase();
-                        const rawNis = String(row.NIS || row.nis || '').trim().toLowerCase();
-                        const st = appState.students.find(s =>
-                            (rawNama && s.name.toLowerCase() === rawNama) ||
-                            (rawNis && s.nis.toLowerCase() === rawNis)
-                        );
-                        if (!st) return;
-
-                        const rawSubj = String(row.Mapel || row.Mata_Pelajaran || fallbackSubj).trim();
-                        const matchedSubj = SUBJECTS_LIST.find(s => s.toLowerCase() === rawSubj.toLowerCase()) || fallbackSubj;
-                        const rawSem = String(row.Semester || fallbackSem).trim();
-                        const sem = rawSem.toLowerCase() === 'genap' ? 'Genap' : 'Ganjil';
-
-                        if (!st.grades) st.grades = { Ganjil: {}, Genap: {} };
-                        if (!st.grades[sem]) st.grades[sem] = {};
-                        const rec = normalizeGradeRecord(st.grades[sem][matchedSubj]);
-
-                        const keys = Object.keys(row);
-                        let hasDetailTasks = false;
-                        for (let i = 0; i < 10; i++) {
-                            const taskKey = keys.find(k => k.toLowerCase().startsWith(`tugas_ulangan_${i + 1}`));
-                            if (taskKey !== undefined && row[taskKey] !== '') {
-                                rec.tasks[i] = Math.max(0, Math.min(100, Number(row[taskKey]) || 0));
-                                hasDetailTasks = true;
-                            }
-                        }
-
-                        if (row.ASAS_ASAT !== undefined && row.ASAS_ASAT !== '') {
-                            rec.asas = Math.max(0, Math.min(100, Number(row.ASAS_ASAT) || 0));
-                        } else if (!hasDetailTasks && row.Nilai !== undefined && row.Nilai !== '') {
-                            const val = Math.max(0, Math.min(100, Number(row.Nilai) || 0));
-                            rec.tasks = Array(10).fill(val);
-                            rec.asas = val;
-                        }
-
-                        if (row.Catatan !== undefined) {
-                            rec.note = String(row.Catatan || '').trim();
-                        }
-
-                        st.grades[sem][matchedSubj] = rec;
-                        updatedCount++;
-                    });
-
-                    saveDatabase();
-                    renderTeacherGradesTable();
-                    showToast(`Berhasil mengimpor ${updatedCount} baris nilai dari Excel!`, 'success');
-                } catch (err) {
-                    showToast('Gagal membaca file Excel nilai!', 'error');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value = '';
-        }
-
-        function renderTeacherStudentsTable() {
-            const query = (document.getElementById('adminStudentSearchInput')?.value || '').trim().toLowerCase();
-            const filtered = appState.students.filter(s =>
-                s.name.toLowerCase().includes(query) || s.nis.toLowerCase().includes(query)
-            );
-
-            document.getElementById('adminStudentCountBadge').textContent = appState.students.length;
-            const tbody = document.getElementById('teacherStudentsTableBody');
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-400">Tidak ada data siswa yang cocok.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = filtered.map((st, idx) => `
-                <tr class="hover:bg-slate-50">
-                    <td class="py-2.5 px-3 font-bold text-slate-500">${idx + 1}</td>
-                    <td class="py-2.5 px-3">
-                        <div class="flex items-center gap-2">
-                            <img src="${st.photo}" alt="${st.name}" class="w-10 h-10 rounded-xl object-cover border border-slate-300 bg-white shrink-0">
-                            <label class="px-2 py-1 rounded-lg bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 text-[10px] font-bold cursor-pointer">
-                                Ganti Foto
-                                <input type="file" accept="image/*" onchange="handleSingleAdminPhotoUpload(event, '${st.nis}')" class="hidden">
-                            </label>
-                        </div>
-                    </td>
-                    <td class="py-2.5 px-3 font-mono font-bold text-mimblue-700">${st.nis}</td>
-                    <td class="py-2.5 px-3 font-bold text-slate-900">${st.name}</td>
-                    <td class="py-2.5 px-3 text-slate-600">${st.gender === 'Perempuan' ? 'P' : 'L'}</td>
-                    <td class="py-2.5 px-3 text-slate-600">
-                        <p class="font-semibold text-slate-800">${st.parentName || '-'}</p>
-                        <p class="text-[11px] text-slate-400">${st.phone || '-'}</p>
-                    </td>
-                    <td class="py-2.5 px-3">
-                        <div class="flex items-center justify-center gap-1.5">
-                            <button type="button" onclick="openEditStudentModal('${st.nis}')" class="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-[11px] font-bold cursor-pointer">Edit</button>
-                            <button type="button" onclick="deleteStudentByNis('${st.nis}')" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-800 text-[11px] font-bold cursor-pointer">Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function compressStudentImageFile(file, maxSize = 260, quality = 0.72) {
-            return compressBlobOrFile(file, maxSize, quality);
-        }
-
-        async function handleSingleAdminPhotoUpload(event, nis) {
-            const file = event.target.files[0];
-            if (!file) return;
-            try {
-                const compressed = await compressStudentImageFile(file, 260, 0.72);
-                const st = appState.students.find(s => s.nis === nis);
-                if (st) {
-                    st.photo = compressed;
-                    saveDatabase();
-                    renderTeacherStudentsTable();
-                    showToast(`Pas foto ${st.name} berhasil diperbarui!`, 'success');
-                }
-            } catch (e) {
-                showToast('Gagal mengunggah foto siswa.', 'error');
-            }
-            event.target.value = '';
-        }
-
-        let modalTempStudentPhoto = null;
-
-        function handleModalStudentPhotoChange(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            compressStudentImageFile(file, 260, 0.72).then(dataUrl => {
-                modalTempStudentPhoto = dataUrl;
-                document.getElementById('modalStudentPhotoPreview').src = dataUrl;
-            }).catch(() => showToast('Gagal memproses foto.', 'error'));
-        }
-
-        function openAddStudentModal() {
-            const nextNo = appState.students.length + 1;
-            modalTempStudentPhoto = null;
-            document.getElementById('studentModalTitle').textContent = 'Tambah Siswa Manual Baru';
-            document.getElementById('modalStudentOriginalNis').value = '';
-            document.getElementById('modalStudentPhotoPreview').src = generateDefaultAvatar('Siswa', 'Laki-laki');
-            document.getElementById('modalStudentNis').value = `kelas3_${nextNo}`;
-            document.getElementById('modalStudentName').value = '';
-            document.getElementById('modalStudentGender').value = 'Laki-laki';
-            document.getElementById('modalStudentBirthPlace').value = 'Purbalingga';
-            document.getElementById('modalStudentBirthDate').value = '';
-            document.getElementById('modalStudentParent').value = '';
-            document.getElementById('modalStudentPhone').value = '';
-            document.getElementById('modalStudentAddress').value = 'Desa Slinga, Kec. Kaligondang, Kab. Purbalingga';
-
-            const modal = document.getElementById('studentFormModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function openEditStudentModal(nis) {
-            const st = appState.students.find(s => s.nis === nis);
-            if (!st) return;
-
-            modalTempStudentPhoto = null;
-            document.getElementById('studentModalTitle').textContent = `Edit Data Siswa (${st.nis})`;
-            document.getElementById('modalStudentOriginalNis').value = st.nis;
-            document.getElementById('modalStudentPhotoPreview').src = st.photo;
-            document.getElementById('modalStudentNis').value = st.nis;
-            document.getElementById('modalStudentName').value = st.name;
-            document.getElementById('modalStudentGender').value = st.gender || 'Laki-laki';
-            document.getElementById('modalStudentBirthPlace').value = st.birthPlace || '';
-            document.getElementById('modalStudentBirthDate').value = st.birthDate || '';
-            document.getElementById('modalStudentParent').value = st.parentName || '';
-            document.getElementById('modalStudentPhone').value = st.phone || '';
-            document.getElementById('modalStudentAddress').value = st.address || '';
-
-            const modal = document.getElementById('studentFormModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeStudentFormModal() {
-            const modal = document.getElementById('studentFormModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        function createBlankGradesObject() {
-            const grades = { Ganjil: {}, Genap: {} };
-            SUBJECTS_LIST.forEach(subj => {
-                grades.Ganjil[subj] = { tasks: Array(10).fill(80), asas: 80, note: '' };
-                grades.Genap[subj] = { tasks: Array(10).fill(80), asas: 80, note: '' };
-            });
-            return grades;
-        }
-
-        function saveStudentModalForm(e) {
-            e.preventDefault();
-            const origNis = document.getElementById('modalStudentOriginalNis').value;
-            const nis = document.getElementById('modalStudentNis').value.trim();
-            const name = document.getElementById('modalStudentName').value.trim();
-            const gender = document.getElementById('modalStudentGender').value;
-            const birthPlace = document.getElementById('modalStudentBirthPlace').value.trim();
-            const birthDate = document.getElementById('modalStudentBirthDate').value;
-            const parentName = document.getElementById('modalStudentParent').value.trim();
-            const phone = document.getElementById('modalStudentPhone').value.trim();
-            const address = document.getElementById('modalStudentAddress').value.trim();
-
-            if (!nis || !name) return;
-
-            if (origNis) {
-                const st = appState.students.find(s => s.nis === origNis);
-                if (st) {
-                    st.nis = nis;
-                    st.name = name;
-                    st.gender = gender;
-                    st.birthPlace = birthPlace;
-                    st.birthDate = birthDate;
-                    st.parentName = parentName;
-                    st.phone = phone;
-                    st.address = address;
-                    if (modalTempStudentPhoto) st.photo = modalTempStudentPhoto;
-                }
-                showToast(`Data siswa ${name} berhasil diperbarui!`, 'success');
-            } else {
-                if (appState.students.some(s => s.nis.toLowerCase() === nis.toLowerCase())) {
-                    showToast(`NIS "${nis}" sudah digunakan siswa lain!`, 'error');
-                    return;
-                }
-                appState.students.push({
-                    no: appState.students.length + 1,
-                    nis,
-                    nisn: '',
-                    name,
-                    gender,
-                    birthPlace,
-                    birthDate,
-                    parentName,
-                    phone,
-                    address,
-                    photo: modalTempStudentPhoto || generateDefaultAvatar(name, gender),
-                    attendance: {},
-                    grades: createBlankGradesObject()
-                });
-                showToast(`Siswa baru ${name} (${nis}) berhasil ditambahkan!`, 'success');
-            }
-
-            reindexStudentNumbers();
-            saveDatabase();
-            closeStudentFormModal();
-            renderTeacherStudentsTable();
-        }
-
-        function deleteStudentByNis(nis) {
-            const st = appState.students.find(s => s.nis === nis);
-            if (!st) return;
-            openCustomConfirm('Hapus Siswa?', `Hapus data siswa "${st.name}" (${st.nis}) dari kelas?`, () => {
-                appState.students = appState.students.filter(s => s.nis !== nis);
-                reindexStudentNumbers();
-                saveDatabase();
-                renderTeacherStudentsTable();
-                showToast(`Siswa ${st.name} telah dihapus.`, 'info');
-            });
-        }
-
-        function confirmClearAllStudents() {
-            openCustomConfirm(
-                'Kosongkan Seluruh Daftar Siswa?',
-                'Tindakan ini akan menghapus seluruh daftar siswa saat ini agar Anda dapat mengimpor daftar siswa tahun ajaran baru.',
-                () => {
-                    appState.students = [];
-                    saveDatabase();
-                    renderTeacherStudentsTable();
-                    showToast('Daftar siswa berhasil dikosongkan.', 'info');
-                }
-            );
-        }
-
-        function reindexStudentNumbers() {
-            appState.students.forEach((s, idx) => { s.no = idx + 1; });
-        }
-
-        function downloadStudentsTemplateXls() {
-            if (typeof XLSX === 'undefined') return;
-            const sampleRows = [
-                {
-                    NIS: 'kelas3_1',
-                    Nama_Lengkap: 'Abdul Aziz',
-                    Jenis_Kelamin: 'Laki-laki',
-                    Tempat_Lahir: 'Purbalingga',
-                    Tanggal_Lahir: '2017-05-12',
-                    Alamat: 'Desa Slinga, Kaligondang, Purbalingga',
-                    Nama_Ortu: 'Bapak Ahmad',
-                    No_HP: '081327001101'
-                },
-                {
-                    NIS: 'kelas3_2',
-                    Nama_Lengkap: 'Aisyah Putri Ramadhani',
-                    Jenis_Kelamin: 'Perempuan',
-                    Tempat_Lahir: 'Purbalingga',
-                    Tanggal_Lahir: '2017-08-20',
-                    Alamat: 'Desa Slinga, Kaligondang, Purbalingga',
-                    Nama_Ortu: 'Ibu Fatimah',
-                    No_HP: '081327001102'
-                }
-            ];
-
-            const ws = XLSX.utils.json_to_sheet(sampleRows);
-            ws['!cols'] = [{ wch: 14 }, { wch: 30 }, { wch: 16 }, { wch: 18 }, { wch: 16 }, { wch: 34 }, { wch: 24 }, { wch: 16 }];
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Template_Siswa');
-            XLSX.writeFile(wb, 'Template_Data_Siswa_MIM1Slinga.xlsx');
-            showToast('Template Excel Data Siswa berhasil diunduh!', 'success');
-        }
-
-        function exportCurrentStudentsXls() {
-            if (typeof XLSX === 'undefined') return;
-            const rows = appState.students.map(st => ({
-                NIS: st.nis,
-                Nama_Lengkap: st.name,
-                Jenis_Kelamin: st.gender,
-                Tempat_Lahir: st.birthPlace || '',
-                Tanggal_Lahir: st.birthDate || '',
-                Alamat: st.address || '',
-                Nama_Ortu: st.parentName || '',
-                No_HP: st.phone || ''
-            }));
-            const ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [{ wch: 14 }, { wch: 30 }, { wch: 16 }, { wch: 18 }, { wch: 16 }, { wch: 34 }, { wch: 24 }, { wch: 16 }];
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Data_Siswa_Kelas3');
-            XLSX.writeFile(wb, 'Data_Siswa_Kelas3_MIM1Slinga.xlsx');
-            showToast('Daftar siswa berhasil diekspor ke Excel!', 'success');
-        }
-
-        function handleImportStudentsXls(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const mode = document.getElementById('importStudentModeSelect').value;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const wb = XLSX.read(data, { type: 'array' });
-                    const sheet = wb.Sheets[wb.SheetNames[0]];
-                    const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-
-                    if (rows.length === 0) {
-                        showToast('File Excel kosong!', 'error');
-                        return;
-                    }
-
-                    if (mode === 'replace') {
-                        appState.students = [];
-                    }
-
-                    let importedCount = 0;
-                    rows.forEach((row, idx) => {
-                        const rawName = String(row.Nama_Lengkap || row.Nama || row['Nama Siswa'] || '').trim();
-                        if (!rawName) return;
-
-                        const rawNis = String(row.NIS || row.nis || `kelas3_${appState.students.length + idx + 1}`).trim();
-                        const rawGender = String(row.Jenis_Kelamin || row.JK || 'Laki-laki').trim();
-                        const gender = rawGender.toLowerCase().startsWith('p') ? 'Perempuan' : 'Laki-laki';
-                        const birthPlace = String(row.Tempat_Lahir || 'Purbalingga').trim();
-                        const birthDate = String(row.Tanggal_Lahir || '').trim();
-                        const address = String(row.Alamat || 'Desa Slinga, Kaligondang, Purbalingga').trim();
-                        const parentName = String(row.Nama_Ortu || '').trim();
-                        const phone = String(row.No_HP || '').trim();
-
-                        const existing = appState.students.find(s => s.nis.toLowerCase() === rawNis.toLowerCase());
-                        if (existing) {
-                            existing.name = rawName;
-                            existing.gender = gender;
-                            existing.birthPlace = birthPlace || existing.birthPlace;
-                            existing.birthDate = birthDate || existing.birthDate;
-                            existing.address = address || existing.address;
-                            existing.parentName = parentName || existing.parentName;
-                            existing.phone = phone || existing.phone;
-                        } else {
-                            appState.students.push({
-                                no: appState.students.length + 1,
-                                nis: rawNis,
-                                nisn: '',
-                                name: rawName,
-                                gender,
-                                birthPlace,
-                                birthDate,
-                                parentName,
-                                phone,
-                                address,
-                                photo: generateDefaultAvatar(rawName, gender),
-                                attendance: {},
-                                grades: createBlankGradesObject()
-                            });
-                        }
-                        importedCount++;
-                    });
-
-                    reindexStudentNumbers();
-                    saveDatabase();
-                    renderTeacherStudentsTable();
-                    showToast(`Berhasil mengimpor ${importedCount} data siswa dari Excel!`, 'success');
-                } catch (err) {
-                    showToast('Gagal membaca file Excel data siswa!', 'error');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value = '';
-        }
-
-        async function exportAllStudentPhotosZip() {
-            if (typeof JSZip === 'undefined') {
-                showToast('Library ZIP belum siap.', 'error');
-                return;
-            }
-            if (appState.students.length === 0) {
-                showToast('Belum ada data siswa untuk diekspor fotonya.', 'error');
-                return;
-            }
-
-            showToast('Mengemas seluruh foto siswa ke arsip ZIP...', 'info');
-            const zip = new JSZip();
-            const folder = zip.folder('Foto_Siswa_Kelas3_MIM1Slinga');
-
-            for (const st of appState.students) {
-                try {
-                    const res = await fetch(st.photo);
-                    const blob = await res.blob();
-                    const ext = blob.type.includes('svg') ? 'svg' : 'jpg';
-                    const safeName = st.name.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
-                    folder.file(`${st.nis}_${safeName}.${ext}`, blob);
-                } catch (e) {}
-            }
-
-            folder.file('PANDUAN_IMPOR_FOTO.txt', 'Cara Impor Ulang Foto:\n1. Beri nama file foto diawali NIS siswa (misal: kelas3_1.jpg atau kelas3_1_Abdul_Aziz.jpg).\n2. Pilih banyak file gambar sekaligus atau unggah kembali file ZIP ini pada menu Impor Foto di Panel Wali Kelas.');
-
-            const content = await zip.generateAsync({ type: 'blob' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(content);
-            link.download = 'Foto_Siswa_Kelas3_MIM1Slinga.zip';
-            link.click();
-            URL.revokeObjectURL(link.href);
-            showToast('Arsip ZIP foto seluruh siswa berhasil diunduh!', 'success');
-        }
-
-        function compressBlobOrFile(blobOrFile, maxSize = 260, quality = 0.72) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const minSide = Math.min(img.width, img.height);
-                        const sx = (img.width - minSide) / 2;
-                        const sy = (img.height - minSide) / 2;
-                        canvas.width = maxSize;
-                        canvas.height = maxSize;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, maxSize, maxSize);
-                        resolve(canvas.toDataURL('image/jpeg', quality));
-                    };
-                    img.onerror = () => reject(new Error('Gagal memuat gambar'));
-                    img.src = e.target.result;
-                };
-                reader.onerror = () => reject(new Error('Gagal membaca file'));
-                reader.readAsDataURL(blobOrFile);
-            });
-        }
-
-        function matchFilenameToStudent(filename) {
-            const cleanName = filename.split('/').pop();
-            const baseName = cleanName.replace(/\.[^/.]+$/, '').toLowerCase().trim();
-            const normalized = baseName.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
-
-            let found = appState.students.find(s => {
-                const nisLow = s.nis.toLowerCase();
-                return baseName === nisLow || baseName.startsWith(nisLow + '_') || baseName.startsWith(nisLow + '-') || baseName.startsWith(nisLow + ' ');
-            });
-            if (found) return found;
-
-            found = appState.students.find(s => s.name.toLowerCase() === normalized);
-            if (found) return found;
-
-            if (normalized.length >= 4) {
-                found = appState.students.find(s => {
-                    const stLower = s.name.toLowerCase();
-                    return stLower.includes(normalized) || normalized.includes(stLower);
-                });
-            }
-            return found || null;
-        }
-
-        async function handleBulkStudentPhotosSelect(event) {
-            const files = Array.from(event.target.files || []);
-            if (files.length === 0) return;
-
-            showToast(`Memproses ${files.length} file unggahan...`, 'info');
-            const results = [];
-
-            for (const file of files) {
-                if (file.name.toLowerCase().endsWith('.zip') && typeof JSZip !== 'undefined') {
-                    try {
-                        const zip = await JSZip.loadAsync(file);
-                        const zipEntries = Object.values(zip.files).filter(entry =>
-                            !entry.dir && /\.(jpe?g|png|webp)$/i.test(entry.name) && !entry.name.includes('__MACOSX')
-                        );
-                        for (const entry of zipEntries) {
-                            try {
-                                const blob = await entry.async('blob');
-                                const dataUrl = await compressBlobOrFile(blob, 260, 0.72);
-                                const shortName = entry.name.split('/').pop();
-                                const matched = matchFilenameToStudent(shortName);
-                                results.push({
-                                    fileName: shortName,
-                                    dataUrl,
-                                    matchedNis: matched ? matched.nis : ''
-                                });
-                            } catch (e) {}
-                        }
-                    } catch (e) {
-                        showToast('Gagal mengekstrak file ZIP foto.', 'error');
-                    }
-                } else if (file.type.startsWith('image/')) {
-                    try {
-                        const dataUrl = await compressStudentImageFile(file, 260, 0.72);
-                        const matched = matchFilenameToStudent(file.name);
-                        results.push({
-                            fileName: file.name,
-                            dataUrl,
-                            matchedNis: matched ? matched.nis : ''
-                        });
-                    } catch (e) {}
-                }
-            }
-
-            appState.pendingBulkPhotos = results;
-            renderBulkPhotoPreview();
-            event.target.value = '';
-        }
-
-        function renderBulkPhotoPreview() {
-            const section = document.getElementById('bulkPhotoPreviewSection');
-            const grid = document.getElementById('bulkPhotoPreviewGrid');
-            const summary = document.getElementById('bulkPhotoSummaryText');
-
-            if (appState.pendingBulkPhotos.length === 0) {
-                section.classList.add('hidden');
-                return;
-            }
-            section.classList.remove('hidden');
-
-            const matchedCount = appState.pendingBulkPhotos.filter(i => i.matchedNis).length;
-            summary.textContent = `${matchedCount} dari ${appState.pendingBulkPhotos.length} foto berhasil dicocokkan otomatis.`;
-
-            grid.innerHTML = appState.pendingBulkPhotos.map((item, idx) => {
-                const options = `<option value="">-- Pilih Siswa --</option>` +
-                    appState.students.map(s => `<option value="${s.nis}" ${s.nis === item.matchedNis ? 'selected' : ''}>${s.nis} - ${s.name}</option>`).join('');
-                return `
-                    <div class="p-2.5 rounded-xl bg-white border ${item.matchedNis ? 'border-emerald-300' : 'border-amber-300'} flex items-center gap-2.5">
-                        <img src="${item.dataUrl}" alt="${item.fileName}" class="w-11 h-11 rounded-lg object-cover border border-slate-200 shrink-0">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-[11px] font-bold text-slate-700 truncate">${item.fileName}</p>
-                            <select onchange="appState.pendingBulkPhotos[${idx}].matchedNis = this.value" class="mt-1 w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-mimblue-800">
-                                ${options}
-                            </select>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function cancelBulkPhotoPreview() {
-            appState.pendingBulkPhotos = [];
-            document.getElementById('bulkPhotoPreviewSection').classList.add('hidden');
-        }
-
-        function applyBulkStudentPhotos() {
-            let count = 0;
-            appState.pendingBulkPhotos.forEach(item => {
-                if (!item.matchedNis) return;
-                const st = appState.students.find(s => s.nis === item.matchedNis);
-                if (st) {
-                    st.photo = item.dataUrl;
-                    count++;
-                }
-            });
-
-            saveDatabase();
-            cancelBulkPhotoPreview();
-            renderTeacherStudentsTable();
-            showToast(`Berhasil menerapkan ${count} pas foto siswa!`, 'success');
-        }
-
-        function renderAdminMonthlyRecapTable() {
-            const monthVal = document.getElementById('adminMonthlyRecapPicker')?.value || new Date().toISOString().slice(0, 7);
-            const [year, month] = monthVal.split('-');
-            const monthNames = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-            const monthNameUpper = monthNames[parseInt(month, 10) - 1] || 'JANUARI';
-            const daysInMonth = new Date(parseInt(year, 10), parseInt(month, 10), 0).getDate();
-
-            document.getElementById('adminMonthlyRecapSubtitle').textContent = `TAHUN PELAJARAN ${appState.settings.academicYear} • BULAN : ${monthNameUpper} ${year}`;
-
-            let dayHeadersHtml = '';
-            for (let d = 1; d <= 31; d++) {
-                const isInvalidDay = d > daysInMonth;
-                dayHeadersHtml += `<th class="py-1.5 px-1 text-center border border-blue-500/50 min-w-[20px] ${isInvalidDay ? 'bg-mimblue-900/60 text-blue-300' : ''}">${d}</th>`;
-            }
-
-            const thead = document.getElementById('adminMonthlyRecapThead');
-            if (thead) {
-                thead.innerHTML = `
-                    <tr class="bg-mimblue-700 text-white">
-                        <th rowspan="2" class="py-2 px-2 border border-blue-500/50 text-center">No</th>
-                        <th rowspan="2" class="py-2 px-2 border border-blue-500/50">NIS</th>
-                        <th rowspan="2" class="py-2 px-2 border border-blue-500/50 min-w-[160px]">Nama Siswa</th>
-                        <th rowspan="2" class="py-2 px-1.5 border border-blue-500/50 text-center">L/P</th>
-                        <th colspan="31" class="py-1.5 px-2 border border-blue-500/50 text-center uppercase tracking-wider">BULAN : ${monthNameUpper}</th>
-                        <th colspan="4" class="py-1.5 px-2 border border-blue-500/50 text-center uppercase">REKAP</th>
-                    </tr>
-                    <tr class="bg-mimblue-800 text-white text-[10px]">
-                        ${dayHeadersHtml}
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-emerald-700">H</th>
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-amber-600">S</th>
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-sky-700">I</th>
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-rose-700">A</th>
-                    </tr>
-                `;
-            }
-
-            let maleCount = 0;
-            let femaleCount = 0;
-
-            const tbody = document.getElementById('adminMonthlyRecapTableBody');
-            tbody.innerHTML = appState.students.map((st, idx) => {
-                const isFemale = st.gender === 'Perempuan';
-                if (isFemale) femaleCount++;
-                else maleCount++;
-
-                let h = 0, s = 0, i = 0, a = 0;
-                let dayCellsHtml = '';
-
-                for (let d = 1; d <= 31; d++) {
-                    if (d > daysInMonth) {
-                        dayCellsHtml += `<td class="py-1.5 px-1 text-center border border-slate-300 bg-slate-200/70"></td>`;
-                        continue;
-                    }
-                    const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
-                    const rec = st.attendance?.[dateKey];
-                    const code = rec?.status || '';
-
-                    if (code === 'H') h++;
-                    else if (code === 'S') s++;
-                    else if (code === 'I') i++;
-                    else if (code === 'A') a++;
-
-                    const codeColor = code === 'H' ? 'text-emerald-700 font-bold'
-                        : code === 'S' ? 'text-amber-700 font-extrabold bg-amber-50'
-                        : code === 'I' ? 'text-blue-700 font-extrabold bg-blue-50'
-                        : code === 'A' ? 'text-rose-700 font-extrabold bg-rose-50'
-                        : 'text-slate-300';
-
-                    dayCellsHtml += `<td class="py-1.5 px-1 text-center border border-slate-300 lowercase ${codeColor}">${code ? code.toLowerCase() : ''}</td>`;
-                }
-
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-1.5 px-2 border border-slate-300 text-center font-bold text-slate-600">${idx + 1}</td>
-                        <td class="py-1.5 px-2 border border-slate-300 font-mono font-bold text-mimblue-700 whitespace-nowrap">${st.nis}</td>
-                        <td class="py-1.5 px-2 border border-slate-300 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-300 text-center font-bold">${isFemale ? 'P' : 'L'}</td>
-                        ${dayCellsHtml}
-                        <td class="py-1.5 px-1.5 border border-slate-300 text-center font-extrabold text-emerald-700 bg-emerald-50/50">${h}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-300 text-center font-extrabold text-amber-700 bg-amber-50/50">${s}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-300 text-center font-extrabold text-blue-700 bg-blue-50/50">${i}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-300 text-center font-extrabold text-rose-700 bg-rose-50/50">${a}</td>
-                    </tr>
-                `;
-            }).join('');
-
-            const totalEl = document.getElementById('recapSummaryTotal');
-            const maleEl = document.getElementById('recapSummaryMale');
-            const femaleEl = document.getElementById('recapSummaryFemale');
-            const signTeacherEl = document.getElementById('recapSignTeacherName');
-            if (totalEl) totalEl.textContent = appState.students.length;
-            if (maleEl) maleEl.textContent = maleCount;
-            if (femaleEl) femaleEl.textContent = femaleCount;
-            if (signTeacherEl) signTeacherEl.textContent = appState.settings.teacherName;
-        }
-
-        function renderAll26QrCards() {
-            const grid = document.getElementById('all26QrCardsGrid');
-            grid.innerHTML = appState.students.map(st => `
-                <div class="p-4 rounded-2xl border-2 border-mimblue-700 bg-white flex flex-col items-center text-center space-y-2 shadow-xs">
-                    <div class="w-full flex items-center justify-between text-[10px] font-extrabold text-mimblue-800 border-b border-slate-100 pb-1.5">
-                        <span>MIM 1 SLINGA</span>
-                        <span>KELAS 3</span>
-                    </div>
-                    <img src="${st.photo}" alt="${st.name}" class="w-12 h-12 rounded-full object-cover border border-mimblue-700">
-                    <h4 class="font-extrabold text-xs text-slate-900 line-clamp-1">${st.name}</h4>
-                    <div id="adminQrBox_${st.nis}" class="p-1.5 bg-white rounded-xl border border-slate-200"></div>
-                    <p class="text-[11px] font-mono font-bold text-mimblue-700">${st.nis}</p>
-                </div>
-            `).join('');
-
-            appState.students.forEach(st => {
-                const box = document.getElementById(`adminQrBox_${st.nis}`);
-                if (box) {
-                    new QRCode(box, {
-                        text: `MIM1SLINGA|${st.nis}`,
-                        width: 96,
-                        height: 96,
-                        colorDark: '#07399C',
-                        colorLight: '#ffffff'
-                    });
-                }
-            });
-        }
-
-        function handleAddMaterial(e) {
-            e.preventDefault();
-            const subject = document.getElementById('newMatSubject').value;
-            const title = document.getElementById('newMatTitle').value.trim();
-            const content = document.getElementById('newMatContent').value.trim();
-            if (!title || !content) return;
-
-            appState.materials.unshift({
-                id: 'mat_' + Date.now(),
-                subject,
-                title,
-                content,
-                createdAt: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-            });
-
-            saveDatabase();
-            document.getElementById('newMatTitle').value = '';
-            document.getElementById('newMatContent').value = '';
-            renderTeacherMaterialsGrid();
-            showToast('Materi pelajaran berhasil dipublikasikan ke semua siswa!', 'success');
-        }
-
-        function renderTeacherMaterialsGrid() {
-            const grid = document.getElementById('teacherMaterialsGrid');
-            grid.innerHTML = appState.materials.map(mat => `
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3">
-                    <div>
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[10px] font-extrabold">${mat.subject}</span>
-                            <button type="button" onclick="deleteMaterialById('${mat.id}')" class="text-rose-600 hover:text-rose-800 text-xs font-bold cursor-pointer">Hapus</button>
-                        </div>
-                        <h5 class="font-extrabold text-sm text-slate-900 mt-2">${mat.title}</h5>
-                        <p class="text-xs text-slate-500 mt-1 line-clamp-2">${mat.content}</p>
-                    </div>
-                    <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="w-full py-2 rounded-xl bg-white hover:bg-mimblue-50 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">
-                        Pratinjau &amp; Unduh
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function deleteMaterialById(id) {
-            appState.materials = appState.materials.filter(m => m.id !== id);
-            saveDatabase();
-            renderTeacherMaterialsGrid();
-            showToast('Materi telah dihapus.', 'info');
-        }
-
-        function openMaterialPreviewModal(matId) {
-            const mat = appState.materials.find(m => m.id === matId);
-            if (!mat) return;
-            appState.activePreviewMaterialId = mat.id;
-
-            document.getElementById('matModalSubjectBadge').textContent = mat.subject;
-            document.getElementById('matModalTitle').textContent = mat.title;
-            document.getElementById('matModalMeta').textContent = `Disusun oleh ${appState.settings.teacherName} • ${mat.createdAt}`;
-            document.getElementById('matModalBody').textContent = mat.content;
-
-            updateGlobalBrandingUI();
-            const modal = document.getElementById('materialPreviewModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            lucide.createIcons();
-        }
-
-        function closeMaterialModal() {
-            const modal = document.getElementById('materialPreviewModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        function downloadActiveMaterialPDF() {
-            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            const filename = mat ? `Materi_${mat.subject.replace(/\s+/g, '_')}` : 'Materi_MIM1Slinga';
-            exportElementToPDF('materialPrintSheet', filename);
-        }
-
-        function downloadActiveMaterialPNG() {
-            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            const filename = mat ? `Materi_${mat.subject.replace(/\s+/g, '_')}` : 'Materi_MIM1Slinga';
-            exportElementToPNG('materialPrintSheet', filename);
-        }
-
-        function downloadActiveMaterialDOCX() {
-            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            if (!mat) return;
-
-            const htmlDoc = `
-                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head><meta charset='utf-8'><title>${mat.title}</title></head>
-                <body style="font-family: Arial, sans-serif; line-height: 1.6;">
-                    <h2 style="text-align:center; color:#07399C; margin-bottom:2px;">MADRASAH IBTIDAIYAH MUHAMMADIYAH 1 SLINGA</h2>
-                    <p style="text-align:center; font-size:12px; color:#555; margin-top:0;">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
-                    <hr/>
-                    <p><strong>Mata Pelajaran:</strong> ${mat.subject}</p>
-                    <h3>${mat.title}</h3>
-                    <p style="white-space:pre-line;">${mat.content}</p>
-                    <br/>
-                    <p style="font-size:12px; color:#555;">Wali Kelas 3: ${appState.settings.teacherName}</p>
-                </body>
-                </html>
-            `;
-            const blob = new Blob(['\ufeff', htmlDoc], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `Materi_${mat.subject.replace(/\s+/g, '_')}_MIM1Slinga.doc`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            showToast('File dokumen Word (.doc) berhasil diunduh!', 'success');
-        }
-
-        function renderTeacherSettingsForm() {
-            document.getElementById('settingTeacherName').value = appState.settings.teacherName;
-            document.getElementById('settingAcademicYear').value = appState.settings.academicYear;
-            document.getElementById('settingAdminPin').value = appState.settings.adminPin;
-            updateGlobalBrandingUI();
-        }
-
-        function handleMadrasahLogoUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 240;
-                    canvas.height = 240;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, 240, 240);
-                    appState.settings.customLogoDataUrl = canvas.toDataURL('image/png');
-                    saveDatabase();
-                    showToast('Logo madrasah berhasil diperbarui di seluruh aplikasi!', 'success');
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-            event.target.value = '';
-        }
-
-        function resetMadrasahLogoDefault() {
-            appState.settings.customLogoDataUrl = '';
-            saveDatabase();
-            showToast('Logo madrasah dikembalikan ke logo bawaan MIM 1 Slinga.', 'info');
-        }
-
-        function saveTeacherClassSettings(e) {
-            e.preventDefault();
-            appState.settings.teacherName = document.getElementById('settingTeacherName').value.trim();
-            appState.settings.academicYear = document.getElementById('settingAcademicYear').value.trim();
-            appState.settings.adminPin = document.getElementById('settingAdminPin').value.trim();
-            saveDatabase();
-            showToast('Pengaturan kelas & PIN berhasil disimpan!', 'success');
-        }
-
-        async function exportElementToPNG(elementId, filePrefix) {
-            const el = document.getElementById(elementId);
-            if (!el) return;
-            showToast('Menyiapkan gambar PNG...', 'info');
-            try {
-                const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-                const link = document.createElement('a');
-                link.download = `${filePrefix}_MIM1Slinga.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                showToast('Berhasil mengunduh file PNG!', 'success');
-            } catch (e) {
-                showToast('Gagal mengekspor PNG.', 'error');
-            }
-        }
-
-        async function exportElementToPDF(elementId, filePrefix) {
-            const el = document.getElementById(elementId);
-            if (!el || typeof window.jspdf === 'undefined') return;
-            showToast('Menyiapkan dokumen PDF...', 'info');
-            try {
-                const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-                const imgData = canvas.toDataURL('image/png');
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('l', 'mm', 'a4');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                pdf.addImage(imgData, 'PNG', 0, 5, pdfWidth, Math.min(pdfHeight, 200));
-                pdf.save(`${filePrefix}_MIM1Slinga.pdf`);
-                showToast('Berhasil mengunduh dokumen PDF!', 'success');
-            } catch (e) {
-                showToast('Gagal mengekspor PDF.', 'error');
-            }
-        }
-
-        Object.assign(window, {
-            appState,
-            switchLoginMode,
-            startPublicQrScanner,
-            stopPublicQrScanner,
-            switchPublicCameraFacing,
-            handlePublicQrImageUpload,
-            handlePublicManualBarcodeSubmit,
-            renderPublicTodayScanList,
-            handleStudentLogin,
-            handleTeacherLogin,
-            logout,
-            switchStudentTab,
-            toggleStudentBioEdit,
-            handleStudentSelfPhotoUpload,
-            saveStudentBioEdit,
-            renderStudentAttendanceReport,
-            renderStudentGrades,
-            renderStudentMaterials,
-            switchTeacherTab,
-            startAdminQrScanner,
-            stopAdminQrScanner,
-            handleAdminManualNisScan,
-            renderTeacherAttendanceTable,
-            setStudentAttendance,
-            setStudentAttendanceNote,
-            markAllPresentForDate,
-            downloadAttendanceTemplateXls,
-            exportMonthlyAttendanceXls,
-            handleImportAttendanceXls,
-            renderTeacherGradesTable,
-            updateAssignmentTopicName,
-            updateStudentTaskScore,
-            updateStudentAsasOrNote,
-            downloadGradesTemplateXls,
-            exportAllSubjectsSummaryXls,
-            handleImportGradesXls,
-            renderTeacherStudentsTable,
-            handleSingleAdminPhotoUpload,
-            handleModalStudentPhotoChange,
-            openAddStudentModal,
-            openEditStudentModal,
-            closeStudentFormModal,
-            saveStudentModalForm,
-            deleteStudentByNis,
-            confirmClearAllStudents,
-            downloadStudentsTemplateXls,
-            exportCurrentStudentsXls,
-            handleImportStudentsXls,
-            exportAllStudentPhotosZip,
-            handleBulkStudentPhotosSelect,
-            cancelBulkPhotoPreview,
-            applyBulkStudentPhotos,
-            renderAdminMonthlyRecapTable,
-            handleAddMaterial,
-            deleteMaterialById,
-            openMaterialPreviewModal,
-            closeMaterialModal,
-            downloadActiveMaterialPDF,
-            downloadActiveMaterialPNG,
-            downloadActiveMaterialDOCX,
-            handleMadrasahLogoUpload,
-            resetMadrasahLogoDefault,
-            saveTeacherClassSettings,
-            exportElementToPNG,
-            exportElementToPDF,
-            closeCustomConfirm
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadDatabase();
-            updateGlobalBrandingUI();
-            const todayIso = new Date().toISOString().split('T')[0];
-            const pubDate = document.getElementById('publicScanDate');
-            if (pubDate) pubDate.value = todayIso;
-            lucide.createIcons();
-        });
-    </script>
-</body>
-</html>
+            st.phone = document.getElementById('bioEditPhone
