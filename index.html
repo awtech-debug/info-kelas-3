@@ -1645,7 +1645,6 @@
                     getDoc(doc(cloudDb, 'artifacts', appId, 'public', 'data', 'kelas3_students', 'kelas3_1'))
                 ]);
 
-                // Hanya inisialisasi seed bila cloud benar-benar kosong (belum ada data admin/siswa)
                 if (!metaSnap.exists() && !studentsSnap.exists()) {
                     await pushAllStateToCloud();
                 }
@@ -1719,7 +1718,6 @@
                     updatedAt: Date.now()
                 }, { merge: true });
 
-                // Cegah menimpa daftar siswa cloud jika snapshot awal belum diterima dan daftar lokal kosong
                 if (appState.students.length > 0 || hasReceivedCloudStudents) {
                     const writePromises = appState.students.map(st => {
                         const stRef = doc(cloudDb, 'artifacts', appId, 'public', 'data', 'kelas3_students', st.nis);
@@ -2579,17 +2577,28 @@
             ) || null;
         }
 
+        function getActiveAttendanceYearMonth() {
+            const recapVal = document.getElementById('adminMonthlyRecapPicker')?.value || '';
+            if (/^\d{4}-\d{2}$/.test(recapVal)) {
+                return recapVal;
+            }
+            const dateVal = document.getElementById('teacherAttendanceDate')?.value || '';
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateVal)) {
+                return dateVal.slice(0, 7);
+            }
+            return new Date().toISOString().slice(0, 7);
+        }
+
         function downloadAttendanceTemplateXls() {
             if (typeof XLSX === 'undefined') {
                 showToast('Library Excel belum siap, coba beberapa detik lagi.', 'error');
                 return;
             }
-            const dateStr = document.getElementById('teacherAttendanceDate')?.value || new Date().toISOString().split('T')[0];
-            const [yearPart, monthPart] = dateStr.split('-');
+            const monthPrefix = getActiveAttendanceYearMonth();
+            const [yearPart, monthPart] = monthPrefix.split('-');
             const yearNum = parseInt(yearPart, 10);
             const monthNum = parseInt(monthPart, 10);
             const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
-            const monthPrefix = `${yearPart}-${monthPart}`;
             const labelBulan = `${getMonthNameIndonesian(monthPart)} ${yearPart}`;
 
             const aoa = [];
@@ -2656,16 +2665,25 @@
                     const sheet = wb.Sheets[wb.SheetNames[0]];
                     const aoa = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
 
-                    const defaultDate = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
-                    const [defaultYear, defaultMonth, defaultDay] = defaultDate.split('-');
+                    const activeYm = getActiveAttendanceYearMonth();
+                    const [defaultYear, defaultMonth] = activeYm.split('-');
+                    const defaultDay = (document.getElementById('teacherAttendanceDate')?.value || `${activeYm}-01`).split('-')[2] || '01';
                     let activeYear = defaultYear;
                     let activeMonth = defaultMonth;
 
-                    for (let r = 0; r < Math.min(4, aoa.length); r++) {
+                    // Deteksi bulan & tahun dari judul/header sheet maupun nama file
+                    const fileNameLower = String(file.name || '').toLowerCase();
+                    const fileYmMatch = fileNameLower.match(/(202\d|203\d)[-_](0[1-9]|1[0-2])/);
+                    if (fileYmMatch) {
+                        activeYear = fileYmMatch[1];
+                        activeMonth = fileYmMatch[2];
+                    }
+
+                    const monthNamesList = ['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember'];
+                    for (let r = 0; r < Math.min(6, aoa.length); r++) {
                         const joined = (aoa[r] || []).join(' ').toLowerCase();
                         const yearMatch = joined.match(/\b(202\d|203\d)\b/);
                         if (yearMatch) activeYear = yearMatch[1];
-                        const monthNamesList = ['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember'];
                         for (const mName of monthNamesList) {
                             if (joined.includes(mName)) {
                                 activeMonth = parseMonthNameToNumber(mName) || activeMonth;
@@ -2700,6 +2718,7 @@
                     }
 
                     let updatedCount = 0;
+                    const maxDaysInDetectedMonth = new Date(parseInt(activeYear, 10), parseInt(activeMonth, 10), 0).getDate();
 
                     if (headerRowIdx !== -1) {
                         for (let r = headerRowIdx + 1; r < aoa.length; r++) {
@@ -2708,8 +2727,10 @@
                             if (!rawNama) continue;
                             const st = findStudentByNameOrNis(rawNama);
                             if (!st) continue;
+                            if (!st.attendance) st.attendance = {};
 
                             Object.entries(dayColMap).forEach(([cIdxStr, dayNum]) => {
+                                if (dayNum > maxDaysInDetectedMonth) return;
                                 const cIdx = parseInt(cIdxStr, 10);
                                 const rawVal = String(row[cIdx] || '').trim().toUpperCase();
                                 if (!rawVal) return;
@@ -2731,8 +2752,9 @@
                         rows.forEach(row => {
                             const st = findStudentByNameOrNis(row.Nama || row.Nama_Siswa, row.NIS || row.nis);
                             if (!st) return;
+                            if (!st.attendance) st.attendance = {};
 
-                            let dateStr = defaultDate;
+                            let dateStr = `${activeYear}-${activeMonth}-${String(parseInt(defaultDay, 10) || 1).padStart(2, '0')}`;
                             const rawTanggal = String(row.Tanggal || row.Tanggal_YYYY_MM_DD || '').trim();
                             const rawBulan = String(row.Bulan || '').trim();
 
@@ -2740,8 +2762,8 @@
                                 dateStr = rawTanggal;
                             } else if (rawTanggal) {
                                 const dayNum = String(parseInt(rawTanggal, 10) || parseInt(defaultDay, 10)).padStart(2, '0');
-                                const monthNum = parseMonthNameToNumber(rawBulan) || defaultMonth;
-                                dateStr = `${defaultYear}-${monthNum}-${dayNum}`;
+                                const monthNum = parseMonthNameToNumber(rawBulan) || activeMonth;
+                                dateStr = `${activeYear}-${monthNum}-${dayNum}`;
                             }
 
                             const rawStatus = String(row.Kode || row.Status_H_S_I_A || row.Status || 'H').trim().toUpperCase().charAt(0);
@@ -2758,10 +2780,18 @@
                         });
                     }
 
+                    const importedYm = `${activeYear}-${activeMonth}`;
+                    const recapPicker = document.getElementById('adminMonthlyRecapPicker');
+                    if (recapPicker) recapPicker.value = importedYm;
+                    const attDateInput = document.getElementById('teacherAttendanceDate');
+                    if (attDateInput && !attDateInput.value.startsWith(importedYm)) {
+                        attDateInput.value = `${importedYm}-01`;
+                    }
+
                     saveDatabase();
                     renderTeacherAttendanceTable();
                     renderAdminMonthlyRecapTable();
-                    showToast(`Berhasil mengimpor ${updatedCount} data presensi dari Excel!`, 'success');
+                    showToast(`Berhasil mengimpor ${updatedCount} data presensi (${getMonthNameIndonesian(activeMonth)} ${activeYear})!`, 'success');
                 } catch (err) {
                     showToast('Format file Excel presensi tidak valid!', 'error');
                 }
