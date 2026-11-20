@@ -88,7 +88,7 @@
                             <span>Unggah Pas Foto</span>
                             <input type="file" accept="image/*" onchange="handleModalStudentPhotoChange(event)" class="hidden">
                         </label>
-                        <p class="text-[11px] text-slate-400">Otomatis dikompresi agar ringan &amp; tersimpan.</p>
+                        <p class="text-[11px] text-slate-400">Otomatis dikompresi agar ringan & tersimpan.</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -212,7 +212,7 @@
                 <form id="studentLoginForm" onsubmit="handleStudentLogin(event)" class="space-y-4 max-w-lg mx-auto">
                     <div class="text-center space-y-1">
                         <h2 class="text-lg sm:text-xl font-extrabold text-mimblue-900">Masuk Portal Siswa Kelas 3</h2>
-                        <p class="text-xs text-slate-500">Masukkan NIS dan Nama Lengkap sesuai daftar kelas untuk melihat biodata, presensi, nilai, materi &amp; kartu QR.</p>
+                        <p class="text-xs text-slate-500">Masukkan NIS dan Nama Lengkap sesuai daftar kelas untuk melihat biodata, presensi, nilai, materi & kartu QR.</p>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Nomor Induk Siswa (NIS)</label>
@@ -298,7 +298,7 @@
                 <form id="teacherLoginForm" onsubmit="handleTeacherLogin(event)" class="hidden space-y-4 max-w-md mx-auto">
                     <div class="text-center space-y-1">
                         <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Dashboard Wali Kelas</h2>
-                        <p class="text-xs text-slate-500">Masukkan PIN Wali Kelas untuk mengelola data siswa, presensi, nilai 12 mapel, materi &amp; pengaturan.</p>
+                        <p class="text-xs text-slate-500">Masukkan PIN Wali Kelas untuk mengelola data siswa, presensi, nilai 12 mapel, materi & pengaturan.</p>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">PIN Wali Kelas</label>
@@ -497,7 +497,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print">
                     <div>
                         <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Rekap Presensi Bulanan</h3>
-                        <p class="text-xs text-slate-500">Pilih bulan untuk melihat ringkasan kehadiran dan mengunduh laporan.</p>
+                        <p class="text-xs text-slate-500">Pilih bulan untuk melihat ringkasan kehadiran (blok merah menandakan hari Minggu/Ahad & libur nasional).</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <input id="studentAttendanceMonthPicker" type="month" onchange="renderStudentAttendanceReport()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
@@ -539,7 +539,7 @@
                             <thead class="bg-slate-100 text-slate-700 uppercase text-[11px]">
                                 <tr>
                                     <th class="py-2.5 px-4">No</th>
-                                    <th class="py-2.5 px-4">Tanggal</th>
+                                    <th class="py-2.5 px-4">Tanggal & Hari</th>
                                     <th class="py-2.5 px-4">Status</th>
                                     <th class="py-2.5 px-4">Keterangan / Waktu</th>
                                 </tr>
@@ -563,7 +563,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                         <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Nilai Akademik Seluruh Mata Pelajaran</h3>
-                        <p class="text-xs text-slate-500">Rerata Tugas dihitung dari kolom tugas terisi; Nilai Akhir muncul setelah ASAS/ASAT terisi.</p>
+                        <p class="text-xs text-slate-500">Default nilai kosong = <strong>0</strong> • Kolom 1: <strong>Rerata Tugas</strong> (murni sebelum 60%) • Kolom 2: <strong>Nilai Akhir (60:40)</strong> aktif saat ASAS/ASAT terisi.</p>
                     </div>
                     <select id="studentGradeSemesterSelect" onchange="renderStudentGrades()" class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                         <option value="Ganjil">Semester Ganjil</option>
@@ -579,9 +579,9 @@
                             <tr>
                                 <th class="py-3 px-3">No</th>
                                 <th class="py-3 px-4">Mata Pelajaran</th>
-                                <th class="py-3 px-3 text-center">Rerata Tugas</th>
+                                <th class="py-3 px-3 text-center">Rerata Tugas (Murni)</th>
                                 <th class="py-3 px-3 text-center">ASAS/ASAT</th>
-                                <th class="py-3 px-3 text-center">Nilai Akhir</th>
+                                <th class="py-3 px-3 text-center">Nilai Akhir (60:40)</th>
                                 <th class="py-3 px-3 text-center">Predikat</th>
                                 <th class="py-3 px-4">Catatan</th>
                             </tr>
@@ -591,7 +591,7 @@
                 </div>
 
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                    <h4 class="text-xs font-extrabold text-mimblue-900 uppercase tracking-wider">Rincian 10 Tugas / Ulangan Harian &amp; Judul Tugas</h4>
+                    <h4 class="text-xs font-extrabold text-mimblue-900 uppercase tracking-wider">Rincian 10 Tugas / Ulangan Harian & Judul Tugas</h4>
                     <div id="studentTaskDetailsContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
                 </div>
             </div>
@@ -610,7 +610,7 @@
             <div id="sTabContent-qrcard" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
                 <div class="flex flex-wrap items-center justify-between gap-2 no-print">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Kartu Identitas &amp; QR Presensi Siswa</h3>
+                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Kartu Identitas & QR Presensi Siswa</h3>
                         <p class="text-xs text-slate-500">Tunjukkan kode QR ini saat presensi harian.</p>
                     </div>
                     <div class="flex gap-2">
@@ -649,7 +649,7 @@
                     <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-10 h-10 rounded-full bg-white p-0.5 object-contain shrink-0">
                     <div>
                         <p class="text-xs sm:text-sm font-extrabold">PANEL WALI KELAS 3 — MIM 1 SLINGA</p>
-                        <p class="text-[11px] text-slate-400">Manajemen Siswa, Presensi, Nilai 12 Mapel, Materi &amp; Pengaturan</p>
+                        <p class="text-[11px] text-slate-400">Manajemen Siswa, Presensi, Nilai 12 Mapel, Materi & Pengaturan</p>
                     </div>
                 </div>
                 <button type="button" onclick="logout()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
@@ -664,11 +664,11 @@
             <div class="flex items-center gap-2 overflow-x-auto pb-1 no-print">
                 <button type="button" id="tTabBtn-students" onclick="switchTeacherTab('students')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer">
                     <i data-lucide="users" class="w-4 h-4"></i>
-                    <span>Data Siswa &amp; Foto</span>
+                    <span>Data Siswa & Foto</span>
                 </button>
                 <button type="button" id="tTabBtn-attendance" onclick="switchTeacherTab('attendance')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="calendar-check" class="w-4 h-4"></i>
-                    <span>Presensi &amp; Impor Excel</span>
+                    <span>Presensi & Impor Excel</span>
                 </button>
                 <button type="button" id="tTabBtn-grades" onclick="switchTeacherTab('grades')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="graduation-cap" class="w-4 h-4"></i>
@@ -676,7 +676,7 @@
                 </button>
                 <button type="button" id="tTabBtn-qrcards" onclick="switchTeacherTab('qrcards')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="printer" class="w-4 h-4"></i>
-                    <span>Rekap Bulanan &amp; Kartu QR</span>
+                    <span>Rekap Bulanan & Kartu QR</span>
                 </button>
                 <button type="button" id="tTabBtn-materials" onclick="switchTeacherTab('materials')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="book-plus" class="w-4 h-4"></i>
@@ -684,7 +684,7 @@
                 </button>
                 <button type="button" id="tTabBtn-settings" onclick="switchTeacherTab('settings')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="settings" class="w-4 h-4"></i>
-                    <span>Pengaturan &amp; Logo</span>
+                    <span>Pengaturan & Logo</span>
                 </button>
             </div>
 
@@ -692,7 +692,7 @@
             <div id="tTabContent-students" class="teacher-tab-content bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Data Siswa &amp; Pas Foto (<span id="adminStudentCountBadge">26</span> Siswa)</h3>
+                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Data Siswa & Pas Foto (<span id="adminStudentCountBadge">26</span> Siswa)</h3>
                         <p class="text-xs text-slate-500">Kelola biodata siswa, impor/ekspor Excel, serta unggah/unduh foto massal (ZIP / banyak file).</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
@@ -780,13 +780,20 @@
             <div id="tTabContent-attendance" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Presensi Harian &amp; Template Excel Bulanan</h3>
-                        <p class="text-xs text-slate-500">Catat presensi per tanggal, scan QR/NIS, atau unduh/impor template Excel terproteksi.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Presensi Harian & Template Excel Bulanan</h3>
+                        <p class="text-xs text-slate-500">Presensi 13 Juli – 31 Oktober 2026 otomatis terisi <strong>Hadir (H)</strong> (kecuali hari Minggu & libur). Ubah manual siswa yang <strong>S / I / A</strong>.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <input id="teacherAttendanceDate" type="date" onchange="renderTeacherAttendanceTable()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                         <button type="button" onclick="markAllPresentForDate()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Semua Hadir (H)</button>
+                        <button type="button" onclick="applyHistoricalFullPresentJulyOct2026(true)" class="px-3.5 py-2 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">Isi Full H (13 Jul–31 Okt 2026)</button>
                     </div>
+                </div>
+
+                <!-- Holiday Banner Notice on Daily View -->
+                <div id="teacherAttendanceHolidayBanner" class="hidden p-3.5 rounded-2xl bg-rose-600 text-white text-xs font-extrabold flex items-center gap-2">
+                    <i data-lucide="calendar-off" class="w-4 h-4 shrink-0"></i>
+                    <span id="teacherAttendanceHolidayText">Hari Minggu / Libur Nasional</span>
                 </div>
 
                 <!-- Month Picker + Template Download + Import -->
@@ -848,15 +855,15 @@
                 </div>
             </div>
 
-            <!-- Teacher Tab 3: Grades (12 Subjects, 10 Tasks + Judul Tugas, ASAS/ASAT, Nilai Akhir) -->
+            <!-- Teacher Tab 3: Grades (12 Subjects, 10 Tasks, 2 Average Columns 60:40, ASAS/ASAT) -->
             <div id="tTabContent-grades" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
                         <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Input Nilai Akademik (12 Mata Pelajaran)</h3>
                         <p class="text-xs text-slate-500">
-                            10 kolom Tugas/Ulangan (rerata hanya dihitung dari kolom terisi &amp; tidak ditampilkan terpisah di tabel input) •
-                            Kolom <strong>ASAS/ASAT</strong> aktif saat diisi •
-                            <strong>Nilai Akhir</strong> (rata-rata seluruh tugas terisi + ASAS/ASAT) hanya terisi jika ASAS/ASAT sudah diisi.
+                            Seluruh nilai belum diinput otomatis default <strong>0</strong> •
+                            <strong>Kolom Rata-rata 1 (Rerata Tugas)</strong>: rata-rata murni 10 Tugas/Ulangan sebelum prosentase 60% •
+                            <strong>Kolom Rata-rata 2 (Nilai Akhir 60:40)</strong>: 60% Rerata Tugas + 40% ASAS/ASAT (hanya aktif saat nilai ASAS/ASAT terisi).
                         </p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
@@ -904,8 +911,9 @@
                                 <th class="py-2.5 px-1 text-center">T8</th>
                                 <th class="py-2.5 px-1 text-center">T9</th>
                                 <th class="py-2.5 px-1 text-center">T10</th>
+                                <th class="py-2.5 px-2 text-center bg-sky-700" title="Rata-rata murni 10 Tugas/Ulangan sebelum prosentase 60%">Rerata Tugas<br><span class="text-[9px] font-normal normal-case">(Murni)</span></th>
                                 <th class="py-2.5 px-2 text-center bg-amber-600">ASAS/ASAT</th>
-                                <th class="py-2.5 px-2.5 text-center bg-emerald-700">Nilai Akhir</th>
+                                <th class="py-2.5 px-2.5 text-center bg-emerald-700" title="60% Rerata Tugas + 40% ASAS/ASAT (aktif saat ASAS/ASAT terisi)">Nilai Akhir<br><span class="text-[9px] font-normal normal-case">(60:40%)</span></th>
                                 <th class="py-2.5 px-2 text-center">Pred</th>
                                 <th class="py-2.5 px-3">Catatan</th>
                             </tr>
@@ -931,11 +939,19 @@
                     </div>
 
                     <div id="adminMonthlyRecapSheet" class="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
-                        <div class="flex items-center gap-3.5 border-b-2 border-mimblue-700 pb-3">
-                            <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-12 h-12 rounded-full object-contain shrink-0">
-                            <div>
-                                <h4 class="font-extrabold text-sm sm:text-base text-mimblue-900">DAFTAR HADIR BULANAN SISWA KELAS 3 — MIM 1 SLINGA</h4>
-                                <p class="text-xs text-slate-500">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
+                        <div class="flex items-center justify-between flex-wrap gap-2 border-b-2 border-mimblue-700 pb-3">
+                            <div class="flex items-center gap-3.5">
+                                <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-12 h-12 rounded-full object-contain shrink-0">
+                                <div>
+                                    <h4 class="font-extrabold text-sm sm:text-base text-mimblue-900">DAFTAR HADIR BULANAN SISWA KELAS 3 — MIM 1 SLINGA</h4>
+                                    <p class="text-xs text-slate-500">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-[11px] font-bold">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-rose-600 text-white">
+                                    <span class="w-2 h-2 rounded-full bg-white"></span>
+                                    Blok Merah = Hari Minggu / Ahad / Libur Nasional
+                                </span>
                             </div>
                         </div>
 
@@ -1005,13 +1021,13 @@
             <!-- Teacher Tab 6: Settings & Logo -->
             <div id="tTabContent-settings" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
                 <div>
-                    <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Pengaturan Kelas, PIN &amp; Logo Madrasah</h3>
+                    <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Pengaturan Kelas, PIN & Logo Madrasah</h3>
                     <p class="text-xs text-slate-500">Perubahan akan tersinkronisasi ke seluruh tampilan portal.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <form onsubmit="saveTeacherClassSettings(event)" class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
-                        <h4 class="text-sm font-extrabold text-slate-900">Identitas Kelas &amp; Keamanan</h4>
+                        <h4 class="text-sm font-extrabold text-slate-900">Identitas Kelas & Keamanan</h4>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Nama Wali Kelas</label>
                             <input id="settingTeacherName" type="text" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold">
@@ -1102,6 +1118,78 @@
             { name: "Tsuraya Aulia Arsy", gender: "Perempuan" }
         ];
 
+        // Daftar Hari Libur Nasional Indonesia Tahun 2026
+        const NATIONAL_HOLIDAYS_2026 = {
+            '2026-01-01': 'Tahun Baru 2026 Masehi',
+            '2026-01-16': 'Isra Mikraj Nabi Muhammad SAW',
+            '2026-02-17': 'Tahun Baru Imlek 2577 Kongzili',
+            '2026-03-19': 'Hari Suci Nyepi Tahun Baru Saka 1948',
+            '2026-03-20': 'Hari Raya Idulfitri 1447 H',
+            '2026-03-21': 'Hari Raya Idulfitri 1447 H',
+            '2026-04-03': 'Wafat Yesus Kristus',
+            '2026-04-05': 'Kebangkitan Yesus Kristus (Paskah)',
+            '2026-05-01': 'Hari Buruh Internasional',
+            '2026-05-14': 'Kenaikan Yesus Kristus',
+            '2026-05-27': 'Hari Raya Iduladha 1447 H',
+            '2026-05-31': 'Hari Raya Waisak 2570 BE',
+            '2026-06-01': 'Hari Lahir Pancasila',
+            '2026-06-16': 'Tahun Baru Islam 1448 H',
+            '2026-08-17': 'Hari Kemerdekaan Republik Indonesia',
+            '2026-08-25': 'Maulid Nabi Muhammad SAW',
+            '2026-12-25': 'Hari Raya Natal'
+        };
+
+        function getDateHolidayInfo(dateStr) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                return { isSunday: false, isHoliday: false, isRedBlock: false, label: '' };
+            }
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dt = new Date(y, m - 1, d);
+            const isSunday = dt.getDay() === 0;
+            const holidayName = NATIONAL_HOLIDAYS_2026[dateStr] || '';
+            const isHoliday = Boolean(holidayName);
+            const isRedBlock = isSunday || isHoliday;
+            const label = isSunday && isHoliday
+                ? `Hari Ahad / Minggu & ${holidayName}`
+                : isSunday
+                    ? 'Hari Ahad / Minggu (Libur)'
+                    : holidayName;
+            return { isSunday, isHoliday, isRedBlock, label };
+        }
+
+        function generateHistoricalAttendanceJulyToOct2026() {
+            const records = {};
+            const start = new Date(2026, 6, 13); // 13 Juli 2026
+            const end = new Date(2026, 9, 31);   // 31 Oktober 2026
+            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                const yyyy = d.getFullYear();
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const dd = String(d.getDate()).padStart(2, '0');
+                const dateKey = `${yyyy}-${mm}-${dd}`;
+                const info = getDateHolidayInfo(dateKey);
+                if (!info.isSunday && !info.isHoliday) {
+                    records[dateKey] = { status: 'H', note: 'Hadir tepat waktu', scanTime: '' };
+                }
+            }
+            return records;
+        }
+
+        function ensureStudentsHistoricalAttendanceJulyOct2026(studentsList) {
+            const baseRecords = generateHistoricalAttendanceJulyToOct2026();
+            let modified = false;
+            studentsList.forEach(st => {
+                if (!st.attendance) st.attendance = {};
+                Object.entries(baseRecords).forEach(([dateKey, defaultRec]) => {
+                    const existing = st.attendance[dateKey];
+                    if (!existing || !existing.status) {
+                        st.attendance[dateKey] = Object.assign({}, defaultRec);
+                        modified = true;
+                    }
+                });
+            });
+            return modified;
+        }
+
         function createDefaultAssignmentTopics() {
             const topics = { Ganjil: {}, Genap: {} };
             ['Ganjil', 'Genap'].forEach(sem => {
@@ -1112,60 +1200,56 @@
             return topics;
         }
 
-        function sanitizeNullableScore(val) {
-            if (val === null || val === undefined || String(val).trim() === '') return null;
+        // Default seluruh nilai yang belum diinput menjadi 0
+        function sanitizeZeroDefaultScore(val) {
+            if (val === null || val === undefined || String(val).trim() === '') return 0;
             const num = Number(val);
-            if (!Number.isFinite(num)) return null;
+            if (!Number.isFinite(num)) return 0;
             return Math.max(0, Math.min(100, num));
         }
 
         function normalizeGradeRecord(raw) {
             if (!raw) {
-                return { tasks: Array(10).fill(null), asas: null, note: '' };
+                return { tasks: Array(10).fill(0), asas: 0, note: '' };
             }
             if (Array.isArray(raw.tasks)) {
-                const tasks = Array.from({ length: 10 }, (_, idx) => sanitizeNullableScore(raw.tasks[idx]));
-                const asas = sanitizeNullableScore(raw.asas);
+                const tasks = Array.from({ length: 10 }, (_, idx) => sanitizeZeroDefaultScore(raw.tasks[idx]));
+                const asas = sanitizeZeroDefaultScore(raw.asas);
                 return { tasks, asas, note: raw.note || '' };
             }
-            const t1 = sanitizeNullableScore(raw.tugas);
-            const t2 = sanitizeNullableScore(raw.uts);
-            const asasOld = sanitizeNullableScore(raw.uas);
-            const tasks = Array(10).fill(null);
-            if (t1 !== null) tasks[0] = t1;
-            if (t2 !== null) tasks[1] = t2;
+            const t1 = sanitizeZeroDefaultScore(raw.tugas);
+            const t2 = sanitizeZeroDefaultScore(raw.uts);
+            const asasOld = sanitizeZeroDefaultScore(raw.uas);
+            const tasks = Array(10).fill(0);
+            tasks[0] = t1;
+            tasks[1] = t2;
             return { tasks, asas: asasOld, note: raw.note || '' };
         }
 
-        // Hanya menghitung kolom tugas/ulangan harian yang terisi (null/kosong diabaikan)
+        // Kolom Rata-rata 1: Rata-rata murni Tugas/Ulangan (sebelum/tanpa prosentase 60%)
         function computeTaskAverage(rec) {
             const norm = normalizeGradeRecord(rec);
-            const filledTasks = norm.tasks.filter(v => v !== null && v !== '' && Number.isFinite(Number(v)));
-            if (filledTasks.length === 0) return null;
-            const sum = filledTasks.reduce((acc, val) => acc + Number(val), 0);
-            return sum / filledTasks.length;
+            const sum = norm.tasks.reduce((acc, val) => acc + sanitizeZeroDefaultScore(val), 0);
+            return sum / 10;
         }
 
-        // Nilai akhir hanya dihitung & ditampilkan jika ASAS/ASAT sudah terisi nilai
-        // Merupakan rata-rata akhir dari seluruh nilai tugas yang terisi dan ASAS/ASAT
+        // Kolom Rata-rata 2: Rata-rata Tugas/Ulangan + ASAS/ASAT setelah prosentase 60:40%
+        // Kolom ini hanya aktif saat nilai ASAS/ASAT terisi (> 0)
         function computeGradeFinalScore(rec) {
             const norm = normalizeGradeRecord(rec);
-            if (norm.asas === null || norm.asas === '' || !Number.isFinite(Number(norm.asas))) {
+            const asasScore = sanitizeZeroDefaultScore(norm.asas);
+            if (asasScore <= 0) {
                 return null;
             }
-            const filledTasks = norm.tasks
-                .filter(v => v !== null && v !== '' && Number.isFinite(Number(v)))
-                .map(v => Number(v));
-            const allScores = [...filledTasks, Number(norm.asas)];
-            const sum = allScores.reduce((acc, val) => acc + val, 0);
-            return sum / allScores.length;
+            const taskAvg = computeTaskAverage(norm);
+            return (taskAvg * 0.6) + (asasScore * 0.4);
         }
 
         function createBlankGradesObject() {
             const grades = { Ganjil: {}, Genap: {} };
             SUBJECTS_LIST.forEach(subj => {
-                grades.Ganjil[subj] = { tasks: Array(10).fill(null), asas: null, note: '' };
-                grades.Genap[subj] = { tasks: Array(10).fill(null), asas: null, note: '' };
+                grades.Ganjil[subj] = { tasks: Array(10).fill(0), asas: 0, note: '' };
+                grades.Genap[subj] = { tasks: Array(10).fill(0), asas: 0, note: '' };
             });
             return grades;
         }
@@ -1239,9 +1323,14 @@
 
         function createInitialDatabase() {
             const todayIso = new Date().toISOString().split('T')[0];
+            const todayInfo = getDateHolidayInfo(todayIso);
             const students = INITIAL_26_STUDENTS.map((item, idx) => {
                 const no = idx + 1;
                 const nis = `kelas3_${no}`;
+                const att = generateHistoricalAttendanceJulyToOct2026();
+                if (!todayInfo.isSunday && !todayInfo.isHoliday && !att[todayIso]) {
+                    att[todayIso] = { status: 'H', note: 'Hadir tepat waktu', scanTime: '06:55' };
+                }
                 return {
                     no,
                     nis,
@@ -1254,9 +1343,7 @@
                     phone: `08132700${String(100 + no)}`,
                     address: 'Desa Slinga, Kec. Kaligondang, Kab. Purbalingga',
                     photo: generateDefaultAvatar(item.name, item.gender),
-                    attendance: {
-                        [todayIso]: { status: 'H', note: 'Hadir tepat waktu', scanTime: '06:55' }
-                    },
+                    attendance: att,
                     grades: createBlankGradesObject()
                 };
             });
@@ -1375,6 +1462,9 @@
                         remoteList.push(docItem.data());
                     });
                     remoteList.sort((a, b) => (a.no || 999) - (b.no || 999));
+
+                    // Otomatis lengkapi presensi 13 Juli - 31 Okt 2026 full H (kecuali Minggu/libur & sel yang sudah terisi S/I/A)
+                    const addedHistorical = ensureStudentsHistoricalAttendanceJulyOct2026(remoteList);
                     appState.students = remoteList;
 
                     updateGlobalBrandingUI();
@@ -1391,6 +1481,10 @@
                     }
                     isApplyingRemoteSnapshot = false;
                     setCloudBadgeState('Cloud Tersinkron', true);
+
+                    if (addedHistorical) {
+                        saveDatabase();
+                    }
                 }, () => {
                     setCloudBadgeState('Gangguan Koneksi', false);
                 });
@@ -1902,8 +1996,12 @@
 
             const monthVal = document.getElementById('studentAttendanceMonthPicker').value || new Date().toISOString().slice(0, 7);
             const [year, month] = monthVal.split('-');
+            const yearNum = parseInt(year, 10);
+            const monthNum = parseInt(month, 10);
+            const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
             const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            const monthLabel = `${monthNames[parseInt(month, 10) - 1]} ${year}`;
+            const dayNames = ['Minggu / Ahad', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const monthLabel = `${monthNames[monthNum - 1]} ${year}`;
 
             document.getElementById('attReportName').textContent = st.name;
             document.getElementById('attReportNis').textContent = st.nis;
@@ -1911,22 +2009,8 @@
             document.getElementById('attReportTeacher').textContent = appState.settings.teacherName;
             document.getElementById('attReportSignTeacher').textContent = appState.settings.teacherName;
 
-            const entries = Object.entries(st.attendance || {})
-                .filter(([date]) => date.startsWith(monthVal))
-                .sort((a, b) => a[0].localeCompare(b[0]));
-
             let countH = 0, countS = 0, countI = 0, countA = 0;
-            entries.forEach(([, val]) => {
-                if (val.status === 'H') countH++;
-                if (val.status === 'S') countS++;
-                if (val.status === 'I') countI++;
-                if (val.status === 'A') countA++;
-            });
-
-            document.getElementById('attCountH').textContent = countH;
-            document.getElementById('attCountS').textContent = countS;
-            document.getElementById('attCountI').textContent = countI;
-            document.getElementById('attCountA').textContent = countA;
+            const rowsHtml = [];
 
             const statusBadge = {
                 H: '<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">Hadir (H)</span>',
@@ -1935,23 +2019,49 @@
                 A: '<span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold">Alpa (A)</span>'
             };
 
-            const tbody = document.getElementById('studentAttendanceTableBody');
-            if (entries.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-400">Belum ada catatan presensi pada bulan ${monthLabel}.</td></tr>`;
-                return;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${monthVal}-${String(d).padStart(2, '0')}`;
+                const dtObj = new Date(yearNum, monthNum - 1, d);
+                const dayName = dayNames[dtObj.getDay()];
+                const hInfo = getDateHolidayInfo(dateStr);
+                const rec = st.attendance?.[dateStr];
+
+                if (rec?.status === 'H') countH++;
+                if (rec?.status === 'S') countS++;
+                if (rec?.status === 'I') countI++;
+                if (rec?.status === 'A') countA++;
+
+                if (hInfo.isRedBlock) {
+                    rowsHtml.push(`
+                        <tr class="bg-rose-600 text-white">
+                            <td class="py-2 px-4 font-bold">${d}</td>
+                            <td class="py-2 px-4 font-extrabold">${dateStr} (${dayName})</td>
+                            <td class="py-2 px-4"><span class="px-2.5 py-0.5 rounded-full bg-white text-rose-700 font-extrabold text-[10px]">LIBUR</span></td>
+                            <td class="py-2 px-4 font-bold">${hInfo.label}</td>
+                        </tr>
+                    `);
+                } else {
+                    const detailInfo = rec
+                        ? ([rec.note || '', rec.scanTime ? `Jam ${rec.scanTime}` : ''].filter(Boolean).join(' • ') || '-')
+                        : '-';
+                    rowsHtml.push(`
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-2 px-4 font-bold text-slate-600">${d}</td>
+                            <td class="py-2 px-4 font-bold text-slate-900">${dateStr} (${dayName})</td>
+                            <td class="py-2 px-4">${rec ? (statusBadge[rec.status] || rec.status) : '<span class="text-slate-400">-</span>'}</td>
+                            <td class="py-2 px-4 text-slate-600">${detailInfo}</td>
+                        </tr>
+                    `);
+                }
             }
 
-            tbody.innerHTML = entries.map(([dateStr, rec], idx) => {
-                const detailInfo = [rec.note || '', rec.scanTime ? `Jam ${rec.scanTime}` : ''].filter(Boolean).join(' • ') || '-';
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-2.5 px-4 font-bold text-slate-600">${idx + 1}</td>
-                        <td class="py-2.5 px-4 font-bold text-slate-900">${dateStr}</td>
-                        <td class="py-2.5 px-4">${statusBadge[rec.status] || rec.status}</td>
-                        <td class="py-2.5 px-4 text-slate-600">${detailInfo}</td>
-                    </tr>
-                `;
-            }).join('');
+            document.getElementById('attCountH').textContent = countH;
+            document.getElementById('attCountS').textContent = countS;
+            document.getElementById('attCountI').textContent = countI;
+            document.getElementById('attCountA').textContent = countA;
+
+            const tbody = document.getElementById('studentAttendanceTableBody');
+            tbody.innerHTML = rowsHtml.join('');
         }
 
         function getPredikat(score) {
@@ -1985,8 +2095,8 @@
             tbody.innerHTML = filtered.map((subj, idx) => {
                 const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
                 const avgTaskRaw = computeTaskAverage(rec);
-                const avgTaskDisplay = avgTaskRaw !== null ? avgTaskRaw.toFixed(1) : '-';
-                const asasDisplay = rec.asas !== null ? rec.asas : '-';
+                const avgTaskDisplay = avgTaskRaw.toFixed(1);
+                const asasDisplay = rec.asas > 0 ? rec.asas : 0;
                 const finalRaw = computeGradeFinalScore(rec);
                 const finalDisplay = finalRaw !== null ? finalRaw.toFixed(1) : '-';
                 const predBadge = finalRaw !== null
@@ -2000,9 +2110,9 @@
                     <tr class="hover:bg-slate-50">
                         <td class="py-3 px-3 font-bold text-slate-500">${idx + 1}</td>
                         <td class="py-3 px-4 font-extrabold text-slate-900">${subj}</td>
-                        <td class="py-3 px-3 text-center font-semibold ${avgTaskRaw !== null ? 'text-slate-800' : 'text-slate-400'}">${avgTaskDisplay}</td>
-                        <td class="py-3 px-3 text-center font-semibold ${rec.asas !== null ? 'text-amber-800' : 'text-slate-400'}">${asasDisplay}</td>
-                        <td class="py-3 px-3 text-center font-extrabold ${finalRaw !== null ? 'text-mimblue-800' : 'text-slate-400'}">${finalDisplay}</td>
+                        <td class="py-3 px-3 text-center font-bold text-sky-800 bg-sky-50/40">${avgTaskDisplay}</td>
+                        <td class="py-3 px-3 text-center font-semibold ${rec.asas > 0 ? 'text-amber-800' : 'text-slate-400'}">${asasDisplay}</td>
+                        <td class="py-3 px-3 text-center font-extrabold ${finalRaw !== null ? 'text-mimblue-800 bg-emerald-50/50' : 'text-slate-400'}">${finalDisplay}</td>
                         <td class="py-3 px-3 text-center">${predBadge}</td>
                         <td class="py-3 px-4 text-slate-500">${rec.note || '-'}</td>
                     </tr>
@@ -2017,7 +2127,7 @@
                     const itemsHtml = rec.tasks.map((val, i) => `
                         <div class="flex items-center justify-between gap-2 py-0.5 border-b border-slate-100 last:border-0">
                             <span class="text-slate-600 truncate" title="${topics[i]}">${i + 1}. ${topics[i]}</span>
-                            <strong class="${val !== null ? 'text-slate-900' : 'text-slate-400'} shrink-0">${val !== null ? val : '-'}</strong>
+                            <strong class="${val > 0 ? 'text-slate-900' : 'text-slate-400'} shrink-0">${val}</strong>
                         </div>
                     `).join('');
                     return `
@@ -2060,7 +2170,7 @@
                     </div>
                     <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="w-full py-2.5 px-4 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
                         <i data-lucide="eye" class="w-4 h-4"></i>
-                        <span>Baca &amp; Unduh (PDF/DOCX/PNG)</span>
+                        <span>Baca & Unduh (PDF/DOCX/PNG)</span>
                     </button>
                 </div>
             `).join('');
@@ -2196,6 +2306,18 @@
 
         function renderTeacherAttendanceTable() {
             const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
+            const hInfo = getDateHolidayInfo(dateStr);
+            const bannerEl = document.getElementById('teacherAttendanceHolidayBanner');
+            const bannerTextEl = document.getElementById('teacherAttendanceHolidayText');
+            if (bannerEl && bannerTextEl) {
+                if (hInfo.isRedBlock) {
+                    bannerEl.classList.remove('hidden');
+                    bannerTextEl.textContent = `BLOK MERAH KALENDER LIBUR: ${dateStr} — ${hInfo.label}`;
+                } else {
+                    bannerEl.classList.add('hidden');
+                }
+            }
+
             const tbody = document.getElementById('teacherAttendanceTableBody');
 
             tbody.innerHTML = appState.students.map((st, idx) => {
@@ -2207,7 +2329,7 @@
                 };
 
                 return `
-                    <tr class="hover:bg-slate-50">
+                    <tr class="${hInfo.isRedBlock ? 'bg-rose-50/70 hover:bg-rose-100/70' : 'hover:bg-slate-50'}">
                         <td class="py-2.5 px-3 font-bold text-slate-500">${idx + 1}</td>
                         <td class="py-2.5 px-3 font-mono font-bold text-mimblue-700">${st.nis}</td>
                         <td class="py-2.5 px-3 font-bold text-slate-900">${st.name}</td>
@@ -2220,7 +2342,7 @@
                             </div>
                         </td>
                         <td class="py-2.5 px-3">
-                            <input type="text" value="${rec.note || ''}" onchange="setStudentAttendanceNote('${st.nis}', this.value)" placeholder="Catatan..."
+                            <input type="text" value="${rec.note || ''}" onchange="setStudentAttendanceNote('${st.nis}', this.value)" placeholder="${hInfo.isRedBlock ? hInfo.label : 'Catatan...'}"
                                 class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] outline-none">
                         </td>
                     </tr>
@@ -2254,6 +2376,11 @@
 
         function markAllPresentForDate() {
             const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
+            const hInfo = getDateHolidayInfo(dateStr);
+            if (hInfo.isRedBlock) {
+                showToast(`Tanggal ${dateStr} adalah ${hInfo.label} (Blok Merah Libur).`, 'error');
+                return;
+            }
             appState.students.forEach(st => {
                 const prevScanTime = st.attendance?.[dateStr]?.scanTime || '';
                 st.attendance[dateStr] = { status: 'H', note: 'Hadir tepat waktu', scanTime: prevScanTime };
@@ -2261,6 +2388,16 @@
             saveDatabase();
             renderTeacherAttendanceTable();
             showToast(`Seluruh ${appState.students.length} siswa ditandai Hadir pada ${dateStr}!`, 'success');
+        }
+
+        function applyHistoricalFullPresentJulyOct2026(notifyUser = false) {
+            ensureStudentsHistoricalAttendanceJulyOct2026(appState.students);
+            saveDatabase();
+            renderTeacherAttendanceTable();
+            renderAdminMonthlyRecapTable();
+            if (notifyUser) {
+                showToast('Presensi 13 Juli – 31 Oktober 2026 terisi Hadir (H) penuh (kecuali hari Minggu & libur)!', 'success');
+            }
         }
 
         function getMonthNameIndonesian(monthNumberStr) {
@@ -2356,7 +2493,7 @@
 
             const aoa = [];
             aoa.push([`TEMPLATE PRESENSI KELAS 3 MIM 1 SLINGA — BULAN ${labelBulan.toUpperCase()} (${monthPrefix})`]);
-            aoa.push(['Petunjuk: Hanya kolom tanggal (H, I, S, A) yang dapat diisi. Kolom identitas & REKAP terkunci otomatis.']);
+            aoa.push(['Petunjuk: Hanya kolom hari aktif (H, I, S, A) yang dapat diisi. Kolom Minggu/Libur (blok merah), identitas & REKAP terkunci.']);
             aoa.push([]);
 
             const groupRow = ['No', 'NIS', 'Nama', ...Array(daysInMonth).fill(''), 'Rekap', '', '', ''];
@@ -2366,6 +2503,16 @@
             aoa.push(colRow);
 
             const editableCells = [];
+            const redHolidayCells = [];
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dayKey = `${monthPrefix}-${String(d).padStart(2, '0')}`;
+                const hInfo = getDateHolidayInfo(dayKey);
+                if (hInfo.isRedBlock) {
+                    redHolidayCells.push({ r: 4, c: 3 + (d - 1) });
+                }
+            }
+
             appState.students.forEach((st, idx) => {
                 const rowNum = idx + 6;
                 const firstDayColIdx = 3;
@@ -2376,9 +2523,16 @@
                 const row = [idx + 1, st.nis, st.name];
                 for (let d = 1; d <= daysInMonth; d++) {
                     const dayKey = `${monthPrefix}-${String(d).padStart(2, '0')}`;
-                    const code = String(st.attendance?.[dayKey]?.status || '').trim().toUpperCase();
-                    row.push(['H', 'I', 'S', 'A'].includes(code) ? code : '');
-                    editableCells.push({ r: rowNum - 1, c: firstDayColIdx + (d - 1) });
+                    const hInfo = getDateHolidayInfo(dayKey);
+                    const cIdx = firstDayColIdx + (d - 1);
+                    if (hInfo.isRedBlock) {
+                        row.push('LIBUR');
+                        redHolidayCells.push({ r: rowNum - 1, c: cIdx });
+                    } else {
+                        const code = String(st.attendance?.[dayKey]?.status || '').trim().toUpperCase();
+                        row.push(['H', 'I', 'S', 'A'].includes(code) ? code : '');
+                        editableCells.push({ r: rowNum - 1, c: cIdx });
+                    }
                 }
 
                 ['H', 'I', 'S', 'A'].forEach(kode => {
@@ -2402,7 +2556,7 @@
                 { wch: 5 },
                 { wch: 12 },
                 { wch: 30 },
-                ...Array(daysInMonth).fill({ wch: 4.5 }),
+                ...Array(daysInMonth).fill({ wch: 5.5 }),
                 { wch: 5.5 },
                 { wch: 5.5 },
                 { wch: 5.5 },
@@ -2421,6 +2575,14 @@
                 const addr = XLSX.utils.encode_cell({ r, c });
                 if (!ws[addr]) ws[addr] = { t: 's', v: '' };
                 ws[addr].l = { locked: false };
+            });
+            redHolidayCells.forEach(({ r, c }) => {
+                const addr = XLSX.utils.encode_cell({ r, c });
+                if (!ws[addr]) ws[addr] = { t: 's', v: '' };
+                ws[addr].s = {
+                    fill: { patternType: 'solid', fgColor: { rgb: 'DC2626' } },
+                    font: { color: { rgb: 'FFFFFF' }, bold: true }
+                };
             });
 
             ws['!protect'] = {
@@ -2598,6 +2760,8 @@
             const tbody = document.getElementById('teacherGradesTableBody');
             tbody.innerHTML = appState.students.map((st, idx) => {
                 const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
+                const avgTaskRaw = computeTaskAverage(rec);
+                const avgTaskDisplay = avgTaskRaw.toFixed(1);
                 const finalRaw = computeGradeFinalScore(rec);
                 const finalDisplay = finalRaw !== null ? finalRaw.toFixed(1) : '-';
                 const predBadge = finalRaw !== null
@@ -2609,13 +2773,13 @@
 
                 const taskCells = rec.tasks.map((score, tIdx) => `
                     <td class="py-1.5 px-1 text-center">
-                        <input type="number" min="0" max="100" value="${score !== null ? score : ''}" placeholder="-"
+                        <input type="number" min="0" max="100" value="${score}"
                             onchange="updateStudentTaskScore('${st.nis}', ${tIdx}, this.value)"
                             class="w-12 text-center py-1 bg-slate-50 border border-slate-300 rounded-lg font-bold text-[11px] focus:bg-white focus:border-mimblue-600 outline-none">
                     </td>
                 `).join('');
 
-                const asasHasVal = rec.asas !== null;
+                const asasHasVal = rec.asas > 0;
 
                 return `
                     <tr class="hover:bg-slate-50">
@@ -2623,8 +2787,9 @@
                         <td class="py-2 px-2.5 font-mono font-bold text-mimblue-700 whitespace-nowrap">${st.nis}</td>
                         <td class="py-2 px-3 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
                         ${taskCells}
+                        <td class="py-2 px-2 text-center font-extrabold text-sky-900 bg-sky-50/80">${avgTaskDisplay}</td>
                         <td class="py-1.5 px-2 text-center ${asasHasVal ? 'bg-amber-50/70' : 'bg-slate-50'}">
-                            <input type="number" min="0" max="100" value="${asasHasVal ? rec.asas : ''}" placeholder="Isi ASAS"
+                            <input type="number" min="0" max="100" value="${rec.asas}"
                                 onchange="updateStudentAsasOrNote('${st.nis}', 'asas', this.value)"
                                 class="w-16 text-center py-1 rounded-lg font-extrabold text-xs outline-none transition ${asasHasVal ? 'bg-white border-2 border-amber-500 text-amber-900' : 'bg-slate-100 border border-dashed border-slate-300 text-slate-500 focus:bg-white focus:border-amber-500'}">
                         </td>
@@ -2655,7 +2820,7 @@
             if (!st.grades) st.grades = createBlankGradesObject();
             if (!st.grades[sem]) st.grades[sem] = {};
             const rec = normalizeGradeRecord(st.grades[sem][subj]);
-            rec.tasks[taskIdx] = sanitizeNullableScore(value);
+            rec.tasks[taskIdx] = sanitizeZeroDefaultScore(value);
             st.grades[sem][subj] = rec;
 
             saveDatabase();
@@ -2675,7 +2840,7 @@
             if (field === 'note') {
                 rec.note = value;
             } else {
-                rec.asas = sanitizeNullableScore(value);
+                rec.asas = sanitizeZeroDefaultScore(value);
             }
             st.grades[sem][subj] = rec;
 
@@ -2694,6 +2859,7 @@
 
             const rows = appState.students.map(st => {
                 const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
+                const avgTask = computeTaskAverage(rec);
                 const finalRaw = computeGradeFinalScore(rec);
                 const rowObj = {
                     NIS: st.nis,
@@ -2702,10 +2868,11 @@
                     Semester: sem
                 };
                 for (let i = 0; i < 10; i++) {
-                    rowObj[`Tugas_Ulangan_${i + 1}_${topics[i]}`] = rec.tasks[i] !== null ? rec.tasks[i] : '';
+                    rowObj[`Tugas_Ulangan_${i + 1}_${topics[i]}`] = rec.tasks[i];
                 }
-                rowObj['ASAS_ASAT'] = rec.asas !== null ? rec.asas : '';
-                rowObj['Nilai_Akhir'] = finalRaw !== null ? Number(finalRaw.toFixed(1)) : '';
+                rowObj['Rerata_Tugas_Murni'] = Number(avgTask.toFixed(1));
+                rowObj['ASAS_ASAT'] = rec.asas;
+                rowObj['Nilai_Akhir_60_40'] = finalRaw !== null ? Number(finalRaw.toFixed(1)) : '';
                 rowObj['Catatan'] = rec.note || '';
                 return rowObj;
             });
@@ -2732,15 +2899,15 @@
                         Nama: st.name,
                         Mapel: subj,
                         Semester: sem,
-                        Rerata_Tugas_Terisi: avgTask !== null ? Number(avgTask.toFixed(1)) : '',
-                        ASAS_ASAT: rec.asas !== null ? rec.asas : '',
-                        Nilai_Akhir: finalRaw !== null ? Number(finalRaw.toFixed(1)) : ''
+                        Rerata_Tugas_Murni: Number(avgTask.toFixed(1)),
+                        ASAS_ASAT: rec.asas,
+                        Nilai_Akhir_60_40: finalRaw !== null ? Number(finalRaw.toFixed(1)) : ''
                     });
                 });
             });
 
             const ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [{ wch: 12 }, { wch: 28 }, { wch: 22 }, { wch: 12 }, { wch: 20 }, { wch: 14 }, { wch: 14 }];
+            ws['!cols'] = [{ wch: 12 }, { wch: 28 }, { wch: 22 }, { wch: 12 }, { wch: 20 }, { wch: 14 }, { wch: 18 }];
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, `Nilai_${sem}`);
             XLSX.writeFile(wb, `Rekap_Nilai_Semua_Mapel_${sem}_MIM1Slinga.xlsx`);
@@ -2785,14 +2952,14 @@
                         for (let i = 0; i < 10; i++) {
                             const taskKey = keys.find(k => k.toLowerCase().startsWith(`tugas_ulangan_${i + 1}`));
                             if (taskKey !== undefined) {
-                                rec.tasks[i] = sanitizeNullableScore(row[taskKey]);
+                                rec.tasks[i] = sanitizeZeroDefaultScore(row[taskKey]);
                             }
                         }
 
                         if (row.ASAS_ASAT !== undefined) {
-                            rec.asas = sanitizeNullableScore(row.ASAS_ASAT);
+                            rec.asas = sanitizeZeroDefaultScore(row.ASAS_ASAT);
                         } else if (row.ASAS !== undefined) {
-                            rec.asas = sanitizeNullableScore(row.ASAS);
+                            rec.asas = sanitizeZeroDefaultScore(row.ASAS);
                         }
 
                         if (row.Catatan !== undefined) {
@@ -2983,7 +3150,7 @@
                     phone,
                     address,
                     photo: modalTempStudentPhoto || generateDefaultAvatar(name, gender),
-                    attendance: {},
+                    attendance: generateHistoricalAttendanceJulyToOct2026(),
                     grades: createBlankGradesObject()
                 });
                 showToast(`Siswa baru ${name} (${nis}) berhasil ditambahkan!`, 'success');
@@ -3135,7 +3302,7 @@
                                 phone,
                                 address,
                                 photo: generateDefaultAvatar(rawName, gender),
-                                attendance: {},
+                                attendance: generateHistoricalAttendanceJulyToOct2026(),
                                 grades: createBlankGradesObject()
                             });
                         }
@@ -3346,10 +3513,22 @@
 
             document.getElementById('adminMonthlyRecapSubtitle').textContent = `TAHUN PELAJARAN ${appState.settings.academicYear} • BULAN : ${monthNameUpper} ${year}`;
 
+            const dayHolidayCache = {};
             let dayHeadersHtml = '';
             for (let d = 1; d <= 31; d++) {
                 const isInvalidDay = d > daysInMonth;
-                dayHeadersHtml += `<th class="py-1.5 px-1 text-center border border-blue-500/50 min-w-[20px] ${isInvalidDay ? 'bg-mimblue-900/60 text-blue-300' : ''}">${d}</th>`;
+                if (isInvalidDay) {
+                    dayHeadersHtml += `<th class="py-1.5 px-1 text-center border border-blue-500/50 min-w-[20px] bg-mimblue-900/60 text-blue-300">${d}</th>`;
+                } else {
+                    const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
+                    const hInfo = getDateHolidayInfo(dateKey);
+                    dayHolidayCache[d] = hInfo;
+                    if (hInfo.isRedBlock) {
+                        dayHeadersHtml += `<th title="${hInfo.label}" class="py-1.5 px-1 text-center border border-rose-500 min-w-[20px] bg-rose-600 text-white font-extrabold">${d}</th>`;
+                    } else {
+                        dayHeadersHtml += `<th class="py-1.5 px-1 text-center border border-blue-500/50 min-w-[20px]">${d}</th>`;
+                    }
+                }
             }
 
             const thead = document.getElementById('adminMonthlyRecapThead');
@@ -3390,6 +3569,12 @@
                         dayCellsHtml += `<td class="py-1.5 px-1 text-center border border-slate-300 bg-slate-200/70"></td>`;
                         continue;
                     }
+                    const hInfo = dayHolidayCache[d];
+                    if (hInfo && hInfo.isRedBlock) {
+                        dayCellsHtml += `<td title="${hInfo.label}" class="py-1.5 px-1 text-center border border-rose-500 bg-rose-600 text-white font-bold"></td>`;
+                        continue;
+                    }
+
                     const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
                     const rec = st.attendance?.[dateKey];
                     const code = rec?.status || '';
@@ -3497,7 +3682,7 @@
                         <p class="text-xs text-slate-500 mt-1 line-clamp-2">${mat.content}</p>
                     </div>
                     <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="w-full py-2 rounded-xl bg-white hover:bg-mimblue-50 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">
-                        Pratinjau &amp; Unduh
+                        Pratinjau & Unduh
                     </button>
                 </div>
             `).join('');
@@ -3682,6 +3867,7 @@
             setStudentAttendance,
             setStudentAttendanceNote,
             markAllPresentForDate,
+            applyHistoricalFullPresentJulyOct2026,
             syncAttendanceMonthPickers,
             downloadAttendanceTemplateXls,
             exportMonthlyAttendanceXls,
