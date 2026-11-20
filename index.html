@@ -563,7 +563,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                         <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Nilai Akademik Seluruh Mata Pelajaran</h3>
-                        <p class="text-xs text-slate-500">Default nilai kosong = <strong>0</strong> • Kolom 1: <strong>Rerata Tugas</strong> (murni sebelum 60%) • Kolom 2: <strong>Nilai Akhir (60:40)</strong> aktif saat ASAS/ASAT terisi.</p>
+                        <p class="text-xs text-slate-500">Default nilai kosong = <strong>0</strong> • Kolom 1: <strong>Rerata Tugas</strong> (Jumlah Tugas ÷ kolom nilai aktif, murni sebelum 60%) • Kolom 2: <strong>Nilai Akhir (60:40)</strong> aktif saat ASAS/ASAT terisi.</p>
                     </div>
                     <select id="studentGradeSemesterSelect" onchange="renderStudentGrades()" class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                         <option value="Ganjil">Semester Ganjil</option>
@@ -862,7 +862,7 @@
                         <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Input Nilai Akademik (12 Mata Pelajaran)</h3>
                         <p class="text-xs text-slate-500">
                             Seluruh nilai belum diinput otomatis default <strong>0</strong> •
-                            <strong>Kolom Rata-rata 1 (Rerata Tugas)</strong>: rata-rata murni 10 Tugas/Ulangan sebelum prosentase 60% •
+                            <strong>Kolom Rata-rata 1 (Rerata Tugas)</strong>: Jumlah Tugas ÷ kolom nilai aktif (murni sebelum prosentase 60%) •
                             <strong>Kolom Rata-rata 2 (Nilai Akhir 60:40)</strong>: 60% Rerata Tugas + 40% ASAS/ASAT (hanya aktif saat nilai ASAS/ASAT terisi).
                         </p>
                     </div>
@@ -911,7 +911,7 @@
                                 <th class="py-2.5 px-1 text-center">T8</th>
                                 <th class="py-2.5 px-1 text-center">T9</th>
                                 <th class="py-2.5 px-1 text-center">T10</th>
-                                <th class="py-2.5 px-2 text-center bg-sky-700" title="Rata-rata murni 10 Tugas/Ulangan sebelum prosentase 60%">Rerata Tugas<br><span class="text-[9px] font-normal normal-case">(Murni)</span></th>
+                                <th class="py-2.5 px-2 text-center bg-sky-700" title="Jumlah Tugas dibagi kolom nilai aktif (sebelum prosentase 60%)">Rerata Tugas<br><span class="text-[9px] font-normal normal-case">(Murni)</span></th>
                                 <th class="py-2.5 px-2 text-center bg-amber-600">ASAS/ASAT</th>
                                 <th class="py-2.5 px-2.5 text-center bg-emerald-700" title="60% Rerata Tugas + 40% ASAS/ASAT (aktif saat ASAS/ASAT terisi)">Nilai Akhir<br><span class="text-[9px] font-normal normal-case">(60:40%)</span></th>
                                 <th class="py-2.5 px-2 text-center">Pred</th>
@@ -1226,11 +1226,15 @@
             return { tasks, asas: asasOld, note: raw.note || '' };
         }
 
-        // Kolom Rata-rata 1: Rata-rata murni Tugas/Ulangan (sebelum/tanpa prosentase 60%)
+        // Kolom Rata-rata 1: Rata-rata murni Tugas/Ulangan (Jumlah 10 Tugas ÷ kolom nilai aktif > 0)
         function computeTaskAverage(rec) {
             const norm = normalizeGradeRecord(rec);
-            const sum = norm.tasks.reduce((acc, val) => acc + sanitizeZeroDefaultScore(val), 0);
-            return sum / 10;
+            const activeScores = norm.tasks
+                .map(val => sanitizeZeroDefaultScore(val))
+                .filter(val => val > 0);
+            if (activeScores.length === 0) return 0;
+            const sum = activeScores.reduce((acc, val) => acc + val, 0);
+            return sum / activeScores.length;
         }
 
         // Kolom Rata-rata 2: Rata-rata Tugas/Ulangan + ASAS/ASAT setelah prosentase 60:40%
