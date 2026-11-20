@@ -356,7 +356,7 @@
                     </div>
                     <div class="px-4 py-2.5 rounded-2xl bg-white/10 border border-white/20 text-center">
                         <p class="text-[10px] uppercase tracking-wider text-blue-200 font-bold">Rerata Akhir</p>
-                        <p id="statAvgGrade" class="text-lg font-black text-amber-300">-</p>
+                        <p id="statAvgGrade" class="text-lg font-black text-amber-300">0.0</p>
                     </div>
                 </div>
             </div>
@@ -502,7 +502,7 @@
                     <div class="flex flex-wrap items-center gap-2">
                         <input id="studentAttendanceMonthPicker" type="month" onchange="renderStudentAttendanceReport()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                         <button type="button" onclick="exportElementToPNG('studentAttendanceSheet', 'Presensi_Siswa')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold cursor-pointer">PNG</button>
-                        <button type="button" onclick="exportElementToPDF('studentAttendanceSheet', 'Presensi_Siswa')" class="px-3 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">PDF</button>
+                        <button type="button" onclick="exportElementToPDF('studentAttendanceSheet', 'Presensi_Siswa')" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">PDF</button>
                     </div>
                 </div>
 
@@ -787,6 +787,14 @@
                         <input id="teacherAttendanceDate" type="date" onchange="renderTeacherAttendanceTable()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                         <button type="button" onclick="markAllPresentForDate()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Semua Hadir (H)</button>
                         <button type="button" onclick="applyHistoricalFullPresentJulyOct2026(true)" class="px-3.5 py-2 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">Isi Full H (13 Jul–31 Okt 2026)</button>
+                        <button type="button" onclick="saveAttendanceManualAction()" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span>Simpan</span>
+                        </button>
+                        <button type="button" onclick="clearAttendanceManualAction()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            <span>Bersihkan Data</span>
+                        </button>
                     </div>
                 </div>
 
@@ -799,7 +807,7 @@
                 <!-- Month Picker + Template Download + Import -->
                 <div class="p-4 rounded-2xl bg-mimblue-50/70 border border-mimblue-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="flex flex-wrap items-center gap-2.5">
-                        <label class="text-xs font-extrabold text-mimblue-900">Bulan Template / Impor:</label>
+                        <label class="text-xs font-extrabold text-mimblue-900">Bulan Template / Impor / Bersihkan:</label>
                         <input id="attendanceTemplateMonthPicker" type="month" onchange="syncAttendanceMonthPickers(this.value)" class="px-3 py-2 bg-white border border-mimblue-300 rounded-xl text-xs font-bold">
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
@@ -872,6 +880,14 @@
                             <option value="Ganjil">Semester Ganjil</option>
                             <option value="Genap">Semester Genap</option>
                         </select>
+                        <button type="button" onclick="saveGradesManualAction()" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span>Simpan</span>
+                        </button>
+                        <button type="button" onclick="clearGradesManualAction()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            <span>Bersihkan Data</span>
+                        </button>
                     </div>
                 </div>
 
@@ -1118,7 +1134,6 @@
             { name: "Tsuraya Aulia Arsy", gender: "Perempuan" }
         ];
 
-        // Daftar Hari Libur Nasional Indonesia Tahun 2026
         const NATIONAL_HOLIDAYS_2026 = {
             '2026-01-01': 'Tahun Baru 2026 Masehi',
             '2026-01-16': 'Isra Mikraj Nabi Muhammad SAW',
@@ -1159,8 +1174,8 @@
 
         function generateHistoricalAttendanceJulyToOct2026() {
             const records = {};
-            const start = new Date(2026, 6, 13); // 13 Juli 2026
-            const end = new Date(2026, 9, 31);   // 31 Oktober 2026
+            const start = new Date(2026, 6, 13);
+            const end = new Date(2026, 9, 31);
             for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
                 const yyyy = d.getFullYear();
                 const mm = String(d.getMonth() + 1).padStart(2, '0');
@@ -1200,7 +1215,7 @@
             return topics;
         }
 
-        // Default seluruh nilai yang belum diinput menjadi 0
+        // Default seluruh nilai selain yang diinput secara manual = 0
         function sanitizeZeroDefaultScore(val) {
             if (val === null || val === undefined || String(val).trim() === '') return 0;
             const num = Number(val);
@@ -1209,7 +1224,7 @@
         }
 
         function normalizeGradeRecord(raw) {
-            if (!raw) {
+            if (!raw || typeof raw !== 'object') {
                 return { tasks: Array(10).fill(0), asas: 0, note: '' };
             }
             if (Array.isArray(raw.tasks)) {
@@ -1226,7 +1241,20 @@
             return { tasks, asas: asasOld, note: raw.note || '' };
         }
 
-        // Kolom Rata-rata 1: Rata-rata murni Tugas/Ulangan (Jumlah 10 Tugas ÷ kolom nilai aktif > 0)
+        function mergeGradeRecordPreservingManual(localRaw, remoteRaw) {
+            const localRec = normalizeGradeRecord(localRaw);
+            const remoteRec = normalizeGradeRecord(remoteRaw);
+            const mergedTasks = Array.from({ length: 10 }, (_, idx) => {
+                const lVal = localRec.tasks[idx];
+                const rVal = remoteRec.tasks[idx];
+                if (lVal > 0 && rVal === 0) return lVal;
+                return rVal;
+            });
+            const mergedAsas = (localRec.asas > 0 && remoteRec.asas === 0) ? localRec.asas : remoteRec.asas;
+            const mergedNote = remoteRec.note || localRec.note || '';
+            return { tasks: mergedTasks, asas: mergedAsas, note: mergedNote };
+        }
+
         function computeTaskAverage(rec) {
             const norm = normalizeGradeRecord(rec);
             const activeScores = norm.tasks
@@ -1237,8 +1265,6 @@
             return sum / activeScores.length;
         }
 
-        // Kolom Rata-rata 2: Rata-rata Tugas/Ulangan + ASAS/ASAT setelah prosentase 60:40%
-        // Kolom ini hanya aktif saat nilai ASAS/ASAT terisi (> 0)
         function computeGradeFinalScore(rec) {
             const norm = normalizeGradeRecord(rec);
             const asasScore = sanitizeZeroDefaultScore(norm.asas);
@@ -1461,13 +1487,26 @@
                     if (querySnap.empty) return;
                     hasReceivedCloudStudents = true;
                     isApplyingRemoteSnapshot = true;
+                    const localByNis = {};
+                    appState.students.forEach(s => { localByNis[s.nis] = s; });
+
                     const remoteList = [];
                     querySnap.forEach(docItem => {
-                        remoteList.push(docItem.data());
+                        const rDoc = docItem.data();
+                        const lDoc = localByNis[rDoc.nis];
+                        const mergedGrades = { Ganjil: {}, Genap: {} };
+                        ['Ganjil', 'Genap'].forEach(sem => {
+                            SUBJECTS_LIST.forEach(subj => {
+                                mergedGrades[sem][subj] = mergeGradeRecordPreservingManual(
+                                    lDoc?.grades?.[sem]?.[subj],
+                                    rDoc.grades?.[sem]?.[subj]
+                                );
+                            });
+                        });
+                        remoteList.push(Object.assign({}, rDoc, { grades: mergedGrades }));
                     });
                     remoteList.sort((a, b) => (a.no || 999) - (b.no || 999));
 
-                    // Otomatis lengkapi presensi 13 Juli - 31 Okt 2026 full H (kecuali Minggu/libur & sel yang sudah terisi S/I/A)
                     const addedHistorical = ensureStudentsHistoricalAttendanceJulyOct2026(remoteList);
                     appState.students = remoteList;
 
@@ -1880,7 +1919,7 @@
             });
             document.getElementById('statAvgGrade').textContent = countFinalSubjects > 0
                 ? (totalFinal / countFinalSubjects).toFixed(1)
-                : '-';
+                : '0.0';
 
             const monthPicker = document.getElementById('studentAttendanceMonthPicker');
             if (!monthPicker.value) {
@@ -2085,11 +2124,20 @@
 
             pillsEl.innerHTML = allSubjects.map(subj => {
                 const active = appState.selectedSubjectFilter === subj;
-                return `<button type="button" onclick="appState.selectedSubjectFilter='${subj.replace(/'/g, "\'")}'; renderStudentGrades();"
-                    class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-mimblue-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                const encodedSubj = encodeURIComponent(subj);
+                return `<button type="button" data-subject-filter="${encodedSubj}"
+                    class="student-grade-pill px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-mimblue-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                     ${subj === 'ALL' ? 'Semua 12 Mapel' : subj}
                 </button>`;
             }).join('');
+
+            pillsEl.querySelectorAll('.student-grade-pill').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const rawSubj = decodeURIComponent(btn.getAttribute('data-subject-filter') || 'ALL');
+                    appState.selectedSubjectFilter = rawSubj;
+                    renderStudentGrades();
+                });
+            });
 
             const filtered = appState.selectedSubjectFilter === 'ALL'
                 ? SUBJECTS_LIST
@@ -2100,23 +2148,23 @@
                 const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
                 const avgTaskRaw = computeTaskAverage(rec);
                 const avgTaskDisplay = avgTaskRaw.toFixed(1);
-                const asasDisplay = rec.asas > 0 ? rec.asas : 0;
+                const asasDisplay = sanitizeZeroDefaultScore(rec.asas);
                 const finalRaw = computeGradeFinalScore(rec);
-                const finalDisplay = finalRaw !== null ? finalRaw.toFixed(1) : '-';
+                const finalDisplay = finalRaw !== null ? finalRaw.toFixed(1) : '0.0';
                 const predBadge = finalRaw !== null
                     ? (() => {
                         const pred = getPredikat(finalRaw);
                         return `<span class="px-2.5 py-0.5 rounded-md font-extrabold ${pred.cls}">${pred.letter}</span>`;
                     })()
-                    : '<span class="text-slate-400 font-bold">-</span>';
+                    : '<span class="px-2.5 py-0.5 rounded-md font-extrabold bg-rose-100 text-rose-800">D</span>';
 
                 return `
                     <tr class="hover:bg-slate-50">
                         <td class="py-3 px-3 font-bold text-slate-500">${idx + 1}</td>
                         <td class="py-3 px-4 font-extrabold text-slate-900">${subj}</td>
                         <td class="py-3 px-3 text-center font-bold text-sky-800 bg-sky-50/40">${avgTaskDisplay}</td>
-                        <td class="py-3 px-3 text-center font-semibold ${rec.asas > 0 ? 'text-amber-800' : 'text-slate-400'}">${asasDisplay}</td>
-                        <td class="py-3 px-3 text-center font-extrabold ${finalRaw !== null ? 'text-mimblue-800 bg-emerald-50/50' : 'text-slate-400'}">${finalDisplay}</td>
+                        <td class="py-3 px-3 text-center font-semibold ${asasDisplay > 0 ? 'text-amber-800' : 'text-slate-500'}">${asasDisplay}</td>
+                        <td class="py-3 px-3 text-center font-extrabold ${finalRaw !== null ? 'text-mimblue-800 bg-emerald-50/50' : 'text-slate-600'}">${finalDisplay}</td>
                         <td class="py-3 px-3 text-center">${predBadge}</td>
                         <td class="py-3 px-4 text-slate-500">${rec.note || '-'}</td>
                     </tr>
@@ -2131,7 +2179,7 @@
                     const itemsHtml = rec.tasks.map((val, i) => `
                         <div class="flex items-center justify-between gap-2 py-0.5 border-b border-slate-100 last:border-0">
                             <span class="text-slate-600 truncate" title="${topics[i]}">${i + 1}. ${topics[i]}</span>
-                            <strong class="${val > 0 ? 'text-slate-900' : 'text-slate-400'} shrink-0">${val}</strong>
+                            <strong class="${val > 0 ? 'text-slate-900' : 'text-slate-500'} shrink-0">${sanitizeZeroDefaultScore(val)}</strong>
                         </div>
                     `).join('');
                     return `
@@ -2149,11 +2197,20 @@
             const allSubjects = ['ALL', ...SUBJECTS_LIST];
             pillsEl.innerHTML = allSubjects.map(subj => {
                 const active = appState.selectedMaterialSubjectFilter === subj;
-                return `<button type="button" onclick="appState.selectedMaterialSubjectFilter='${subj.replace(/'/g, "\'")}'; renderStudentMaterials();"
-                    class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-mimblue-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                const encodedSubj = encodeURIComponent(subj);
+                return `<button type="button" data-mat-subject="${encodedSubj}"
+                    class="student-mat-pill px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-mimblue-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                     ${subj === 'ALL' ? 'Semua Mapel' : subj}
                 </button>`;
             }).join('');
+
+            pillsEl.querySelectorAll('.student-mat-pill').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const rawSubj = decodeURIComponent(btn.getAttribute('data-mat-subject') || 'ALL');
+                    appState.selectedMaterialSubjectFilter = rawSubj;
+                    renderStudentMaterials();
+                });
+            });
 
             const filtered = appState.selectedMaterialSubjectFilter === 'ALL'
                 ? appState.materials
@@ -2392,6 +2449,42 @@
             saveDatabase();
             renderTeacherAttendanceTable();
             showToast(`Seluruh ${appState.students.length} siswa ditandai Hadir pada ${dateStr}!`, 'success');
+        }
+
+        async function saveAttendanceManualAction() {
+            const dateStr = document.getElementById('teacherAttendanceDate')?.value || new Date().toISOString().split('T')[0];
+            clearTimeout(cloudSyncTimer);
+            await pushAllStateToCloud();
+            renderTeacherAttendanceTable();
+            renderAdminMonthlyRecapTable();
+            showToast(`Data kehadiran (${dateStr} & bulan aktif) berhasil disimpan!`, 'success');
+        }
+
+        function clearAttendanceManualAction() {
+            const dateStr = document.getElementById('teacherAttendanceDate')?.value || '';
+            const monthYm = getActiveAttendanceYearMonth();
+            openCustomConfirm(
+                'Bersihkan Data Kehadiran?',
+                `Pilih tindakan pembersihan data kehadiran (baik input manual maupun hasil impor template):\n• Klik "Ya, Lanjutkan" untuk menghapus seluruh data kehadiran pada bulan ${monthYm} (termasuk tanggal ${dateStr || '-'}).`,
+                async () => {
+                    appState.students.forEach(st => {
+                        if (!st.attendance || typeof st.attendance !== 'object') {
+                            st.attendance = {};
+                            return;
+                        }
+                        Object.keys(st.attendance).forEach(key => {
+                            if (key.startsWith(`${monthYm}-`)) {
+                                delete st.attendance[key];
+                            }
+                        });
+                    });
+                    clearTimeout(cloudSyncTimer);
+                    await pushAllStateToCloud();
+                    renderTeacherAttendanceTable();
+                    renderAdminMonthlyRecapTable();
+                    showToast(`Seluruh data kehadiran bulan ${monthYm} berhasil dibersihkan!`, 'success');
+                }
+            );
         }
 
         function applyHistoricalFullPresentJulyOct2026(notifyUser = false) {
@@ -2767,23 +2860,27 @@
                 const avgTaskRaw = computeTaskAverage(rec);
                 const avgTaskDisplay = avgTaskRaw.toFixed(1);
                 const finalRaw = computeGradeFinalScore(rec);
-                const finalDisplay = finalRaw !== null ? finalRaw.toFixed(1) : '-';
+                const finalDisplay = finalRaw !== null ? finalRaw.toFixed(1) : '0.0';
                 const predBadge = finalRaw !== null
                     ? (() => {
                         const pred = getPredikat(finalRaw);
                         return `<span class="px-2 py-0.5 rounded-md font-extrabold ${pred.cls}">${pred.letter}</span>`;
                     })()
-                    : '<span class="text-slate-400 font-bold">-</span>';
+                    : '<span class="px-2 py-0.5 rounded-md font-extrabold bg-rose-100 text-rose-800">D</span>';
 
-                const taskCells = rec.tasks.map((score, tIdx) => `
+                const taskCells = rec.tasks.map((score, tIdx) => {
+                    const cleanVal = sanitizeZeroDefaultScore(score);
+                    return `
                     <td class="py-1.5 px-1 text-center">
-                        <input type="number" min="0" max="100" value="${score}"
+                        <input type="number" min="0" max="100" value="${cleanVal}"
                             onchange="updateStudentTaskScore('${st.nis}', ${tIdx}, this.value)"
                             class="w-12 text-center py-1 bg-slate-50 border border-slate-300 rounded-lg font-bold text-[11px] focus:bg-white focus:border-mimblue-600 outline-none">
                     </td>
-                `).join('');
+                `;
+                }).join('');
 
-                const asasHasVal = rec.asas > 0;
+                const asasClean = sanitizeZeroDefaultScore(rec.asas);
+                const asasHasVal = asasClean > 0;
 
                 return `
                     <tr class="hover:bg-slate-50">
@@ -2793,11 +2890,11 @@
                         ${taskCells}
                         <td class="py-2 px-2 text-center font-extrabold text-sky-900 bg-sky-50/80">${avgTaskDisplay}</td>
                         <td class="py-1.5 px-2 text-center ${asasHasVal ? 'bg-amber-50/70' : 'bg-slate-50'}">
-                            <input type="number" min="0" max="100" value="${rec.asas}"
+                            <input type="number" min="0" max="100" value="${asasClean}"
                                 onchange="updateStudentAsasOrNote('${st.nis}', 'asas', this.value)"
-                                class="w-16 text-center py-1 rounded-lg font-extrabold text-xs outline-none transition ${asasHasVal ? 'bg-white border-2 border-amber-500 text-amber-900' : 'bg-slate-100 border border-dashed border-slate-300 text-slate-500 focus:bg-white focus:border-amber-500'}">
+                                class="w-16 text-center py-1 rounded-lg font-extrabold text-xs outline-none transition ${asasHasVal ? 'bg-white border-2 border-amber-500 text-amber-900' : 'bg-slate-100 border border-dashed border-slate-300 text-slate-600 focus:bg-white focus:border-amber-500'}">
                         </td>
-                        <td class="py-2 px-2.5 text-center font-extrabold ${finalRaw !== null ? 'text-emerald-800 bg-emerald-50/70' : 'text-slate-400 bg-slate-50'}">${finalDisplay}</td>
+                        <td class="py-2 px-2.5 text-center font-extrabold ${finalRaw !== null ? 'text-emerald-800 bg-emerald-50/70' : 'text-slate-600 bg-slate-50'}">${finalDisplay}</td>
                         <td class="py-2 px-2 text-center">${predBadge}</td>
                         <td class="py-1.5 px-3"><input type="text" value="${rec.note || ''}" onchange="updateStudentAsasOrNote('${st.nis}', 'note', this.value)" placeholder="Catatan..." class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px]"></td>
                     </tr>
@@ -2852,6 +2949,35 @@
             renderTeacherGradesTable();
         }
 
+        async function saveGradesManualAction() {
+            const subj = document.getElementById('teacherGradeSubjectSelect')?.value || '';
+            const sem = document.getElementById('teacherGradeSemesterSelect')?.value || 'Ganjil';
+            clearTimeout(cloudSyncTimer);
+            await pushAllStateToCloud();
+            renderTeacherGradesTable();
+            showToast(`Data nilai ${subj} (${sem}) berhasil disimpan!`, 'success');
+        }
+
+        function clearGradesManualAction() {
+            const subj = document.getElementById('teacherGradeSubjectSelect')?.value || '';
+            const sem = document.getElementById('teacherGradeSemesterSelect')?.value || 'Ganjil';
+            openCustomConfirm(
+                'Bersihkan Data Nilai?',
+                `Hapus/reset seluruh nilai (baik input manual maupun hasil impor template) pada mata pelajaran "${subj}" (${sem}) kembali ke 0?`,
+                async () => {
+                    appState.students.forEach(st => {
+                        if (!st.grades) st.grades = createBlankGradesObject();
+                        if (!st.grades[sem]) st.grades[sem] = {};
+                        st.grades[sem][subj] = { tasks: Array(10).fill(0), asas: 0, note: '' };
+                    });
+                    clearTimeout(cloudSyncTimer);
+                    await pushAllStateToCloud();
+                    renderTeacherGradesTable();
+                    showToast(`Seluruh nilai ${subj} (${sem}) berhasil direset ke 0!`, 'success');
+                }
+            );
+        }
+
         function downloadGradesTemplateXls() {
             if (typeof XLSX === 'undefined') {
                 showToast('Library Excel belum siap.', 'error');
@@ -2872,11 +2998,11 @@
                     Semester: sem
                 };
                 for (let i = 0; i < 10; i++) {
-                    rowObj[`Tugas_Ulangan_${i + 1}_${topics[i]}`] = rec.tasks[i];
+                    rowObj[`Tugas_Ulangan_${i + 1}_${topics[i]}`] = sanitizeZeroDefaultScore(rec.tasks[i]);
                 }
                 rowObj['Rerata_Tugas_Murni'] = Number(avgTask.toFixed(1));
-                rowObj['ASAS_ASAT'] = rec.asas;
-                rowObj['Nilai_Akhir_60_40'] = finalRaw !== null ? Number(finalRaw.toFixed(1)) : '';
+                rowObj['ASAS_ASAT'] = sanitizeZeroDefaultScore(rec.asas);
+                rowObj['Nilai_Akhir_60_40'] = finalRaw !== null ? Number(finalRaw.toFixed(1)) : 0;
                 rowObj['Catatan'] = rec.note || '';
                 return rowObj;
             });
@@ -2904,8 +3030,8 @@
                         Mapel: subj,
                         Semester: sem,
                         Rerata_Tugas_Murni: Number(avgTask.toFixed(1)),
-                        ASAS_ASAT: rec.asas,
-                        Nilai_Akhir_60_40: finalRaw !== null ? Number(finalRaw.toFixed(1)) : ''
+                        ASAS_ASAT: sanitizeZeroDefaultScore(rec.asas),
+                        Nilai_Akhir_60_40: finalRaw !== null ? Number(finalRaw.toFixed(1)) : 0
                     });
                 });
             });
@@ -3871,6 +3997,8 @@
             setStudentAttendance,
             setStudentAttendanceNote,
             markAllPresentForDate,
+            saveAttendanceManualAction,
+            clearAttendanceManualAction,
             applyHistoricalFullPresentJulyOct2026,
             syncAttendanceMonthPickers,
             downloadAttendanceTemplateXls,
@@ -3880,6 +4008,8 @@
             updateAssignmentTopicName,
             updateStudentTaskScore,
             updateStudentAsasOrNote,
+            saveGradesManualAction,
+            clearGradesManualAction,
             downloadGradesTemplateXls,
             exportAllSubjectsSummaryXls,
             handleImportGradesXls,
