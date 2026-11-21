@@ -285,7 +285,7 @@
 
                             <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-2.5">
                                 <div class="flex items-center justify-between">
-                                    <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Riwayat Presensi Tanggal Terpilih</h3>
+                                    <h3 id="publicTodayScanHeading" class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Riwayat Presensi Tanggal Terpilih</h3>
                                     <span id="publicTodayScanCount" class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[11px] font-extrabold">0 / 26 Siswa</span>
                                 </div>
                                 <div id="publicTodayScanList" class="max-h-56 overflow-y-auto space-y-1.5 pr-1"></div>
@@ -430,7 +430,7 @@
                             <p id="bioViewGender" class="font-bold text-slate-900 mt-0.5"></p>
                         </div>
                         <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] text-slate-400 font-bold">Tempat, Tanggal Lahir</p>
+                            <p class="text-[11px] text-slate-400 font-bold">Tempat, Tanggal Lahir (DD-MM-YYYY)</p>
                             <p id="bioViewBirth" class="font-bold text-slate-900 mt-0.5"></p>
                         </div>
                         <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
@@ -509,7 +509,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print">
                     <div>
                         <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Rekap Presensi Bulanan</h3>
-                        <p class="text-xs text-slate-500">Pilih bulan untuk melihat ringkasan kehadiran (blok merah menandakan hari Minggu/Ahad & libur nasional).</p>
+                        <p class="text-xs text-slate-500">Format tanggal <strong>DD-MM-YYYY</strong> • Blok merah menandakan hari Minggu/Ahad & libur nasional.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <input id="studentAttendanceMonthPicker" type="month" onchange="renderStudentAttendanceReport()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
@@ -551,7 +551,7 @@
                             <thead class="bg-slate-100 text-slate-700 uppercase text-[11px]">
                                 <tr>
                                     <th class="py-2.5 px-4">No</th>
-                                    <th class="py-2.5 px-4">Tanggal & Hari</th>
+                                    <th class="py-2.5 px-4">Tanggal (DD-MM-YYYY) & Hari</th>
                                     <th class="py-2.5 px-4">Status</th>
                                     <th class="py-2.5 px-4">Keterangan / Waktu</th>
                                 </tr>
@@ -921,17 +921,18 @@
                 </div>
             </div>
 
-            <!-- Teacher Tab 2: Attendance & Excel Import/Export -->
+            <!-- Teacher Tab 2: Attendance & Excel Import/Export + Direct Paste -->
             <div id="tTabContent-attendance" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Presensi Harian & Template Excel Bulanan</h3>
-                        <p class="text-xs text-slate-500">Presensi 13 Juli – 31 Oktober 2026 otomatis terisi <strong>Hadir (H)</strong> (kecuali hari Minggu & libur). Ubah manual siswa yang <strong>S / I / A</strong>.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Presensi Harian, Paste Langsung Excel & Template Bulanan</h3>
+                        <p class="text-xs text-slate-500">Presensi 13-07-2026 – 31-10-2026 otomatis terisi <strong>Hadir (H)</strong> (kecuali hari Minggu & libur). Ubah manual siswa yang <strong>S / I / A</strong> atau paste blok 1 bulan dari Excel.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <input id="teacherAttendanceDate" type="date" onchange="renderTeacherAttendanceTable()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
+                        <span id="teacherAttendanceSelectedDateBadge" class="px-2.5 py-2 rounded-xl bg-mimblue-50 text-mimblue-800 border border-mimblue-200 text-xs font-mono font-bold"></span>
                         <button type="button" onclick="markAllPresentForDate()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Semua Hadir (H)</button>
-                        <button type="button" onclick="applyHistoricalFullPresentJulyOct2026(true)" class="px-3.5 py-2 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">Isi Full H (13 Jul–31 Okt 2026)</button>
+                        <button type="button" onclick="applyHistoricalFullPresentJulyOct2026(true)" class="px-3.5 py-2 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">Isi Full H (13-07 s.d 31-10-2026)</button>
                         <button type="button" onclick="saveAttendanceManualAction()" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4"></i>
                             <span>Simpan</span>
@@ -952,8 +953,9 @@
                 <!-- Month Picker + Template Download + Import -->
                 <div class="p-4 rounded-2xl bg-mimblue-50/70 border border-mimblue-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="flex flex-wrap items-center gap-2.5">
-                        <label class="text-xs font-extrabold text-mimblue-900">Bulan Template / Impor / Bersihkan:</label>
+                        <label class="text-xs font-extrabold text-mimblue-900">Bulan Template / Paste / Impor / Bersihkan:</label>
                         <input id="attendanceTemplateMonthPicker" type="month" onchange="syncAttendanceMonthPickers(this.value)" class="px-3 py-2 bg-white border border-mimblue-300 rounded-xl text-xs font-bold">
+                        <span id="attendanceMonthDaysInfoBadge" class="px-2.5 py-1.5 rounded-xl bg-white border border-mimblue-200 text-[11px] font-bold text-mimblue-800"></span>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <button type="button" onclick="downloadAttendanceTemplateXls()" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">Unduh Template Excel (.xlsx)</button>
@@ -962,6 +964,27 @@
                             <input type="file" accept=".xlsx,.xls" onchange="handleImportAttendanceXls(event)" class="hidden">
                         </label>
                     </div>
+                </div>
+
+                <!-- Direct Excel Copy-Paste Box for Monthly Attendance (H/S/I/A block only) -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200 space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-emerald-950">Paste Langsung Kehadiran 1 Bulan dari Excel (Blok H / S / I / A Saja)</h4>
+                            <p class="text-[11px] text-emerald-800">
+                                Blok saja isi sel <strong>H / S / I / A</strong> (atau sel kosong/`-`) di Excel untuk seluruh siswa (baris ke bawah) × hari pada bulan terpilih (kolom ke kanan, misal 1–31 Oktober 2026), lalu tekan <kbd class="px-1.5 py-0.5 bg-white border border-emerald-300 rounded text-[10px] font-mono">Ctrl+V</kbd> di bawah. Hari Minggu & libur nasional otomatis dilewati (blok merah).
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" onclick="clearAttendancePasteBox()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-emerald-200 text-xs font-bold cursor-pointer">Kosongkan Kotak</button>
+                            <button type="button" onclick="applyPastedMonthlyAttendance()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold cursor-pointer">Terapkan ke Bulan Ini</button>
+                        </div>
+                    </div>
+                    <textarea id="attendanceExcelPasteArea" rows="5"
+                        placeholder="Contoh paste dari Excel (dipisah Tab antar hari, Enter antar siswa):
+H	H	I	H	H	...
+H	S	H	H	H	..."
+                        class="w-full px-3.5 py-2.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono text-slate-800 outline-none focus:border-emerald-600"></textarea>
                 </div>
 
                 <!-- Admin Quick QR/NIS Scanner -->
@@ -1008,11 +1031,11 @@
                 </div>
             </div>
 
-            <!-- Teacher Tab 3: Grades (12 Subjects, 10 Tasks, 2 Average Columns 60:40, ASAS/ASAT) -->
+            <!-- Teacher Tab 3: Grades (12 Subjects, 10 Tasks, 2 Average Columns 60:40, ASAS/ASAT + Direct Paste) -->
             <div id="tTabContent-grades" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Input Nilai Akademik (12 Mata Pelajaran)</h3>
+                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Input & Paste Langsung Nilai Akademik (12 Mata Pelajaran)</h3>
                         <p class="text-xs text-slate-500">
                             Seluruh nilai belum diinput otomatis default <strong>0</strong> •
                             <strong>Kolom Rata-rata 1 (Rerata Tugas)</strong>: Jumlah Tugas ÷ kolom nilai aktif (murni sebelum prosentase 60%) •
@@ -1046,6 +1069,27 @@
                         </label>
                     </div>
                     <button type="button" onclick="exportAllSubjectsSummaryXls()" class="px-3.5 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-950 text-xs font-bold cursor-pointer">Ekspor Rekap Semua Mapel (.xlsx)</button>
+                </div>
+
+                <!-- Direct Excel Copy-Paste Box for Grades -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-mimblue-50/70 border border-mimblue-200 space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-mimblue-900">Paste Langsung Nilai dari Excel untuk Seluruh Siswa (Mapel & Semester Aktif)</h4>
+                            <p class="text-[11px] text-mimblue-800">
+                                Copy blok angka nilai dari Excel berurutan per siswa (baris ke bawah): <strong>1–10 kolom Tugas (T1..T10)</strong>, atau <strong>11 kolom (T1..T10 + ASAS/ASAT)</strong>, atau <strong>12 kolom (+ Catatan)</strong>, lalu <kbd class="px-1.5 py-0.5 bg-white border border-mimblue-300 rounded text-[10px] font-mono">Ctrl+V</kbd>.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" onclick="clearGradesPasteBox()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-mimblue-200 text-xs font-bold cursor-pointer">Kosongkan Kotak</button>
+                            <button type="button" onclick="applyPastedGradesBlock()" class="px-4 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">Terapkan Nilai</button>
+                        </div>
+                    </div>
+                    <textarea id="gradesExcelPasteArea" rows="4"
+                        placeholder="Contoh paste dari Excel (dipisah Tab):
+85	90	88	0	0	0	0	0	0	0	92	Tuntas
+80	85	82	0	0	0	0	0	0	0	88	Baik"
+                        class="w-full px-3.5 py-2.5 bg-white border border-mimblue-300 rounded-xl text-xs font-mono text-slate-800 outline-none focus:border-mimblue-600"></textarea>
                 </div>
 
                 <!-- 10 Judul Tugas Box -->
@@ -1299,6 +1343,25 @@
             '2026-12-25': 'Hari Raya Natal'
         };
 
+        // Format tampilan tanggal menjadi DD-MM-YYYY (penyimpanan internal tetap YYYY-MM-DD)
+        function formatDateDDMMYYYY(dateStr) {
+            if (!dateStr) return '-';
+            const match = String(dateStr).trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (match) {
+                return `${match[3]}-${match[2]}-${match[1]}`;
+            }
+            return String(dateStr);
+        }
+
+        function formatTodayIndonesianDDMMYYYY() {
+            const now = new Date();
+            const dd = String(now.getDate()).padStart(2, '0');
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const yyyy = now.getFullYear();
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            return `${dd} ${months[now.getMonth()]} ${yyyy} (${dd}-${mm}-${yyyy})`;
+        }
+
         function getDateHolidayInfo(dateStr) {
             if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
                 return { isSunday: false, isHoliday: false, isRedBlock: false, label: '' };
@@ -1362,7 +1425,7 @@
 
         function sanitizeZeroDefaultScore(val) {
             if (val === null || val === undefined || String(val).trim() === '') return 0;
-            const num = Number(val);
+            const num = Number(String(val).trim().replace(',', '.'));
             if (!Number.isFinite(num)) return 0;
             return Math.max(0, Math.min(100, num));
         }
@@ -1527,12 +1590,13 @@
                 };
             });
 
+            const formattedToday = formatTodayIndonesianDDMMYYYY();
             const materials = SUBJECTS_LIST.map((subj, i) => ({
                 id: `mat_${i + 1}`,
                 subject: subj,
                 title: `Bab 1 - Pengantar & Rangkuman ${subj} Kelas 3`,
                 content: `Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nAnak-anak Kelas 3 MIM 1 Slinga yang shalih dan shalihah, berikut adalah ringkasan materi pokok mata pelajaran ${subj}:\n\n1. Memahami konsep dasar dan nilai-nilai akhlak mulia dalam kehidupan sehari-hari.\n2. Membiasakan sikap disiplin, jujur, tanggung jawab, serta gemar membaca.\n3. Kerjakan latihan soal pada buku pendamping siswa halaman 12-15.\n\nSelamat belajar dan tetap semangat!`,
-                createdAt: '19 November 2026'
+                createdAt: formattedToday
             }));
 
             return {
@@ -1927,7 +1991,7 @@
             const card = document.getElementById('publicLastScanCard');
             document.getElementById('publicLastScanPhoto').src = st.photo;
             document.getElementById('publicLastScanBadge').textContent = labels[statusCode].badge;
-            document.getElementById('publicLastScanTime').textContent = `${timeNow} WIB`;
+            document.getElementById('publicLastScanTime').textContent = `${formatDateDDMMYYYY(dateStr)} • ${timeNow} WIB`;
             document.getElementById('publicLastScanName').textContent = st.name;
             document.getElementById('publicLastScanNis').textContent = `${st.nis} • Absen ${st.no}`;
             card.classList.remove('hidden');
@@ -1938,6 +2002,11 @@
 
         function renderPublicTodayScanList() {
             const dateStr = document.getElementById('publicScanDate')?.value || new Date().toISOString().split('T')[0];
+            const headingEl = document.getElementById('publicTodayScanHeading');
+            if (headingEl) {
+                headingEl.textContent = `Riwayat Presensi (${formatDateDDMMYYYY(dateStr)})`;
+            }
+
             const listEl = document.getElementById('publicTodayScanList');
             const countEl = document.getElementById('publicTodayScanCount');
             if (!listEl || !countEl) return;
@@ -1946,7 +2015,7 @@
             countEl.textContent = `${scanned.length} / ${appState.students.length} Siswa`;
 
             if (scanned.length === 0) {
-                listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">Belum ada presensi tercatat pada tanggal ini.</p>`;
+                listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">Belum ada presensi tercatat pada tanggal ${formatDateDDMMYYYY(dateStr)}.</p>`;
                 return;
             }
 
@@ -2156,7 +2225,8 @@
             document.getElementById('bioViewName').textContent = st.name;
             document.getElementById('bioViewNisNisn').textContent = `${st.nis} / ${st.nisn || '-'}`;
             document.getElementById('bioViewGender').textContent = st.gender || '-';
-            document.getElementById('bioViewBirth').textContent = `${st.birthPlace || '-'}, ${st.birthDate || '-'}`;
+            const formattedBirthDate = st.birthDate ? formatDateDDMMYYYY(st.birthDate) : '-';
+            document.getElementById('bioViewBirth').textContent = `${st.birthPlace || '-'}, ${formattedBirthDate}`;
             document.getElementById('bioViewParent').textContent = st.parentName || '-';
             document.getElementById('bioViewPhone').textContent = st.phone || '-';
             document.getElementById('bioViewAddress').textContent = st.address || '-';
@@ -2258,7 +2328,9 @@
             };
 
             for (let d = 1; d <= daysInMonth; d++) {
-                const dateStr = `${monthVal}-${String(d).padStart(2, '0')}`;
+                const ddStr = String(d).padStart(2, '0');
+                const dateStr = `${monthVal}-${ddStr}`;
+                const displayDate = `${ddStr}-${month}-${year}`;
                 const dtObj = new Date(yearNum, monthNum - 1, d);
                 const dayName = dayNames[dtObj.getDay()];
                 const hInfo = getDateHolidayInfo(dateStr);
@@ -2273,7 +2345,7 @@
                     rowsHtml.push(`
                         <tr class="bg-rose-600 text-white">
                             <td class="py-2 px-4 font-bold">${d}</td>
-                            <td class="py-2 px-4 font-extrabold">${dateStr} (${dayName})</td>
+                            <td class="py-2 px-4 font-extrabold">${displayDate} (${dayName})</td>
                             <td class="py-2 px-4"><span class="px-2.5 py-0.5 rounded-full bg-white text-rose-700 font-extrabold text-[10px]">LIBUR</span></td>
                             <td class="py-2 px-4 font-bold">${hInfo.label}</td>
                         </tr>
@@ -2285,7 +2357,7 @@
                     rowsHtml.push(`
                         <tr class="hover:bg-slate-50">
                             <td class="py-2 px-4 font-bold text-slate-600">${d}</td>
-                            <td class="py-2 px-4 font-bold text-slate-900">${dateStr} (${dayName})</td>
+                            <td class="py-2 px-4 font-bold text-slate-900">${displayDate} (${dayName})</td>
                             <td class="py-2 px-4">${rec ? (statusBadge[rec.status] || rec.status) : '<span class="text-slate-400">-</span>'}</td>
                             <td class="py-2 px-4 text-slate-600">${detailInfo}</td>
                         </tr>
@@ -2663,6 +2735,7 @@
                 const activeYm = getActiveAttendanceYearMonth();
                 const tplPicker = document.getElementById('attendanceTemplateMonthPicker');
                 if (tplPicker && !tplPicker.value) tplPicker.value = activeYm;
+                updateAttendanceMonthInfoBadge(activeYm);
                 renderTeacherAttendanceTable();
             }
             if (tabName === 'grades') renderTeacherGradesTable();
@@ -2731,18 +2804,23 @@
             saveDatabase();
             playScanSuccessBeep();
             renderTeacherAttendanceTable();
-            showToast(`${st.name} (${st.nis}) tercatat Hadir!`, 'success');
+            showToast(`${st.name} (${st.nis}) tercatat Hadir pada ${formatDateDDMMYYYY(dateStr)}!`, 'success');
         }
 
         function renderTeacherAttendanceTable() {
             const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
+            const dateBadge = document.getElementById('teacherAttendanceSelectedDateBadge');
+            if (dateBadge) {
+                dateBadge.textContent = `Tanggal: ${formatDateDDMMYYYY(dateStr)}`;
+            }
+
             const hInfo = getDateHolidayInfo(dateStr);
             const bannerEl = document.getElementById('teacherAttendanceHolidayBanner');
             const bannerTextEl = document.getElementById('teacherAttendanceHolidayText');
             if (bannerEl && bannerTextEl) {
                 if (hInfo.isRedBlock) {
                     bannerEl.classList.remove('hidden');
-                    bannerTextEl.textContent = `BLOK MERAH KALENDER LIBUR: ${dateStr} — ${hInfo.label}`;
+                    bannerTextEl.textContent = `BLOK MERAH KALENDER LIBUR: ${formatDateDDMMYYYY(dateStr)} — ${hInfo.label}`;
                 } else {
                     bannerEl.classList.add('hidden');
                 }
@@ -2808,7 +2886,7 @@
             const dateStr = document.getElementById('teacherAttendanceDate').value || new Date().toISOString().split('T')[0];
             const hInfo = getDateHolidayInfo(dateStr);
             if (hInfo.isRedBlock) {
-                showToast(`Tanggal ${dateStr} adalah ${hInfo.label} (Blok Merah Libur).`, 'error');
+                showToast(`Tanggal ${formatDateDDMMYYYY(dateStr)} adalah ${hInfo.label} (Blok Merah Libur).`, 'error');
                 return;
             }
             appState.students.forEach(st => {
@@ -2817,7 +2895,7 @@
             });
             saveDatabase();
             renderTeacherAttendanceTable();
-            showToast(`Seluruh ${appState.students.length} siswa ditandai Hadir pada ${dateStr}!`, 'success');
+            showToast(`Seluruh ${appState.students.length} siswa ditandai Hadir pada ${formatDateDDMMYYYY(dateStr)}!`, 'success');
         }
 
         async function saveAttendanceManualAction() {
@@ -2826,7 +2904,7 @@
             await pushAllStateToCloud();
             renderTeacherAttendanceTable();
             renderAdminMonthlyRecapTable();
-            showToast(`Data kehadiran (${dateStr} & bulan aktif) berhasil disimpan!`, 'success');
+            showToast(`Data kehadiran (${formatDateDDMMYYYY(dateStr)} & bulan aktif) berhasil disimpan!`, 'success');
         }
 
         function clearAttendanceManualAction() {
@@ -2834,7 +2912,7 @@
             const monthYm = getActiveAttendanceYearMonth();
             openCustomConfirm(
                 'Bersihkan Data Kehadiran?',
-                `Hapus seluruh data kehadiran (baik input manual maupun hasil impor template) pada bulan ${monthYm} (termasuk tanggal ${dateStr || '-'})?`,
+                `Hapus seluruh data kehadiran (baik input manual maupun hasil impor/paste) pada bulan ${monthYm} (termasuk tanggal ${dateStr ? formatDateDDMMYYYY(dateStr) : '-'})?`,
                 async () => {
                     appState.students.forEach(st => {
                         if (!st.attendance || typeof st.attendance !== 'object') {
@@ -2862,7 +2940,7 @@
             renderTeacherAttendanceTable();
             renderAdminMonthlyRecapTable();
             if (notifyUser) {
-                showToast('Presensi 13 Juli – 31 Oktober 2026 terisi Hadir (H) penuh (kecuali hari Minggu & libur)!', 'success');
+                showToast('Presensi 13-07-2026 – 31-10-2026 terisi Hadir (H) penuh (kecuali hari Minggu & libur)!', 'success');
             }
         }
 
@@ -2884,7 +2962,7 @@
         function normalizeAttendanceCode(rawVal) {
             if (rawVal === null || rawVal === undefined) return '';
             const val = String(rawVal).trim().toUpperCase();
-            if (!val || val === '-' || val === '0' || val === '.') return '';
+            if (!val || val === '-' || val === '0' || val === '.' || val === 'LIBUR') return '';
             if (val === 'H' || val.startsWith('HADIR') || val === 'V' || val === '✓' || val === '✔') return 'H';
             if (val === 'I' || val.startsWith('IZIN')) return 'I';
             if (val === 'S' || val.startsWith('SAKIT')) return 'S';
@@ -2903,6 +2981,14 @@
             ) || null;
         }
 
+        function updateAttendanceMonthInfoBadge(ymValue) {
+            const badge = document.getElementById('attendanceMonthDaysInfoBadge');
+            if (!badge || !/^\d{4}-\d{2}$/.test(ymValue)) return;
+            const [y, m] = ymValue.split('-').map(Number);
+            const daysInMonth = new Date(y, m, 0).getDate();
+            badge.textContent = `${getMonthNameIndonesian(String(m))} ${y} (${daysInMonth} hari)`;
+        }
+
         function syncAttendanceMonthPickers(ymValue) {
             if (!/^\d{4}-\d{2}$/.test(ymValue)) return;
             const tplPicker = document.getElementById('attendanceTemplateMonthPicker');
@@ -2910,6 +2996,8 @@
 
             const recapPicker = document.getElementById('adminMonthlyRecapPicker');
             if (recapPicker && recapPicker.value !== ymValue) recapPicker.value = ymValue;
+
+            updateAttendanceMonthInfoBadge(ymValue);
 
             const attDateInput = document.getElementById('teacherAttendanceDate');
             if (attDateInput && !attDateInput.value.startsWith(ymValue)) {
@@ -2938,6 +3026,140 @@
                 return dateVal.slice(0, 7);
             }
             return new Date().toISOString().slice(0, 7);
+        }
+
+        function clearAttendancePasteBox() {
+            const area = document.getElementById('attendanceExcelPasteArea');
+            if (area) {
+                area.value = '';
+                area.focus();
+            }
+        }
+
+        async function applyPastedMonthlyAttendance() {
+            const area = document.getElementById('attendanceExcelPasteArea');
+            const rawText = String(area?.value || '').trim();
+            if (!rawText) {
+                showToast('Tempelkan (Ctrl+V) blok kode H/S/I/A dari Excel terlebih dahulu.', 'error');
+                return;
+            }
+
+            const monthYm = getActiveAttendanceYearMonth();
+            const [yearStr, monthStr] = monthYm.split('-');
+            const daysInMonth = new Date(parseInt(yearStr, 10), parseInt(monthStr, 10), 0).getDate();
+
+            const rawLines = rawText.split(/\r?\n/).filter(line => line.trim() !== '');
+            if (rawLines.length === 0) {
+                showToast('Data paste kosong.', 'error');
+                return;
+            }
+
+            const studentRows = appState.students;
+            const rowsToApply = Math.min(rawLines.length, studentRows.length);
+            let updatedCells = 0;
+            let skippedHolidays = 0;
+
+            for (let r = 0; r < rowsToApply; r++) {
+                const st = studentRows[r];
+                if (!st.attendance) st.attendance = {};
+
+                const cols = rawLines[r].split('\t');
+                const colsToApply = Math.min(cols.length, daysInMonth);
+
+                for (let c = 0; c < colsToApply; c++) {
+                    const dayNum = c + 1;
+                    const dateKey = `${monthYm}-${String(dayNum).padStart(2, '0')}`;
+                    const hInfo = getDateHolidayInfo(dateKey);
+                    if (hInfo.isRedBlock) {
+                        skippedHolidays++;
+                        continue;
+                    }
+
+                    const code = normalizeAttendanceCode(cols[c]);
+                    if (!code) continue;
+
+                    const prev = st.attendance[dateKey] || {};
+                    st.attendance[dateKey] = {
+                        status: code,
+                        scanTime: prev.scanTime || '',
+                        note: prev.note || (code === 'H' ? 'Hadir tepat waktu' : '')
+                    };
+                    updatedCells++;
+                }
+            }
+
+            if (updatedCells === 0) {
+                showToast('Tidak ada kode H, I, S, atau A valid yang terdeteksi pada blok paste.', 'error');
+                return;
+            }
+
+            saveDatabase();
+            await pushAllStateToCloud();
+            renderTeacherAttendanceTable();
+            renderAdminMonthlyRecapTable();
+
+            const labelBulan = `${getMonthNameIndonesian(monthStr)} ${yearStr}`;
+            showToast(`Berhasil menerapkan ${updatedCells} data kehadiran (${rowsToApply} siswa, ${labelBulan})${skippedHolidays > 0 ? ` • ${skippedHolidays} sel hari libur dilewati` : ''}!`, 'success');
+        }
+
+        function clearGradesPasteBox() {
+            const area = document.getElementById('gradesExcelPasteArea');
+            if (area) {
+                area.value = '';
+                area.focus();
+            }
+        }
+
+        async function applyPastedGradesBlock() {
+            const area = document.getElementById('gradesExcelPasteArea');
+            const rawText = String(area?.value || '').trim();
+            if (!rawText) {
+                showToast('Tempelkan (Ctrl+V) blok nilai dari Excel terlebih dahulu.', 'error');
+                return;
+            }
+
+            const subj = document.getElementById('teacherGradeSubjectSelect').value;
+            const sem = document.getElementById('teacherGradeSemesterSelect').value;
+
+            const rawLines = rawText.split(/\r?\n/).filter(line => line.trim() !== '');
+            if (rawLines.length === 0) {
+                showToast('Data nilai paste kosong.', 'error');
+                return;
+            }
+
+            const rowsToApply = Math.min(rawLines.length, appState.students.length);
+            let updatedStudents = 0;
+
+            for (let r = 0; r < rowsToApply; r++) {
+                const st = appState.students[r];
+                if (!st.grades) st.grades = createBlankGradesObject();
+                if (!st.grades[sem]) st.grades[sem] = {};
+
+                const rec = normalizeGradeRecord(st.grades[sem][subj]);
+                const cols = rawLines[r].split('\t');
+
+                for (let t = 0; t < 10; t++) {
+                    if (t < cols.length && String(cols[t] ?? '').trim() !== '') {
+                        rec.tasks[t] = sanitizeZeroDefaultScore(cols[t]);
+                    }
+                }
+
+                if (cols.length >= 11 && String(cols[10] ?? '').trim() !== '') {
+                    rec.asas = sanitizeZeroDefaultScore(cols[10]);
+                }
+
+                if (cols.length >= 12) {
+                    rec.note = String(cols[11] ?? '').trim();
+                }
+
+                st.grades[sem][subj] = rec;
+                updatedStudents++;
+            }
+
+            saveDatabase();
+            await pushAllStateToCloud();
+            renderTeacherGradesTable();
+            showToast(`Berhasil menerapkan nilai untuk ${updatedStudents} siswa pada mapel ${subj} (${sem})!`, 'success');
         }
 
         function exportMonthlyAttendanceXls() {
@@ -3332,7 +3554,7 @@
             const sem = document.getElementById('teacherGradeSemesterSelect')?.value || 'Ganjil';
             openCustomConfirm(
                 'Bersihkan Data Nilai?',
-                `Hapus/reset seluruh nilai (baik input manual maupun hasil impor template) pada mata pelajaran "${subj}" (${sem}) kembali ke 0?`,
+                `Hapus/reset seluruh nilai (baik input manual maupun hasil impor/paste) pada mata pelajaran "${subj}" (${sem}) kembali ke 0?`,
                 async () => {
                     appState.students.forEach(st => {
                         if (!st.grades) st.grades = createBlankGradesObject();
@@ -3698,7 +3920,7 @@
                     Nama_Lengkap: 'Abdul Aziz',
                     Jenis_Kelamin: 'Laki-laki',
                     Tempat_Lahir: 'Purbalingga',
-                    Tanggal_Lahir: '2017-05-12',
+                    Tanggal_Lahir: '12-05-2017',
                     Alamat: 'Desa Slinga, Kaligondang, Purbalingga',
                     Nama_Ortu: 'Bapak Ahmad',
                     No_HP: '081327001101'
@@ -3708,7 +3930,7 @@
                     Nama_Lengkap: 'Aisyah Putri Ramadhani',
                     Jenis_Kelamin: 'Perempuan',
                     Tempat_Lahir: 'Purbalingga',
-                    Tanggal_Lahir: '2017-08-20',
+                    Tanggal_Lahir: '20-08-2017',
                     Alamat: 'Desa Slinga, Kaligondang, Purbalingga',
                     Nama_Ortu: 'Ibu Fatimah',
                     No_HP: '081327001102'
@@ -3730,7 +3952,7 @@
                 Nama_Lengkap: st.name,
                 Jenis_Kelamin: st.gender,
                 Tempat_Lahir: st.birthPlace || '',
-                Tanggal_Lahir: st.birthDate || '',
+                Tanggal_Lahir: st.birthDate ? formatDateDDMMYYYY(st.birthDate) : '',
                 Alamat: st.address || '',
                 Nama_Ortu: st.parentName || '',
                 No_HP: st.phone || ''
@@ -3741,6 +3963,20 @@
             XLSX.utils.book_append_sheet(wb, ws, 'Data_Siswa_Kelas3');
             XLSX.writeFile(wb, 'Data_Siswa_Kelas3_MIM1Slinga.xlsx');
             showToast('Daftar siswa berhasil diekspor ke Excel!', 'success');
+        }
+
+        function parseFlexibleDateToIso(rawDate) {
+            const s = String(rawDate || '').trim();
+            if (!s) return '';
+            const dmy = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+            if (dmy) {
+                return `${dmy[3]}-${dmy[2].padStart(2, '0')}-${dmy[1].padStart(2, '0')}`;
+            }
+            const ymd = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+            if (ymd) {
+                return `${ymd[1]}-${ymd[2].padStart(2, '0')}-${ymd[3].padStart(2, '0')}`;
+            }
+            return s;
         }
 
         function handleImportStudentsXls(event) {
@@ -3774,7 +4010,7 @@
                         const rawGender = String(row.Jenis_Kelamin || row.JK || 'Laki-laki').trim();
                         const gender = rawGender.toLowerCase().startsWith('p') ? 'Perempuan' : 'Laki-laki';
                         const birthPlace = String(row.Tempat_Lahir || 'Purbalingga').trim();
-                        const birthDate = String(row.Tanggal_Lahir || '').trim();
+                        const birthDate = parseFlexibleDateToIso(row.Tanggal_Lahir);
                         const address = String(row.Alamat || 'Desa Slinga, Kaligondang, Purbalingga').trim();
                         const parentName = String(row.Nama_Ortu || '').trim();
                         const phone = String(row.No_HP || '').trim();
@@ -3811,141 +4047,121 @@
                     reindexStudentNumbers();
                     saveDatabase();
                     renderTeacherStudentsTable();
-                    showToast(`Berhasil mengimpor ${importedCount} data siswa dari Excel!`, 'success');
+                    showToast(`Berhasil mengimpor ${importedCount} data siswa!`, 'success');
                 } catch (err) {
-                    showToast('Gagal membaca file Excel data siswa!', 'error');
+                    showToast('Gagal mengimpor file Excel siswa.', 'error');
                 }
             };
             reader.readAsArrayBuffer(file);
             event.target.value = '';
         }
 
-        async function exportAllStudentPhotosZip() {
-            if (typeof JSZip === 'undefined') {
-                showToast('Library ZIP belum siap.', 'error');
-                return;
-            }
-            if (appState.students.length === 0) {
-                showToast('Belum ada data siswa untuk diekspor fotonya.', 'error');
-                return;
-            }
-
-            showToast('Mengemas seluruh foto siswa ke arsip ZIP...', 'info');
-            const zip = new JSZip();
-            const folder = zip.folder('Foto_Siswa_Kelas3_MIM1Slinga');
-
-            for (const st of appState.students) {
-                try {
-                    const res = await fetch(st.photo);
-                    const blob = await res.blob();
-                    const ext = blob.type.includes('svg') ? 'svg' : 'jpg';
-                    const safeName = st.name.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
-                    folder.file(`${st.nis}_${safeName}.${ext}`, blob);
-                } catch (e) {}
-            }
-
-            folder.file('PANDUAN_IMPOR_FOTO.txt', 'Cara Impor Ulang Foto:\n1. Beri nama file foto diawali NIS siswa (misal: kelas3_1.jpg atau kelas3_1_Abdul_Aziz.jpg).\n2. Pilih banyak file gambar sekaligus atau unggah kembali file ZIP ini pada menu Impor Foto di Panel Wali Kelas.');
-
-            const content = await zip.generateAsync({ type: 'blob' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(content);
-            link.download = 'Foto_Siswa_Kelas3_MIM1Slinga.zip';
-            link.click();
-            URL.revokeObjectURL(link.href);
-            showToast('Arsip ZIP foto seluruh siswa berhasil diunduh!', 'success');
-        }
-
         function compressBlobOrFile(blobOrFile, maxSize = 260, quality = 0.72) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = (ev) => {
                     const img = new Image();
-                    img.onload = function() {
+                    img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        const minSide = Math.min(img.width, img.height);
-                        const sx = (img.width - minSide) / 2;
-                        const sy = (img.height - minSide) / 2;
-                        canvas.width = maxSize;
-                        canvas.height = maxSize;
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > h && w > maxSize) {
+                            h = Math.round((h * maxSize) / w);
+                            w = maxSize;
+                        } else if (h >= w && h > maxSize) {
+                            w = Math.round((w * maxSize) / h);
+                            h = maxSize;
+                        }
+                        canvas.width = w || maxSize;
+                        canvas.height = h || maxSize;
                         const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, maxSize, maxSize);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                         resolve(canvas.toDataURL('image/jpeg', quality));
                     };
-                    img.onerror = () => reject(new Error('Gagal memuat gambar'));
-                    img.src = e.target.result;
+                    img.onerror = reject;
+                    img.src = ev.target.result;
                 };
-                reader.onerror = () => reject(new Error('Gagal membaca file'));
+                reader.onerror = reject;
                 reader.readAsDataURL(blobOrFile);
             });
         }
 
-        function matchFilenameToStudent(filename) {
-            const cleanName = filename.split('/').pop();
-            const baseName = cleanName.replace(/\.[^/.]+$/, '').toLowerCase().trim();
-            const normalized = baseName.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+        function matchStudentByPhotoFilename(filename) {
+            const base = filename.split('/').pop().replace(/\.[^/.]+$/, '').toLowerCase().trim();
+            const cleanBase = base.replace(/[^a-z0-9]/g, '');
 
-            let found = appState.students.find(s => {
-                const nisLow = s.nis.toLowerCase();
-                return baseName === nisLow || baseName.startsWith(nisLow + '_') || baseName.startsWith(nisLow + '-') || baseName.startsWith(nisLow + ' ');
-            });
-            if (found) return found;
+            let matched = appState.students.find(s =>
+                s.nis.toLowerCase() === base ||
+                base.startsWith(s.nis.toLowerCase() + '_') ||
+                base.startsWith(s.nis.toLowerCase() + '-') ||
+                base.startsWith(s.nis.toLowerCase() + ' ')
+            );
+            if (matched) return matched;
 
-            found = appState.students.find(s => s.name.toLowerCase() === normalized);
-            if (found) return found;
-
-            if (normalized.length >= 4) {
-                found = appState.students.find(s => {
-                    const stLower = s.name.toLowerCase();
-                    return stLower.includes(normalized) || normalized.includes(stLower);
-                });
+            const numMatch = base.match(/(?:kelas3[_-]?)?(\d+)/);
+            if (numMatch) {
+                const candidateNis = `kelas3_${parseInt(numMatch[1], 10)}`;
+                matched = appState.students.find(s => s.nis.toLowerCase() === candidateNis);
+                if (matched) return matched;
             }
-            return found || null;
+
+            matched = appState.students.find(s => {
+                const normName = s.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                return normName && (cleanBase.includes(normName) || normName.includes(cleanBase));
+            });
+            return matched || null;
         }
 
         async function handleBulkStudentPhotosSelect(event) {
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
 
-            showToast(`Memproses ${files.length} file unggahan...`, 'info');
-            const results = [];
+            const candidateEntries = [];
 
-            for (const file of files) {
-                if (file.name.toLowerCase().endsWith('.zip') && typeof JSZip !== 'undefined') {
+            for (const f of files) {
+                if (f.name.toLowerCase().endsWith('.zip')) {
+                    if (typeof JSZip === 'undefined') {
+                        showToast('Library ZIP belum termuat.', 'error');
+                        continue;
+                    }
                     try {
-                        const zip = await JSZip.loadAsync(file);
+                        const zip = await JSZip.loadAsync(f);
                         const zipEntries = Object.values(zip.files).filter(entry =>
-                            !entry.dir && /\.(jpe?g|png|webp)$/i.test(entry.name) && !entry.name.includes('__MACOSX')
+                            !entry.dir && /\.(jpe?g|png|webp|gif)$/i.test(entry.name)
                         );
                         for (const entry of zipEntries) {
-                            try {
-                                const blob = await entry.async('blob');
-                                const dataUrl = await compressBlobOrFile(blob, 260, 0.72);
-                                const shortName = entry.name.split('/').pop();
-                                const matched = matchFilenameToStudent(shortName);
-                                results.push({
-                                    fileName: shortName,
-                                    dataUrl,
-                                    matchedNis: matched ? matched.nis : ''
-                                });
-                            } catch (e) {}
+                            const blob = await entry.async('blob');
+                            candidateEntries.push({ filename: entry.name, blob });
                         }
-                    } catch (e) {
-                        showToast('Gagal mengekstrak file ZIP foto.', 'error');
+                    } catch (err) {
+                        showToast(`Gagal membaca file ZIP: ${f.name}`, 'error');
                     }
-                } else if (file.type.startsWith('image/')) {
-                    try {
-                        const dataUrl = await compressStudentImageFile(file, 260, 0.72);
-                        const matched = matchFilenameToStudent(file.name);
-                        results.push({
-                            fileName: file.name,
-                            dataUrl,
-                            matchedNis: matched ? matched.nis : ''
-                        });
-                    } catch (e) {}
+                } else if (f.type.startsWith('image/')) {
+                    candidateEntries.push({ filename: f.name, blob: f });
                 }
             }
 
-            appState.pendingBulkPhotos = results;
+            if (candidateEntries.length === 0) {
+                showToast('Tidak ditemukan file gambar valid (.jpg/.png/.webp atau .zip).', 'error');
+                event.target.value = '';
+                return;
+            }
+
+            const previews = [];
+            for (const item of candidateEntries) {
+                const student = matchStudentByPhotoFilename(item.filename);
+                try {
+                    const dataUrl = await compressBlobOrFile(item.blob, 260, 0.72);
+                    previews.push({
+                        filename: item.filename,
+                        dataUrl,
+                        matchedNis: student ? student.nis : '',
+                        matchedName: student ? student.name : 'Tidak cocok otomatis'
+                    });
+                } catch (e) {}
+            }
+
+            appState.pendingBulkPhotos = previews;
             renderBulkPhotoPreview();
             event.target.value = '';
         }
@@ -3955,199 +4171,232 @@
             const grid = document.getElementById('bulkPhotoPreviewGrid');
             const summary = document.getElementById('bulkPhotoSummaryText');
 
-            if (appState.pendingBulkPhotos.length === 0) {
+            if (!appState.pendingBulkPhotos || appState.pendingBulkPhotos.length === 0) {
                 section.classList.add('hidden');
+                grid.innerHTML = '';
                 return;
             }
-            section.classList.remove('hidden');
 
-            const matchedCount = appState.pendingBulkPhotos.filter(i => i.matchedNis).length;
-            summary.textContent = `${matchedCount} dari ${appState.pendingBulkPhotos.length} foto berhasil dicocokkan otomatis.`;
+            const matchedCount = appState.pendingBulkPhotos.filter(p => p.matchedNis).length;
+            summary.textContent = `Pratinjau ${appState.pendingBulkPhotos.length} Foto (${matchedCount} cocok dengan siswa). Anda bisa mengubah pilihan siswa sebelum menerapkan:`;
 
-            grid.innerHTML = appState.pendingBulkPhotos.map((item, idx) => {
-                const options = `<option value="">-- Pilih Siswa --</option>` +
-                    appState.students.map(s => `<option value="${s.nis}" ${s.nis === item.matchedNis ? 'selected' : ''}>${s.nis} - ${s.name}</option>`).join('');
-                return `
-                    <div class="p-2.5 rounded-xl bg-white border ${item.matchedNis ? 'border-emerald-300' : 'border-amber-300'} flex items-center gap-2.5">
-                        <img src="${item.dataUrl}" alt="${item.fileName}" class="w-11 h-11 rounded-lg object-cover border border-slate-200 shrink-0">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-[11px] font-bold text-slate-700 truncate">${item.fileName}</p>
-                            <select onchange="appState.pendingBulkPhotos[${idx}].matchedNis = this.value" class="mt-1 w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-mimblue-800">
-                                ${options}
-                            </select>
-                        </div>
+            const studentOpts = `<option value="">-- Lewati / Pilih Siswa --</option>` +
+                appState.students.map(s => `<option value="${s.nis}">${s.nis} - ${s.name}</option>`).join('');
+
+            grid.innerHTML = appState.pendingBulkPhotos.map((p, idx) => `
+                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-white border ${p.matchedNis ? 'border-emerald-300' : 'border-amber-300'}">
+                    <img src="${p.dataUrl}" alt="${p.filename}" class="w-11 h-11 rounded-lg object-cover border border-slate-200 shrink-0">
+                    <div class="min-w-0 flex-1 space-y-1">
+                        <p class="text-[11px] font-mono font-bold text-slate-700 truncate" title="${p.filename}">${p.filename.split('/').pop()}</p>
+                        <select onchange="updatePendingPhotoStudent(${idx}, this.value)" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold">
+                            ${studentOpts.replace(`value="${p.matchedNis}"`, `value="${p.matchedNis}" selected`)}
+                        </select>
                     </div>
-                `;
-            }).join('');
+                </div>
+            `).join('');
+
+            section.classList.remove('hidden');
+        }
+
+        function updatePendingPhotoStudent(idx, nis) {
+            if (!appState.pendingBulkPhotos[idx]) return;
+            appState.pendingBulkPhotos[idx].matchedNis = nis;
+            const st = appState.students.find(s => s.nis === nis);
+            appState.pendingBulkPhotos[idx].matchedName = st ? st.name : '';
         }
 
         function cancelBulkPhotoPreview() {
             appState.pendingBulkPhotos = [];
-            document.getElementById('bulkPhotoPreviewSection').classList.add('hidden');
+            renderBulkPhotoPreview();
         }
 
         function applyBulkStudentPhotos() {
-            let count = 0;
+            if (!appState.pendingBulkPhotos || appState.pendingBulkPhotos.length === 0) return;
+            let applied = 0;
+
             appState.pendingBulkPhotos.forEach(item => {
                 if (!item.matchedNis) return;
                 const st = appState.students.find(s => s.nis === item.matchedNis);
                 if (st) {
                     st.photo = item.dataUrl;
-                    count++;
+                    applied++;
                 }
             });
 
             saveDatabase();
-            cancelBulkPhotoPreview();
+            appState.pendingBulkPhotos = [];
+            renderBulkPhotoPreview();
             renderTeacherStudentsTable();
-            showToast(`Berhasil menerapkan ${count} pas foto siswa!`, 'success');
+            showToast(`Berhasil menerapkan ${applied} pas foto siswa!`, 'success');
+        }
+
+        async function exportAllStudentPhotosZip() {
+            if (typeof JSZip === 'undefined') {
+                showToast('Library ZIP belum siap.', 'error');
+                return;
+            }
+            const zip = new JSZip();
+            const folder = zip.folder('Foto_Siswa_Kelas3_MIM1Slinga');
+
+            for (const st of appState.students) {
+                if (!st.photo || !st.photo.startsWith('data:image')) continue;
+                const base64Part = st.photo.split(',')[1];
+                const ext = st.photo.includes('image/png') ? 'png' : (st.photo.includes('image/svg') ? 'svg' : 'jpg');
+                const safeName = st.name.replace(/[^a-zA-Z0-9_-]/g, '_');
+                folder.file(`${st.nis}_${safeName}.${ext}`, base64Part, { base64: true });
+            }
+
+            const blob = await zip.generateAsync({ type: 'blob' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Foto_Siswa_Kelas3_MIM1Slinga.zip';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Arsip ZIP foto seluruh siswa berhasil diunduh!', 'success');
         }
 
         function renderAdminMonthlyRecapTable() {
-            const monthVal = document.getElementById('adminMonthlyRecapPicker')?.value || new Date().toISOString().slice(0, 7);
+            const monthVal = document.getElementById('adminMonthlyRecapPicker')?.value || getActiveAttendanceYearMonth();
             const [year, month] = monthVal.split('-');
-            const monthNames = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-            const monthNameUpper = monthNames[parseInt(month, 10) - 1] || 'JANUARI';
-            const daysInMonth = new Date(parseInt(year, 10), parseInt(month, 10), 0).getDate();
+            const yearNum = parseInt(year, 10);
+            const monthNum = parseInt(month, 10);
+            const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
+            const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            const monthTitle = `${monthNames[monthNum - 1]} ${year}`;
 
-            document.getElementById('adminMonthlyRecapSubtitle').textContent = `TAHUN PELAJARAN ${appState.settings.academicYear} • BULAN : ${monthNameUpper} ${year}`;
+            document.getElementById('adminMonthlyRecapSubtitle').textContent = `Bulan: ${monthTitle} • Jumlah Hari: ${daysInMonth} hari`;
+            document.getElementById('recapSignTeacherName').textContent = appState.settings.teacherName;
 
-            const dayHolidayCache = {};
-            let dayHeadersHtml = '';
-            for (let d = 1; d <= 31; d++) {
-                const isInvalidDay = d > daysInMonth;
-                if (isInvalidDay) {
-                    dayHeadersHtml += `<th class="py-1.5 px-1 text-center border border-blue-500/50 min-w-[20px] bg-mimblue-900/60 text-blue-300">${d}</th>`;
+            const maleCount = appState.students.filter(s => s.gender === 'Laki-laki').length;
+            const femaleCount = appState.students.filter(s => s.gender !== 'Laki-laki').length;
+            document.getElementById('recapSummaryTotal').textContent = appState.students.length;
+            document.getElementById('recapSummaryMale').textContent = maleCount;
+            document.getElementById('recapSummaryFemale').textContent = femaleCount;
+
+            const dayHeaders = [];
+            const dayHolidayFlags = [];
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
+                const hInfo = getDateHolidayInfo(dateKey);
+                dayHolidayFlags.push(hInfo);
+                if (hInfo.isRedBlock) {
+                    dayHeaders.push(`<th class="py-1.5 px-1 border border-rose-800 bg-rose-600 text-white text-center min-w-[24px]" title="${formatDateDDMMYYYY(dateKey)} - ${hInfo.label}">${d}</th>`);
                 } else {
-                    const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
-                    const hInfo = getDateHolidayInfo(dateKey);
-                    dayHolidayCache[d] = hInfo;
-                    if (hInfo.isRedBlock) {
-                        dayHeadersHtml += `<th title="${hInfo.label}" class="py-1.5 px-1 text-center border border-rose-500 min-w-[20px] bg-rose-600 text-white font-extrabold">${d}</th>`;
-                    } else {
-                        dayHeadersHtml += `<th class="py-1.5 px-1 text-center border border-blue-500/50 min-w-[20px]">${d}</th>`;
-                    }
+                    dayHeaders.push(`<th class="py-1.5 px-1 border border-slate-300 bg-slate-100 text-slate-700 text-center min-w-[24px]" title="${formatDateDDMMYYYY(dateKey)}">${d}</th>`);
                 }
             }
 
-            const thead = document.getElementById('adminMonthlyRecapThead');
-            if (thead) {
-                thead.innerHTML = `
-                    <tr class="bg-mimblue-700 text-white">
-                        <th rowspan="2" class="py-2 px-2 border border-blue-500/50 text-center">No</th>
-                        <th rowspan="2" class="py-2 px-2 border border-blue-500/50">NIS</th>
-                        <th rowspan="2" class="py-2 px-2 border border-blue-500/50 min-w-[160px]">Nama Siswa</th>
-                        <th rowspan="2" class="py-2 px-1.5 border border-blue-500/50 text-center">L/P</th>
-                        <th colspan="31" class="py-1.5 px-2 border border-blue-500/50 text-center uppercase tracking-wider">BULAN : ${monthNameUpper}</th>
-                        <th colspan="4" class="py-1.5 px-2 border border-blue-500/50 text-center uppercase">REKAP</th>
-                    </tr>
-                    <tr class="bg-mimblue-800 text-white text-[10px]">
-                        ${dayHeadersHtml}
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-emerald-700">H</th>
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-amber-600">S</th>
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-sky-700">I</th>
-                        <th class="py-1.5 px-1.5 border border-blue-500/50 text-center bg-rose-700">A</th>
-                    </tr>
-                `;
-            }
-
-            let maleCount = 0;
-            let femaleCount = 0;
+            document.getElementById('adminMonthlyRecapThead').innerHTML = `
+                <tr>
+                    <th rowspan="2" class="py-2 px-2 border border-slate-300 bg-slate-100 text-slate-800 text-center">No</th>
+                    <th rowspan="2" class="py-2 px-2 border border-slate-300 bg-slate-100 text-slate-800 text-left min-w-[160px]">Nama Siswa</th>
+                    <th rowspan="2" class="py-2 px-1.5 border border-slate-300 bg-slate-100 text-slate-800 text-center">L/P</th>
+                    <th colspan="${daysInMonth}" class="py-1.5 px-2 border border-slate-300 bg-mimblue-700 text-white text-center">Tanggal (${monthTitle})</th>
+                    <th colspan="4" class="py-1.5 px-2 border border-slate-300 bg-mimblue-800 text-white text-center">Rekap</th>
+                </tr>
+                <tr>
+                    ${dayHeaders.join('')}
+                    <th class="py-1.5 px-1.5 border border-slate-300 bg-emerald-100 text-emerald-900 text-center">H</th>
+                    <th class="py-1.5 px-1.5 border border-slate-300 bg-blue-100 text-blue-900 text-center">I</th>
+                    <th class="py-1.5 px-1.5 border border-slate-300 bg-amber-100 text-amber-900 text-center">S</th>
+                    <th class="py-1.5 px-1.5 border border-slate-300 bg-rose-100 text-rose-900 text-center">A</th>
+                </tr>
+            `;
 
             const tbody = document.getElementById('adminMonthlyRecapTableBody');
             tbody.innerHTML = appState.students.map((st, idx) => {
-                const isFemale = st.gender === 'Perempuan';
-                if (isFemale) femaleCount++;
-                else maleCount++;
+                let hCnt = 0, iCnt = 0, sCnt = 0, aCnt = 0;
+                const cells = [];
 
-                let h = 0, s = 0, i = 0, a = 0;
-                let dayCellsHtml = '';
-
-                for (let d = 1; d <= 31; d++) {
-                    if (d > daysInMonth) {
-                        dayCellsHtml += `<td class="py-1.5 px-1 text-center border border-slate-300 bg-slate-200/70"></td>`;
-                        continue;
-                    }
-                    const hInfo = dayHolidayCache[d];
-                    if (hInfo && hInfo.isRedBlock) {
-                        dayCellsHtml += `<td title="${hInfo.label}" class="py-1.5 px-1 text-center border border-rose-500 bg-rose-600 text-white font-bold"></td>`;
-                        continue;
-                    }
-
+                for (let d = 1; d <= daysInMonth; d++) {
                     const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
-                    const status = st.attendance?.[dateKey]?.status || '';
-                    if (status === 'H') h++;
-                    else if (status === 'S') s++;
-                    else if (status === 'I') i++;
-                    else if (status === 'A') a++;
+                    const hInfo = dayHolidayFlags[d - 1];
+                    if (hInfo.isRedBlock) {
+                        cells.push(`<td class="py-1 px-1 border border-rose-700 bg-rose-600 text-white text-center font-extrabold" title="${formatDateDDMMYYYY(dateKey)} - ${hInfo.label}">L</td>`);
+                        continue;
+                    }
 
-                    const colorCls = status === 'H'
-                        ? 'text-emerald-700 font-extrabold bg-emerald-50/50'
-                        : status === 'S'
-                            ? 'text-amber-700 font-extrabold bg-amber-50/70'
-                            : status === 'I'
-                                ? 'text-sky-700 font-extrabold bg-sky-50/70'
-                                : status === 'A'
-                                    ? 'text-rose-700 font-extrabold bg-rose-50/70'
-                                    : 'text-slate-300';
-                    dayCellsHtml += `<td class="py-1.5 px-1 text-center border border-slate-300 ${colorCls}">${status}</td>`;
+                    const status = st.attendance?.[dateKey]?.status || '';
+                    if (status === 'H') hCnt++;
+                    if (status === 'I') iCnt++;
+                    if (status === 'S') sCnt++;
+                    if (status === 'A') aCnt++;
+
+                    const clsMap = {
+                        H: 'text-emerald-700 font-extrabold bg-emerald-50/60',
+                        I: 'text-blue-700 font-extrabold bg-blue-50/60',
+                        S: 'text-amber-700 font-extrabold bg-amber-50/60',
+                        A: 'text-rose-700 font-extrabold bg-rose-50/70'
+                    };
+                    cells.push(`<td class="py-1 px-1 border border-slate-200 text-center ${clsMap[status] || 'text-slate-300'}">${status || '-'}</td>`);
                 }
 
                 return `
-                    <tr class="hover:bg-slate-50/80">
-                        <td class="py-1.5 px-2 text-center border border-slate-300 font-bold text-slate-600">${idx + 1}</td>
-                        <td class="py-1.5 px-2 border border-slate-300 font-mono font-bold text-mimblue-800 whitespace-nowrap">${st.nis}</td>
-                        <td class="py-1.5 px-2 border border-slate-300 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
-                        <td class="py-1.5 px-1.5 text-center border border-slate-300 font-bold text-slate-700">${isFemale ? 'P' : 'L'}</td>
-                        ${dayCellsHtml}
-                        <td class="py-1.5 px-1.5 text-center border border-slate-300 font-extrabold text-emerald-800 bg-emerald-50/40">${h}</td>
-                        <td class="py-1.5 px-1.5 text-center border border-slate-300 font-extrabold text-amber-800 bg-amber-50/40">${s}</td>
-                        <td class="py-1.5 px-1.5 text-center border border-slate-300 font-extrabold text-sky-800 bg-sky-50/40">${i}</td>
-                        <td class="py-1.5 px-1.5 text-center border border-slate-300 font-extrabold text-rose-800 bg-rose-50/40">${a}</td>
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-1.5 px-2 border border-slate-200 text-center font-bold text-slate-600">${idx + 1}</td>
+                        <td class="py-1.5 px-2 border border-slate-200 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
+                        <td class="py-1.5 px-1.5 border border-slate-200 text-center text-slate-600">${st.gender === 'Perempuan' ? 'P' : 'L'}</td>
+                        ${cells.join('')}
+                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-emerald-800 bg-emerald-50/40">${hCnt}</td>
+                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-blue-800 bg-blue-50/40">${iCnt}</td>
+                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-amber-800 bg-amber-50/40">${sCnt}</td>
+                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-rose-800 bg-rose-50/40">${aCnt}</td>
                     </tr>
                 `;
             }).join('');
-
-            const totalEl = document.getElementById('recapSummaryTotal');
-            const maleEl = document.getElementById('recapSummaryMale');
-            const femaleEl = document.getElementById('recapSummaryFemale');
-            const signEl = document.getElementById('recapSignTeacherName');
-            if (totalEl) totalEl.textContent = appState.students.length;
-            if (maleEl) maleEl.textContent = maleCount;
-            if (femaleEl) femaleEl.textContent = femaleCount;
-            if (signEl) signEl.textContent = appState.settings.teacherName;
         }
 
         function renderAll26QrCards() {
             const grid = document.getElementById('all26QrCardsGrid');
-            grid.innerHTML = appState.students.map(st => `
-                <div class="p-3.5 rounded-2xl border border-slate-200 bg-white text-center space-y-2 shadow-2xs">
-                    <div class="flex items-center justify-center gap-1.5 border-b border-slate-100 pb-1.5">
-                        <img src="${appState.settings.customLogoDataUrl || getDefaultMadrasahLogoSvg()}" alt="Logo" class="w-5 h-5 rounded-full object-contain">
-                        <span class="text-[9px] font-black text-mimblue-900">MIM 1 SLINGA • KLS 3</span>
-                    </div>
-                    <img src="${st.photo}" alt="${st.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-200 mx-auto">
-                    <div>
-                        <p class="text-xs font-extrabold text-slate-900 truncate">${st.no}. ${st.name}</p>
-                        <p class="text-[10px] font-mono font-bold text-mimblue-700">${st.nis}</p>
-                    </div>
-                    <div id="qr-container-${st.nis}" class="flex justify-center py-1"></div>
-                </div>
-            `).join('');
+            grid.innerHTML = '';
 
             appState.students.forEach(st => {
-                const target = document.getElementById(`qr-container-${st.nis}`);
-                if (target) {
-                    target.innerHTML = '';
-                    new QRCode(target, {
-                        text: `MIM1SLINGA|${st.nis}`,
-                        width: 84,
-                        height: 84,
-                        colorDark: '#07399C',
-                        colorLight: '#ffffff'
-                    });
-                }
+                const card = document.createElement('div');
+                card.className = 'p-3.5 rounded-2xl border border-slate-200 bg-white shadow-2xs flex flex-col items-center text-center space-y-2';
+                card.innerHTML = `
+                    <div class="flex items-center gap-1.5 w-full justify-center border-b border-slate-100 pb-1.5">
+                        <img src="${appState.settings.customLogoDataUrl || getDefaultMadrasahLogoSvg()}" alt="Logo" class="w-5 h-5 rounded-full object-contain">
+                        <span class="text-[10px] font-black text-mimblue-900">MIM 1 SLINGA • ABSEN ${st.no}</span>
+                    </div>
+                    <img src="${st.photo}" alt="${st.name}" class="w-12 h-12 rounded-xl object-cover border border-mimblue-700">
+                    <div class="w-full">
+                        <p class="text-xs font-extrabold text-slate-900 truncate" title="${st.name}">${st.name}</p>
+                        <p class="text-[10px] font-mono font-bold text-mimblue-700">${st.nis}</p>
+                    </div>
+                    <div id="qr-holder-${st.nis}" class="p-1 bg-white rounded-xl border border-slate-100"></div>
+                `;
+                grid.appendChild(card);
+
+                const holder = card.querySelector(`#qr-holder-${st.nis}`);
+                new QRCode(holder, {
+                    text: `MIM1SLINGA|${st.nis}`,
+                    width: 96,
+                    height: 96,
+                    colorDark: '#07399C',
+                    colorLight: '#ffffff'
+                });
             });
+        }
+
+        function renderTeacherMaterialsGrid() {
+            const grid = document.getElementById('teacherMaterialsGrid');
+            grid.innerHTML = appState.materials.map(mat => `
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3">
+                    <div>
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[10px] font-extrabold">${mat.subject}</span>
+                            <span class="text-[10px] text-slate-400">${mat.createdAt || ''}</span>
+                        </div>
+                        <h4 class="font-extrabold text-xs sm:text-sm text-slate-900 mt-2">${mat.title}</h4>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-2">${mat.content}</p>
+                    </div>
+                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-200/70">
+                        <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="px-3 py-1 rounded-lg bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 text-[11px] font-bold cursor-pointer">Pratinjau</button>
+                        <button type="button" onclick="deleteMaterialById('${mat.id}')" class="px-3 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-bold cursor-pointer">Hapus</button>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function handleAddMaterial(e) {
@@ -4158,42 +4407,21 @@
             if (!title || !content) return;
 
             appState.materials.unshift({
-                id: 'mat_' + Date.now(),
+                id: `mat_${Date.now()}`,
                 subject,
                 title,
                 content,
-                createdAt: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+                createdAt: formatTodayIndonesianDDMMYYYY()
             });
 
             saveDatabase();
-            document.getElementById('newMatTitle').value = '';
-            document.getElementById('newMatContent').value = '';
+            e.target.reset();
             renderTeacherMaterialsGrid();
-            showToast('Materi baru berhasil dipublikasikan ke portal siswa!', 'success');
-        }
-
-        function renderTeacherMaterialsGrid() {
-            const grid = document.getElementById('teacherMaterialsGrid');
-            grid.innerHTML = appState.materials.map(mat => `
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3">
-                    <div>
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[10px] font-extrabold">${mat.subject}</span>
-                            <span class="text-[10px] text-slate-400">${mat.createdAt}</span>
-                        </div>
-                        <h4 class="font-extrabold text-sm text-slate-900 mt-2">${mat.title}</h4>
-                        <p class="text-xs text-slate-500 mt-1 line-clamp-2">${mat.content}</p>
-                    </div>
-                    <div class="flex items-center gap-2 pt-2 border-t border-slate-200/70">
-                        <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="flex-1 py-1.5 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 text-xs font-bold cursor-pointer">Pratinjau / Unduh</button>
-                        <button type="button" onclick="deleteMaterialById('${mat.id}')" class="py-1.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold cursor-pointer">Hapus</button>
-                    </div>
-                </div>
-            `).join('');
+            showToast('Materi baru berhasil dipublikasikan ke Portal Siswa!', 'success');
         }
 
         function deleteMaterialById(id) {
-            openCustomConfirm('Hapus Materi?', 'Hapus materi pembelajaran ini dari daftar?', () => {
+            openCustomConfirm('Hapus Materi?', 'Hapus materi pelajaran ini dari portal?', () => {
                 appState.materials = appState.materials.filter(m => m.id !== id);
                 saveDatabase();
                 renderTeacherMaterialsGrid();
@@ -4208,7 +4436,7 @@
 
             document.getElementById('matModalSubjectBadge').textContent = mat.subject;
             document.getElementById('matModalTitle').textContent = mat.title;
-            document.getElementById('matModalMeta').textContent = `Mata Pelajaran: ${mat.subject} • Diunggah: ${mat.createdAt}`;
+            document.getElementById('matModalMeta').textContent = `Mata Pelajaran: ${mat.subject} • Diperbarui: ${mat.createdAt || '-'}`;
             document.getElementById('matModalBody').textContent = mat.content;
 
             updateGlobalBrandingUI();
@@ -4223,48 +4451,48 @@
             modal.classList.remove('flex');
         }
 
-        function downloadActiveMaterialPNG() {
-            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            if (!mat) return;
-            exportElementToPNG('materialPrintSheet', `Materi_${mat.subject}_${mat.title}`);
-        }
-
-        function downloadActiveMaterialPDF() {
-            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            if (!mat) return;
-            exportElementToPDF('materialPrintSheet', `Materi_${mat.subject}_${mat.title}`);
-        }
-
         function downloadActiveMaterialDOCX() {
             const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
             if (!mat) return;
 
             const safeParagraphs = mat.content
                 .split('\n')
-                .map(line => `<p style="font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5;margin:4px 0;">${line.replace(/</g, '<')}</p>`)
+                .map(line => `<p style="font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5;margin:0 0 8pt 0;">${line || ' '}</p>`)
                 .join('');
 
             const htmlDoc = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-                <head><meta charset="utf-8"><title>${mat.title}</title></head>
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>${mat.title}</title></head>
                 <body>
-                    <h2 style="color:#07399C;font-family:Calibri,Arial,sans-serif;margin-bottom:2px;">MADRASAH IBTIDAIYAH MUHAMMADIYAH 1 SLINGA</h2>
-                    <p style="color:#555;font-family:Calibri,Arial,sans-serif;font-size:10pt;margin-top:0;">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga • Kelas 3</p>
+                    <h2 style="color:#07399C;font-family:Arial,sans-serif;margin-bottom:2px;">MADRASAH IBTIDAIYAH MUHAMMADIYAH 1 SLINGA</h2>
+                    <p style="color:#555;font-size:10pt;margin-top:0;">Kelas 3 • Mata Pelajaran: <strong>${mat.subject}</strong></p>
                     <hr style="border:1px solid #07399C;">
-                    <h3 style="font-family:Calibri,Arial,sans-serif;margin-bottom:2px;">${mat.title}</h3>
-                    <p style="color:#666;font-family:Calibri,Arial,sans-serif;font-size:10pt;margin-top:0;">Mapel: ${mat.subject} | Tanggal: ${mat.createdAt}</p>
+                    <h3 style="font-family:Arial,sans-serif;">${mat.title}</h3>
                     ${safeParagraphs}
                 </body>
                 </html>
             `;
 
             const blob = new Blob(['\ufeff', htmlDoc], { type: 'application/msword' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Materi_${mat.subject.replace(/[^a-zA-Z0-9]/g, '_')}.doc`;
-            link.click();
-            URL.revokeObjectURL(link.href);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${mat.title.replace(/[^a-zA-Z0-9_-]/g, '_')}.doc`;
+            a.click();
+            URL.revokeObjectURL(url);
             showToast('Dokumen Word (.doc) materi berhasil diunduh!', 'success');
+        }
+
+        function downloadActiveMaterialPNG() {
+            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
+            const filePrefix = mat ? mat.title.replace(/[^a-zA-Z0-9_-]/g, '_') : 'Materi_Kelas3';
+            exportElementToPNG('materialPrintSheet', filePrefix);
+        }
+
+        function downloadActiveMaterialPDF() {
+            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
+            const filePrefix = mat ? mat.title.replace(/[^a-zA-Z0-9_-]/g, '_') : 'Materi_Kelas3';
+            exportElementToPDF('materialPrintSheet', filePrefix);
         }
 
         function renderTeacherSettingsForm() {
@@ -4280,19 +4508,21 @@
             appState.settings.academicYear = document.getElementById('settingAcademicYear').value.trim() || '2025/2026';
             appState.settings.adminPin = document.getElementById('settingAdminPin').value.trim() || '123456';
             saveDatabase();
-            showToast('Pengaturan Wali Kelas, Tahun Pelajaran & PIN berhasil disimpan!', 'success');
+            updateGlobalBrandingUI();
+            showToast('Pengaturan kelas & PIN berhasil disimpan!', 'success');
         }
 
         async function handleMadrasahLogoUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
             try {
-                const logoDataUrl = await compressStudentImageFile(file, 240, 0.85);
-                appState.settings.customLogoDataUrl = logoDataUrl;
+                const compressedLogo = await compressBlobOrFile(file, 240, 0.85);
+                appState.settings.customLogoDataUrl = compressedLogo;
                 saveDatabase();
-                showToast('Logo Madrasah berhasil diperbarui!', 'success');
+                updateGlobalBrandingUI();
+                showToast('Logo Madrasah berhasil diperbarui di seluruh halaman!', 'success');
             } catch (e) {
-                showToast('Gagal mengunggah logo madrasah.', 'error');
+                showToast('Gagal memuat logo.', 'error');
             }
             event.target.value = '';
         }
@@ -4300,52 +4530,79 @@
         function resetMadrasahLogoDefault() {
             appState.settings.customLogoDataUrl = '';
             saveDatabase();
+            updateGlobalBrandingUI();
             showToast('Logo Madrasah dikembalikan ke logo bawaan MIM 1 Slinga.', 'info');
         }
 
-        async function exportElementToPNG(elementId, fileBaseName) {
-            const target = document.getElementById(elementId);
-            if (!target || typeof html2canvas === 'undefined') {
-                showToast('Fitur ekspor PNG belum siap.', 'error');
+        async function exportElementToPNG(elementId, filePrefix) {
+            const el = document.getElementById(elementId);
+            if (!el || typeof html2canvas === 'undefined') {
+                showToast('Fitur ekspor gambar belum siap.', 'error');
                 return;
             }
             showToast('Menyiapkan gambar PNG...', 'info');
             try {
-                const canvas = await html2canvas(target, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+                const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
                 const link = document.createElement('a');
-                link.download = `${fileBaseName.replace(/[^a-zA-Z0-9_-]/g, '_')}.png`;
+                link.download = `${filePrefix}_MIM1Slinga.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                showToast('File PNG berhasil diunduh!', 'success');
+                showToast('Berhasil mengunduh PNG!', 'success');
             } catch (e) {
-                showToast('Gagal mengekspor PNG.', 'error');
+                showToast('Gagal membuat gambar PNG.', 'error');
             }
         }
 
-        async function exportElementToPDF(elementId, fileBaseName) {
-            const target = document.getElementById(elementId);
-            if (!target || typeof html2canvas === 'undefined' || !window.jspdf) {
+        async function exportElementToPDF(elementId, filePrefix) {
+            const el = document.getElementById(elementId);
+            if (!el || typeof html2canvas === 'undefined' || !window.jspdf) {
                 showToast('Fitur ekspor PDF belum siap.', 'error');
                 return;
             }
             showToast('Menyiapkan dokumen PDF...', 'info');
             try {
-                const canvas = await html2canvas(target, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+                const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-                const pageWidth = pdf.internal.pageSize.getWidth() - 16;
-                const pageHeight = (canvas.height * pageWidth) / canvas.width;
-                pdf.addImage(imgData, 'PNG', 8, 8, pageWidth, Math.min(pageHeight, pdf.internal.pageSize.getHeight() - 16));
-                pdf.save(`${fileBaseName.replace(/[^a-zA-Z0-9_-]/g, '_')}.pdf`);
-                showToast('Dokumen PDF berhasil diunduh!', 'success');
+                const pdf = new jsPDF({
+                    orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 8;
+                const usableWidth = pageWidth - margin * 2;
+                const imgHeight = (canvas.height * usableWidth) / canvas.width;
+
+                let heightLeft = imgHeight;
+                let position = margin;
+
+                pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
+                heightLeft -= (pageHeight - margin * 2);
+
+                while (heightLeft > 0) {
+                    position = heightLeft - imgHeight + margin;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
+                    heightLeft -= (pageHeight - margin * 2);
+                }
+
+                pdf.save(`${filePrefix}_MIM1Slinga.pdf`);
+                showToast('Berhasil mengunduh PDF!', 'success');
             } catch (e) {
-                showToast('Gagal mengekspor PDF.', 'error');
+                showToast('Gagal membuat file PDF.', 'error');
             }
         }
 
         Object.assign(window, {
             switchLoginMode,
+            startPublicQrScanner,
+            stopPublicQrScanner,
+            switchPublicCameraFacing,
+            handlePublicQrImageUpload,
+            handlePublicManualBarcodeSubmit,
+            renderPublicTodayScanList,
             handleStudentLogin,
             handleTeacherLogin,
             logout,
@@ -4359,12 +4616,6 @@
             renderStudentAsasTab,
             renderStudentRaporTab,
             renderStudentMaterials,
-            startPublicQrScanner,
-            stopPublicQrScanner,
-            switchPublicCameraFacing,
-            handlePublicQrImageUpload,
-            handlePublicManualBarcodeSubmit,
-            renderPublicTodayScanList,
             switchTeacherTab,
             startAdminQrScanner,
             stopAdminQrScanner,
@@ -4377,6 +4628,10 @@
             clearAttendanceManualAction,
             applyHistoricalFullPresentJulyOct2026,
             syncAttendanceMonthPickers,
+            clearAttendancePasteBox,
+            applyPastedMonthlyAttendance,
+            clearGradesPasteBox,
+            applyPastedGradesBlock,
             exportMonthlyAttendanceXls,
             downloadAttendanceTemplateXls,
             handleImportAttendanceXls,
@@ -4401,18 +4656,22 @@
             downloadStudentsTemplateXls,
             exportCurrentStudentsXls,
             handleImportStudentsXls,
-            exportAllStudentPhotosZip,
             handleBulkStudentPhotosSelect,
+            updatePendingPhotoStudent,
             cancelBulkPhotoPreview,
             applyBulkStudentPhotos,
+            exportAllStudentPhotosZip,
             renderAdminMonthlyRecapTable,
+            renderAll26QrCards,
+            renderTeacherMaterialsGrid,
             handleAddMaterial,
             deleteMaterialById,
             openMaterialPreviewModal,
             closeMaterialModal,
+            downloadActiveMaterialDOCX,
             downloadActiveMaterialPNG,
             downloadActiveMaterialPDF,
-            downloadActiveMaterialDOCX,
+            renderTeacherSettingsForm,
             saveTeacherClassSettings,
             handleMadrasahLogoUpload,
             resetMadrasahLogoDefault,
@@ -4423,7 +4682,6 @@
 
         loadDatabase();
         updateGlobalBrandingUI();
-        switchLoginMode('student');
         lucide.createIcons();
     </script>
 </body>
