@@ -184,7 +184,7 @@
                         </div>
                         <h1 class="text-xl sm:text-3xl font-black tracking-tight mt-1.5">INFO KELAS 3 — MIM 1 SLINGA</h1>
                         <p class="text-xs sm:text-sm text-blue-100 mt-0.5">
-                            Wali Kelas: <strong id="loginHomeroomTeacherName" class="text-white">ALFAM ATTHAMI</strong> •
+                            Wali Kelas: <strong id="loginHomeroomTeacherName" class="text-white">Alfam Atthamimy, M.Pd.</strong> •
                             Jumlah Siswa: <strong id="loginTotalStudentsCount" class="text-amber-300">26</strong>
                         </p>
                     </div>
@@ -346,7 +346,7 @@
                             <span id="heroStudentNis" class="px-2.5 py-0.5 rounded-full bg-white/15 text-xs font-mono font-bold"></span>
                         </div>
                         <h2 id="heroStudentName" class="text-lg sm:text-2xl font-black mt-1"></h2>
-                        <p class="text-xs text-blue-100 mt-0.5">Wali Kelas: <strong id="heroHomeroomName">ALFAM ATTHAMI</strong> • MIM 1 Slinga</p>
+                        <p class="text-xs text-blue-100 mt-0.5">Wali Kelas: <strong id="heroHomeroomName">Alfam Atthamimy, M.Pd.</strong> • MIM 1 Slinga</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3 shrink-0">
@@ -560,13 +560,7 @@
                         </table>
                     </div>
 
-                    <div class="flex justify-end pt-3 text-xs text-slate-600">
-                        <div class="text-center space-y-8 pr-4">
-                            <p>Wali Kelas 3,</p>
-                            <p id="attReportSignTeacher" class="font-extrabold text-slate-900 underline"></p>
-                        </div>
-                    </div>
-                    <p id="attReportTeacher" class="hidden"></p>
+                    <div id="studentAttendanceSignatureBlock" class="pt-4"></div>
                 </div>
             </div>
 
@@ -732,12 +726,7 @@
                         </table>
                     </div>
 
-                    <div class="flex justify-end pt-3 text-xs text-slate-600">
-                        <div class="text-center space-y-8 pr-4">
-                            <p>Wali Kelas 3,</p>
-                            <p id="raporSignTeacherName" class="font-extrabold text-slate-900 underline"></p>
-                        </div>
-                    </div>
+                    <div id="studentRaporSignatureBlock" class="pt-4"></div>
                 </div>
             </div>
 
@@ -1167,14 +1156,9 @@ H	S	H	H	H	..."
                             </table>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-3 text-xs text-slate-700">
-                            <div class="space-y-0.5">
-                                <p>Jumlah Siswa: <strong id="recapSummaryTotal">0</strong> (L: <strong id="recapSummaryMale">0</strong>, P: <strong id="recapSummaryFemale">0</strong>)</p>
-                            </div>
-                            <div class="text-center space-y-8 pr-4">
-                                <p>Wali Kelas 3,</p>
-                                <p id="recapSignTeacherName" class="font-extrabold text-slate-900 underline"></p>
-                            </div>
+                        <div class="pt-2 text-xs text-slate-700 space-y-3">
+                            <p>Jumlah Siswa: <strong id="recapSummaryTotal">0</strong> (L: <strong id="recapSummaryMale">0</strong>, P: <strong id="recapSummaryFemale">0</strong>)</p>
+                            <div id="adminMonthlySignatureBlock"></div>
                         </div>
                     </div>
                 </div>
@@ -1279,6 +1263,15 @@ H	S	H	H	H	..."
         let hasReceivedCloudMeta = false;
         let cloudSyncTimer = null;
 
+        const PRINCIPAL_SIGN_INFO = {
+            name: 'Rosika Priasih, S.Pd.I,M.Pd',
+            nip: '198009162007102001',
+            role: 'Kepala Madrasah',
+            school: 'MIM 1 Slinga'
+        };
+
+        const DEFAULT_HOMEROOM_NAME = 'Alfam Atthamimy, M.Pd.';
+
         const SUBJECTS_LIST = [
             "Al Qur'an Hadis",
             "Akidah Akhlak",
@@ -1378,6 +1371,85 @@ H	S	H	H	H	..."
                     ? 'Hari Ahad / Minggu (Libur)'
                     : holidayName;
             return { isSunday, isHoliday, isRedBlock, label };
+        }
+
+        // Mencari tanggal akhir bulan yang bukan hari Minggu/Ahad & bukan libur nasional
+        function getLastEffectiveWorkDateTextForMonth(ymValue) {
+            const match = String(ymValue || '').match(/^(\d{4})-(\d{2})$/);
+            const yearNum = match ? parseInt(match[1], 10) : new Date().getFullYear();
+            const monthNum = match ? parseInt(match[2], 10) : (new Date().getMonth() + 1);
+            const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
+            const monthName = getMonthNameIndonesian(String(monthNum).padStart(2, '0'));
+
+            for (let d = daysInMonth; d >= 1; d--) {
+                const key = `${yearNum}-${String(monthNum).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                const hInfo = getDateHolidayInfo(key);
+                if (!hInfo.isRedBlock) {
+                    return `${d} ${monthName} ${yearNum}`;
+                }
+            }
+            return `${daysInMonth} ${monthName} ${yearNum}`;
+        }
+
+        function renderDualElectronicSignatureBlock(containerId, datePlaceText, periodTag) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const homeroomName = appState.settings.teacherName || DEFAULT_HOMEROOM_NAME;
+            const principalQrId = `tte-qr-principal-${containerId}`;
+            const homeroomQrId = `tte-qr-homeroom-${containerId}`;
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-slate-700 pt-2">
+                    <div class="flex flex-col items-center text-center space-y-1.5">
+                        <p class="invisible select-none">Slinga, ${datePlaceText}</p>
+                        <p class="font-semibold">Mengetahui,</p>
+                        <p class="font-extrabold text-slate-900">${PRINCIPAL_SIGN_INFO.role}</p>
+                        <div class="py-1.5 flex flex-col items-center justify-center">
+                            <div id="${principalQrId}" class="p-1.5 bg-white border border-slate-200 rounded-xl inline-block"></div>
+                            <span class="text-[9px] font-mono text-slate-400 mt-0.5">TTE Digital • ${PRINCIPAL_SIGN_INFO.school}</span>
+                        </div>
+                        <p class="font-extrabold text-slate-900 underline">${PRINCIPAL_SIGN_INFO.name}</p>
+                        <p class="font-mono text-[11px] text-slate-600">NIP. ${PRINCIPAL_SIGN_INFO.nip}</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center space-y-1.5">
+                        <p class="font-semibold text-slate-800">Slinga, ${datePlaceText}</p>
+                        <p class="invisible select-none">Mengetahui,</p>
+                        <p class="font-extrabold text-slate-900">Wali Kelas 3</p>
+                        <div class="py-1.5 flex flex-col items-center justify-center">
+                            <div id="${homeroomQrId}" class="p-1.5 bg-white border border-slate-200 rounded-xl inline-block"></div>
+                            <span class="text-[9px] font-mono text-slate-400 mt-0.5">TTE Digital • ${PRINCIPAL_SIGN_INFO.school}</span>
+                        </div>
+                        <p class="font-extrabold text-slate-900 underline">${homeroomName}</p>
+                        <p class="invisible select-none text-[11px]">NIP.</p>
+                    </div>
+                </div>
+            `;
+
+            if (typeof QRCode !== 'undefined') {
+                const pHolder = document.getElementById(principalQrId);
+                if (pHolder) {
+                    pHolder.innerHTML = '';
+                    new QRCode(pHolder, {
+                        text: `TTE|${PRINCIPAL_SIGN_INFO.school}|${PRINCIPAL_SIGN_INFO.role}|${PRINCIPAL_SIGN_INFO.name}|NIP:${PRINCIPAL_SIGN_INFO.nip}|${periodTag}`,
+                        width: 72,
+                        height: 72,
+                        colorDark: '#07399C',
+                        colorLight: '#ffffff'
+                    });
+                }
+                const hHolder = document.getElementById(homeroomQrId);
+                if (hHolder) {
+                    hHolder.innerHTML = '';
+                    new QRCode(hHolder, {
+                        text: `TTE|${PRINCIPAL_SIGN_INFO.school}|Wali Kelas 3|${homeroomName}|${datePlaceText}|${periodTag}`,
+                        width: 72,
+                        height: 72,
+                        colorDark: '#07399C',
+                        colorLight: '#ffffff'
+                    });
+                }
+            }
         }
 
         function generateHistoricalAttendanceJulyToOct2026() {
@@ -1544,7 +1616,7 @@ H	S	H	H	H	..."
             materials: [],
             assignmentTopics: createDefaultAssignmentTopics(),
             settings: {
-                teacherName: 'ALFAM ATTHAMI',
+                teacherName: DEFAULT_HOMEROOM_NAME,
                 academicYear: '2025/2026',
                 adminPin: '123456',
                 customLogoDataUrl: ''
@@ -1604,7 +1676,7 @@ H	S	H	H	H	..."
                 materials,
                 assignmentTopics: createDefaultAssignmentTopics(),
                 settings: {
-                    teacherName: 'ALFAM ATTHAMI',
+                    teacherName: DEFAULT_HOMEROOM_NAME,
                     academicYear: '2025/2026',
                     adminPin: '123456',
                     customLogoDataUrl: ''
@@ -2314,8 +2386,6 @@ H	S	H	H	H	..."
             document.getElementById('attReportName').textContent = st.name;
             document.getElementById('attReportNis').textContent = st.nis;
             document.getElementById('attReportMonthLabel').textContent = monthLabel;
-            document.getElementById('attReportTeacher').textContent = appState.settings.teacherName;
-            document.getElementById('attReportSignTeacher').textContent = appState.settings.teacherName;
 
             let countH = 0, countS = 0, countI = 0, countA = 0;
             const rowsHtml = [];
@@ -2372,6 +2442,13 @@ H	S	H	H	H	..."
 
             const tbody = document.getElementById('studentAttendanceTableBody');
             tbody.innerHTML = rowsHtml.join('');
+
+            const signDateStr = getLastEffectiveWorkDateTextForMonth(monthVal);
+            renderDualElectronicSignatureBlock(
+                'studentAttendanceSignatureBlock',
+                signDateStr,
+                `PRESENSI-${monthVal}-${st.nis}`
+            );
         }
 
         function getPredikat(score) {
@@ -2608,7 +2685,6 @@ H	S	H	H	H	..."
             document.getElementById('raporStudentName').textContent = st.name;
             document.getElementById('raporStudentNis').textContent = st.nis;
             document.getElementById('raporSemesterLabel').textContent = sem;
-            document.getElementById('raporSignTeacherName').textContent = appState.settings.teacherName;
 
             document.getElementById('studentRaporTableBody').innerHTML = SUBJECTS_LIST.map((subj, idx) => {
                 const rec = normalizeGradeRecord(st.grades?.[sem]?.[subj]);
@@ -2631,6 +2707,15 @@ H	S	H	H	H	..."
                     </tr>
                 `;
             }).join('');
+
+            const raporSignDateText = sem === 'Genap'
+                ? getLastEffectiveWorkDateTextForMonth('2027-06')
+                : getLastEffectiveWorkDateTextForMonth('2026-12');
+            renderDualElectronicSignatureBlock(
+                'studentRaporSignatureBlock',
+                raporSignDateText,
+                `RAPOR-${sem}-${st.nis}`
+            );
         }
 
         function renderStudentMaterials() {
@@ -3958,32 +4043,17 @@ H	S	H	H	H	..."
                 No_HP: st.phone || ''
             }));
             const ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [{ wch: 14 }, { wch: 30 }, { wch: 16 }, { wch: 18 }, { wch: 16 }, { wch: 34 }, { wch: 24 }, { wch: 16 }];
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Data_Siswa_Kelas3');
+            XLSX.utils.book_append_sheet(wb, ws, 'Data_Siswa');
             XLSX.writeFile(wb, 'Data_Siswa_Kelas3_MIM1Slinga.xlsx');
-            showToast('Daftar siswa berhasil diekspor ke Excel!', 'success');
-        }
-
-        function parseFlexibleDateToIso(rawDate) {
-            const s = String(rawDate || '').trim();
-            if (!s) return '';
-            const dmy = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
-            if (dmy) {
-                return `${dmy[3]}-${dmy[2].padStart(2, '0')}-${dmy[1].padStart(2, '0')}`;
-            }
-            const ymd = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
-            if (ymd) {
-                return `${ymd[1]}-${ymd[2].padStart(2, '0')}-${ymd[3].padStart(2, '0')}`;
-            }
-            return s;
+            showToast('Ekspor Excel Data Siswa berhasil!', 'success');
         }
 
         function handleImportStudentsXls(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const mode = document.getElementById('importStudentModeSelect').value;
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
@@ -3997,59 +4067,49 @@ H	S	H	H	H	..."
                         return;
                     }
 
-                    if (mode === 'replace') {
-                        appState.students = [];
-                    }
-
-                    let importedCount = 0;
+                    const newList = [];
                     rows.forEach((row, idx) => {
-                        const rawName = String(row.Nama_Lengkap || row.Nama || row['Nama Siswa'] || '').trim();
-                        if (!rawName) return;
+                        const nis = String(row.NIS || row.nis || `kelas3_${idx + 1}`).trim();
+                        const name = String(row.Nama_Lengkap || row.Nama || row.name || '').trim();
+                        if (!name) return;
 
-                        const rawNis = String(row.NIS || row.nis || `kelas3_${appState.students.length + idx + 1}`).trim();
-                        const rawGender = String(row.Jenis_Kelamin || row.JK || 'Laki-laki').trim();
-                        const gender = rawGender.toLowerCase().startsWith('p') ? 'Perempuan' : 'Laki-laki';
-                        const birthPlace = String(row.Tempat_Lahir || 'Purbalingga').trim();
-                        const birthDate = parseFlexibleDateToIso(row.Tanggal_Lahir);
-                        const address = String(row.Alamat || 'Desa Slinga, Kaligondang, Purbalingga').trim();
-                        const parentName = String(row.Nama_Ortu || '').trim();
-                        const phone = String(row.No_HP || '').trim();
+                        const genderRaw = String(row.Jenis_Kelamin || row.JK || row.gender || 'Laki-laki').trim().toLowerCase();
+                        const gender = (genderRaw.startsWith('p') || genderRaw.includes('perempuan')) ? 'Perempuan' : 'Laki-laki';
+                        const existing = appState.students.find(s => s.nis.toLowerCase() === nis.toLowerCase());
 
-                        const existing = appState.students.find(s => s.nis.toLowerCase() === rawNis.toLowerCase());
-                        if (existing) {
-                            existing.name = rawName;
-                            existing.gender = gender;
-                            existing.birthPlace = birthPlace || existing.birthPlace;
-                            existing.birthDate = birthDate || existing.birthDate;
-                            existing.address = address || existing.address;
-                            existing.parentName = parentName || existing.parentName;
-                            existing.phone = phone || existing.phone;
-                        } else {
-                            appState.students.push({
-                                no: appState.students.length + 1,
-                                nis: rawNis,
-                                nisn: '',
-                                name: rawName,
-                                gender,
-                                birthPlace,
-                                birthDate,
-                                parentName,
-                                phone,
-                                address,
-                                photo: generateDefaultAvatar(rawName, gender),
-                                attendance: generateHistoricalAttendanceJulyToOct2026(),
-                                grades: createBlankGradesObject()
-                            });
-                        }
-                        importedCount++;
+                        newList.push({
+                            no: idx + 1,
+                            nis,
+                            nisn: existing?.nisn || '',
+                            name,
+                            gender,
+                            birthPlace: String(row.Tempat_Lahir || existing?.birthPlace || 'Purbalingga').trim(),
+                            birthDate: String(row.Tanggal_Lahir || existing?.birthDate || '').trim(),
+                            parentName: String(row.Nama_Ortu || row.Orang_Tua || existing?.parentName || '').trim(),
+                            phone: String(row.No_HP || row.HP || existing?.phone || '').trim(),
+                            address: String(row.Alamat || existing?.address || 'Desa Slinga, Kec. Kaligondang, Kab. Purbalingga').trim(),
+                            photo: existing?.photo || generateDefaultAvatar(name, gender),
+                            attendance: existing?.attendance || generateHistoricalAttendanceJulyToOct2026(),
+                            grades: existing?.grades || createBlankGradesObject()
+                        });
                     });
+
+                    if (mode === 'replace') {
+                        appState.students = newList;
+                    } else {
+                        newList.forEach(item => {
+                            const idxFound = appState.students.findIndex(s => s.nis.toLowerCase() === item.nis.toLowerCase());
+                            if (idxFound >= 0) appState.students[idxFound] = item;
+                            else appState.students.push(item);
+                        });
+                    }
 
                     reindexStudentNumbers();
                     saveDatabase();
                     renderTeacherStudentsTable();
-                    showToast(`Berhasil mengimpor ${importedCount} data siswa!`, 'success');
+                    showToast(`Berhasil memproses ${newList.length} data siswa dari Excel!`, 'success');
                 } catch (err) {
-                    showToast('Gagal mengimpor file Excel siswa.', 'error');
+                    showToast('Gagal membaca file Excel siswa!', 'error');
                 }
             };
             reader.readAsArrayBuffer(file);
@@ -4062,7 +4122,6 @@ H	S	H	H	H	..."
                 reader.onload = (ev) => {
                     const img = new Image();
                     img.onload = () => {
-                        const canvas = document.createElement('canvas');
                         let w = img.width;
                         let h = img.height;
                         if (w > h && w > maxSize) {
@@ -4072,8 +4131,9 @@ H	S	H	H	H	..."
                             w = Math.round((w * maxSize) / h);
                             h = maxSize;
                         }
-                        canvas.width = w || maxSize;
-                        canvas.height = h || maxSize;
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w || 120;
+                        canvas.height = h || 120;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                         resolve(canvas.toDataURL('image/jpeg', quality));
@@ -4087,28 +4147,26 @@ H	S	H	H	H	..."
         }
 
         function matchStudentByPhotoFilename(filename) {
-            const base = filename.split('/').pop().replace(/\.[^/.]+$/, '').toLowerCase().trim();
-            const cleanBase = base.replace(/[^a-z0-9]/g, '');
+            const baseName = String(filename || '').split('/').pop().replace(/\.[^/.]+$/, '').trim().toLowerCase();
+            if (!baseName) return null;
 
-            let matched = appState.students.find(s =>
-                s.nis.toLowerCase() === base ||
-                base.startsWith(s.nis.toLowerCase() + '_') ||
-                base.startsWith(s.nis.toLowerCase() + '-') ||
-                base.startsWith(s.nis.toLowerCase() + ' ')
-            );
+            let matched = appState.students.find(s => s.nis.toLowerCase() === baseName);
             if (matched) return matched;
 
-            const numMatch = base.match(/(?:kelas3[_-]?)?(\d+)/);
+            matched = appState.students.find(s => baseName.startsWith(s.nis.toLowerCase() + '_') || baseName.startsWith(s.nis.toLowerCase() + '-'));
+            if (matched) return matched;
+
+            const numMatch = baseName.match(/(?:absen|no|siswa|k3|kelas3)?[_-]?(\d{1,2})$/);
             if (numMatch) {
-                const candidateNis = `kelas3_${parseInt(numMatch[1], 10)}`;
-                matched = appState.students.find(s => s.nis.toLowerCase() === candidateNis);
+                const num = parseInt(numMatch[1], 10);
+                matched = appState.students.find(s => s.no === num || s.nis.toLowerCase() === `kelas3_${num}`);
                 if (matched) return matched;
             }
 
-            matched = appState.students.find(s => {
-                const normName = s.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-                return normName && (cleanBase.includes(normName) || normName.includes(cleanBase));
-            });
+            const normFile = normalizePersonName(baseName);
+            if (normFile.length >= 3) {
+                matched = appState.students.find(s => normalizePersonName(s.name) === normFile || normalizePersonName(s.name).includes(normFile));
+            }
             return matched || null;
         }
 
@@ -4116,81 +4174,64 @@ H	S	H	H	H	..."
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
 
-            const candidateEntries = [];
-
-            for (const f of files) {
-                if (f.name.toLowerCase().endsWith('.zip')) {
-                    if (typeof JSZip === 'undefined') {
-                        showToast('Library ZIP belum termuat.', 'error');
-                        continue;
-                    }
+            const extractedItems = [];
+            for (const file of files) {
+                if (file.name.toLowerCase().endsWith('.zip') && typeof JSZip !== 'undefined') {
                     try {
-                        const zip = await JSZip.loadAsync(f);
-                        const zipEntries = Object.values(zip.files).filter(entry =>
-                            !entry.dir && /\.(jpe?g|png|webp|gif)$/i.test(entry.name)
-                        );
-                        for (const entry of zipEntries) {
+                        const zip = await JSZip.loadAsync(file);
+                        const entries = Object.values(zip.files).filter(entry => !entry.dir && /\.(jpe?g|png|webp)$/i.test(entry.name));
+                        for (const entry of entries) {
                             const blob = await entry.async('blob');
-                            candidateEntries.push({ filename: entry.name, blob });
+                            extractedItems.push({ filename: entry.name, blob });
                         }
-                    } catch (err) {
-                        showToast(`Gagal membaca file ZIP: ${f.name}`, 'error');
+                    } catch (e) {
+                        showToast(`Gagal membaca file ZIP ${file.name}`, 'error');
                     }
-                } else if (f.type.startsWith('image/')) {
-                    candidateEntries.push({ filename: f.name, blob: f });
+                } else if (file.type.startsWith('image/') || /\.(jpe?g|png|webp)$/i.test(file.name)) {
+                    extractedItems.push({ filename: file.name, blob: file });
                 }
             }
 
-            if (candidateEntries.length === 0) {
-                showToast('Tidak ditemukan file gambar valid (.jpg/.png/.webp atau .zip).', 'error');
+            if (extractedItems.length === 0) {
+                showToast('Tidak ditemukan file gambar (.jpg/.png/.webp) atau ZIP foto.', 'error');
                 event.target.value = '';
                 return;
             }
 
-            const previews = [];
-            for (const item of candidateEntries) {
-                const student = matchStudentByPhotoFilename(item.filename);
+            const previewList = [];
+            for (const item of extractedItems) {
                 try {
                     const dataUrl = await compressBlobOrFile(item.blob, 260, 0.72);
-                    previews.push({
+                    const student = matchStudentByPhotoFilename(item.filename);
+                    previewList.push({
                         filename: item.filename,
                         dataUrl,
-                        matchedNis: student ? student.nis : '',
-                        matchedName: student ? student.name : 'Tidak cocok otomatis'
+                        student
                     });
                 } catch (e) {}
             }
 
-            appState.pendingBulkPhotos = previews;
-            renderBulkPhotoPreview();
+            appState.pendingBulkPhotos = previewList;
+            renderBulkPhotoPreview(previewList);
             event.target.value = '';
         }
 
-        function renderBulkPhotoPreview() {
+        function renderBulkPhotoPreview(previewList) {
             const section = document.getElementById('bulkPhotoPreviewSection');
-            const grid = document.getElementById('bulkPhotoPreviewGrid');
             const summary = document.getElementById('bulkPhotoSummaryText');
+            const grid = document.getElementById('bulkPhotoPreviewGrid');
 
-            if (!appState.pendingBulkPhotos || appState.pendingBulkPhotos.length === 0) {
-                section.classList.add('hidden');
-                grid.innerHTML = '';
-                return;
-            }
+            const matchedCount = previewList.filter(p => p.student).length;
+            summary.textContent = `Pratinjau ${previewList.length} foto: ${matchedCount} cocok dengan siswa, ${previewList.length - matchedCount} belum cocok.`;
 
-            const matchedCount = appState.pendingBulkPhotos.filter(p => p.matchedNis).length;
-            summary.textContent = `Pratinjau ${appState.pendingBulkPhotos.length} Foto (${matchedCount} cocok dengan siswa). Anda bisa mengubah pilihan siswa sebelum menerapkan:`;
-
-            const studentOpts = `<option value="">-- Lewati / Pilih Siswa --</option>` +
-                appState.students.map(s => `<option value="${s.nis}">${s.nis} - ${s.name}</option>`).join('');
-
-            grid.innerHTML = appState.pendingBulkPhotos.map((p, idx) => `
-                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-white border ${p.matchedNis ? 'border-emerald-300' : 'border-amber-300'}">
-                    <img src="${p.dataUrl}" alt="${p.filename}" class="w-11 h-11 rounded-lg object-cover border border-slate-200 shrink-0">
-                    <div class="min-w-0 flex-1 space-y-1">
-                        <p class="text-[11px] font-mono font-bold text-slate-700 truncate" title="${p.filename}">${p.filename.split('/').pop()}</p>
-                        <select onchange="updatePendingPhotoStudent(${idx}, this.value)" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold">
-                            ${studentOpts.replace(`value="${p.matchedNis}"`, `value="${p.matchedNis}" selected`)}
-                        </select>
+            grid.innerHTML = previewList.map(p => `
+                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-white border ${p.student ? 'border-emerald-300' : 'border-rose-200'}">
+                    <img src="${p.dataUrl}" alt="${p.filename}" class="w-10 h-10 rounded-lg object-cover shrink-0">
+                    <div class="min-w-0 flex-1">
+                        <p class="text-[11px] font-bold text-slate-800 truncate">${p.filename}</p>
+                        <p class="text-[10px] font-bold ${p.student ? 'text-emerald-700' : 'text-rose-600'} truncate">
+                            ${p.student ? `→ ${p.student.name} (${p.student.nis})` : '→ Tidak cocok NIS/Nama'}
+                        </p>
                     </div>
                 </div>
             `).join('');
@@ -4198,34 +4239,23 @@ H	S	H	H	H	..."
             section.classList.remove('hidden');
         }
 
-        function updatePendingPhotoStudent(idx, nis) {
-            if (!appState.pendingBulkPhotos[idx]) return;
-            appState.pendingBulkPhotos[idx].matchedNis = nis;
-            const st = appState.students.find(s => s.nis === nis);
-            appState.pendingBulkPhotos[idx].matchedName = st ? st.name : '';
-        }
-
         function cancelBulkPhotoPreview() {
             appState.pendingBulkPhotos = [];
-            renderBulkPhotoPreview();
+            document.getElementById('bulkPhotoPreviewSection').classList.add('hidden');
+            document.getElementById('bulkPhotoPreviewGrid').innerHTML = '';
         }
 
         function applyBulkStudentPhotos() {
-            if (!appState.pendingBulkPhotos || appState.pendingBulkPhotos.length === 0) return;
+            const list = appState.pendingBulkPhotos || [];
             let applied = 0;
-
-            appState.pendingBulkPhotos.forEach(item => {
-                if (!item.matchedNis) return;
-                const st = appState.students.find(s => s.nis === item.matchedNis);
-                if (st) {
-                    st.photo = item.dataUrl;
+            list.forEach(item => {
+                if (item.student) {
+                    item.student.photo = item.dataUrl;
                     applied++;
                 }
             });
-
             saveDatabase();
-            appState.pendingBulkPhotos = [];
-            renderBulkPhotoPreview();
+            cancelBulkPhotoPreview();
             renderTeacherStudentsTable();
             showToast(`Berhasil menerapkan ${applied} pas foto siswa!`, 'success');
         }
@@ -4239,21 +4269,21 @@ H	S	H	H	H	..."
             const folder = zip.folder('Foto_Siswa_Kelas3_MIM1Slinga');
 
             for (const st of appState.students) {
-                if (!st.photo || !st.photo.startsWith('data:image')) continue;
-                const base64Part = st.photo.split(',')[1];
-                const ext = st.photo.includes('image/png') ? 'png' : (st.photo.includes('image/svg') ? 'svg' : 'jpg');
+                if (!st.photo || !st.photo.startsWith('data:image/')) continue;
+                const parts = st.photo.split(',');
+                const mimeMatch = parts[0].match(/data:image\/([a-zA-Z+]+);/);
+                const ext = mimeMatch && mimeMatch[1].includes('svg') ? 'svg' : 'jpg';
+                const base64Data = parts[1];
                 const safeName = st.name.replace(/[^a-zA-Z0-9_-]/g, '_');
-                folder.file(`${st.nis}_${safeName}.${ext}`, base64Part, { base64: true });
+                folder.file(`${st.nis}_${safeName}.${ext}`, base64Data, { base64: true });
             }
 
             const blob = await zip.generateAsync({ type: 'blob' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Foto_Siswa_Kelas3_MIM1Slinga.zip';
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('Arsip ZIP foto seluruh siswa berhasil diunduh!', 'success');
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Foto_Siswa_Kelas3_MIM1Slinga.zip';
+            link.click();
+            showToast('Arsip ZIP foto siswa berhasil diunduh!', 'success');
         }
 
         function renderAdminMonthlyRecapTable() {
@@ -4262,120 +4292,117 @@ H	S	H	H	H	..."
             const yearNum = parseInt(year, 10);
             const monthNum = parseInt(month, 10);
             const daysInMonth = new Date(yearNum, monthNum, 0).getDate();
-            const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            const monthTitle = `${monthNames[monthNum - 1]} ${year}`;
+            const monthName = getMonthNameIndonesian(month);
 
-            document.getElementById('adminMonthlyRecapSubtitle').textContent = `Bulan: ${monthTitle} • Jumlah Hari: ${daysInMonth} hari`;
-            document.getElementById('recapSignTeacherName').textContent = appState.settings.teacherName;
+            document.getElementById('adminMonthlyRecapSubtitle').textContent =
+                `Periode Bulan ${monthName} ${year} (${daysInMonth} Hari) • Wali Kelas: ${appState.settings.teacherName}`;
 
-            const maleCount = appState.students.filter(s => s.gender === 'Laki-laki').length;
-            const femaleCount = appState.students.filter(s => s.gender !== 'Laki-laki').length;
+            const dayHeaders = Array.from({ length: daysInMonth }, (_, i) => {
+                const d = i + 1;
+                const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
+                const hInfo = getDateHolidayInfo(dateKey);
+                if (hInfo.isRedBlock) {
+                    return `<th class="border border-slate-400 px-1 py-1.5 text-center bg-rose-600 text-white font-extrabold" title="${hInfo.label}">${d}</th>`;
+                }
+                return `<th class="border border-slate-400 px-1 py-1.5 text-center bg-slate-100 text-slate-800">${d}</th>`;
+            }).join('');
+
+            document.getElementById('adminMonthlyRecapThead').innerHTML = `
+                <tr>
+                    <th rowspan="2" class="border border-slate-400 px-2 py-1.5 text-center bg-slate-100 text-slate-800">No</th>
+                    <th rowspan="2" class="border border-slate-400 px-2 py-1.5 text-center bg-slate-100 text-slate-800">NIS</th>
+                    <th rowspan="2" class="border border-slate-400 px-3 py-1.5 text-left bg-slate-100 text-slate-800 min-w-[170px]">Nama</th>
+                    <th colspan="${daysInMonth}" class="border border-slate-400 px-2 py-1 text-center bg-slate-100 text-slate-800">Tanggal (${monthName} ${year})</th>
+                    <th colspan="4" class="border border-slate-400 px-2 py-1 text-center bg-slate-100 text-slate-800">Rekap</th>
+                </tr>
+                <tr>
+                    ${dayHeaders}
+                    <th class="border border-slate-400 px-1.5 py-1 text-center bg-slate-100 text-slate-800">H</th>
+                    <th class="border border-slate-400 px-1.5 py-1 text-center bg-slate-100 text-slate-800">I</th>
+                    <th class="border border-slate-400 px-1.5 py-1 text-center bg-slate-100 text-slate-800">S</th>
+                    <th class="border border-slate-400 px-1.5 py-1 text-center bg-slate-100 text-slate-800">A</th>
+                </tr>
+            `;
+
+            let maleCount = 0;
+            let femaleCount = 0;
+
+            document.getElementById('adminMonthlyRecapTableBody').innerHTML = appState.students.map((st, idx) => {
+                if (st.gender === 'Perempuan') femaleCount++;
+                else maleCount++;
+
+                let h = 0, i = 0, s = 0, a = 0;
+                const dayCells = Array.from({ length: daysInMonth }, (_, dIdx) => {
+                    const dayNum = dIdx + 1;
+                    const dateKey = `${monthVal}-${String(dayNum).padStart(2, '0')}`;
+                    const hInfo = getDateHolidayInfo(dateKey);
+
+                    if (hInfo.isRedBlock) {
+                        return `<td class="border border-slate-400 px-1 py-1 text-center font-extrabold bg-rose-600 text-white" title="${hInfo.label}">L</td>`;
+                    }
+
+                    const status = st.attendance?.[dateKey]?.status || '';
+                    if (status === 'H') h++;
+                    else if (status === 'I') i++;
+                    else if (status === 'S') s++;
+                    else if (status === 'A') a++;
+                    return `<td class="border border-slate-400 px-1 py-1 text-center font-bold text-slate-800">${status || ''}</td>`;
+                }).join('');
+
+                return `
+                    <tr>
+                        <td class="border border-slate-400 px-2 py-1 text-center font-semibold text-slate-700">${idx + 1}</td>
+                        <td class="border border-slate-400 px-2 py-1 text-center font-mono text-slate-700">${st.nis}</td>
+                        <td class="border border-slate-400 px-2.5 py-1 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
+                        ${dayCells}
+                        <td class="border border-slate-400 px-1.5 py-1 text-center font-bold text-slate-900">${h}</td>
+                        <td class="border border-slate-400 px-1.5 py-1 text-center font-bold text-slate-900">${i}</td>
+                        <td class="border border-slate-400 px-1.5 py-1 text-center font-bold text-slate-900">${s}</td>
+                        <td class="border border-slate-400 px-1.5 py-1 text-center font-bold text-slate-900">${a}</td>
+                    </tr>
+                `;
+            }).join('');
+
             document.getElementById('recapSummaryTotal').textContent = appState.students.length;
             document.getElementById('recapSummaryMale').textContent = maleCount;
             document.getElementById('recapSummaryFemale').textContent = femaleCount;
 
-            const dayHeaders = [];
-            const dayHolidayFlags = [];
-            for (let d = 1; d <= daysInMonth; d++) {
-                const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
-                const hInfo = getDateHolidayInfo(dateKey);
-                dayHolidayFlags.push(hInfo);
-                if (hInfo.isRedBlock) {
-                    dayHeaders.push(`<th class="py-1.5 px-1 border border-rose-800 bg-rose-600 text-white text-center min-w-[24px]" title="${formatDateDDMMYYYY(dateKey)} - ${hInfo.label}">${d}</th>`);
-                } else {
-                    dayHeaders.push(`<th class="py-1.5 px-1 border border-slate-300 bg-slate-100 text-slate-700 text-center min-w-[24px]" title="${formatDateDDMMYYYY(dateKey)}">${d}</th>`);
-                }
-            }
-
-            document.getElementById('adminMonthlyRecapThead').innerHTML = `
-                <tr>
-                    <th rowspan="2" class="py-2 px-2 border border-slate-300 bg-slate-100 text-slate-800 text-center">No</th>
-                    <th rowspan="2" class="py-2 px-2 border border-slate-300 bg-slate-100 text-slate-800 text-left min-w-[160px]">Nama Siswa</th>
-                    <th rowspan="2" class="py-2 px-1.5 border border-slate-300 bg-slate-100 text-slate-800 text-center">L/P</th>
-                    <th colspan="${daysInMonth}" class="py-1.5 px-2 border border-slate-300 bg-mimblue-700 text-white text-center">Tanggal (${monthTitle})</th>
-                    <th colspan="4" class="py-1.5 px-2 border border-slate-300 bg-mimblue-800 text-white text-center">Rekap</th>
-                </tr>
-                <tr>
-                    ${dayHeaders.join('')}
-                    <th class="py-1.5 px-1.5 border border-slate-300 bg-emerald-100 text-emerald-900 text-center">H</th>
-                    <th class="py-1.5 px-1.5 border border-slate-300 bg-blue-100 text-blue-900 text-center">I</th>
-                    <th class="py-1.5 px-1.5 border border-slate-300 bg-amber-100 text-amber-900 text-center">S</th>
-                    <th class="py-1.5 px-1.5 border border-slate-300 bg-rose-100 text-rose-900 text-center">A</th>
-                </tr>
-            `;
-
-            const tbody = document.getElementById('adminMonthlyRecapTableBody');
-            tbody.innerHTML = appState.students.map((st, idx) => {
-                let hCnt = 0, iCnt = 0, sCnt = 0, aCnt = 0;
-                const cells = [];
-
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const dateKey = `${monthVal}-${String(d).padStart(2, '0')}`;
-                    const hInfo = dayHolidayFlags[d - 1];
-                    if (hInfo.isRedBlock) {
-                        cells.push(`<td class="py-1 px-1 border border-rose-700 bg-rose-600 text-white text-center font-extrabold" title="${formatDateDDMMYYYY(dateKey)} - ${hInfo.label}">L</td>`);
-                        continue;
-                    }
-
-                    const status = st.attendance?.[dateKey]?.status || '';
-                    if (status === 'H') hCnt++;
-                    if (status === 'I') iCnt++;
-                    if (status === 'S') sCnt++;
-                    if (status === 'A') aCnt++;
-
-                    const clsMap = {
-                        H: 'text-emerald-700 font-extrabold bg-emerald-50/60',
-                        I: 'text-blue-700 font-extrabold bg-blue-50/60',
-                        S: 'text-amber-700 font-extrabold bg-amber-50/60',
-                        A: 'text-rose-700 font-extrabold bg-rose-50/70'
-                    };
-                    cells.push(`<td class="py-1 px-1 border border-slate-200 text-center ${clsMap[status] || 'text-slate-300'}">${status || '-'}</td>`);
-                }
-
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-1.5 px-2 border border-slate-200 text-center font-bold text-slate-600">${idx + 1}</td>
-                        <td class="py-1.5 px-2 border border-slate-200 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-200 text-center text-slate-600">${st.gender === 'Perempuan' ? 'P' : 'L'}</td>
-                        ${cells.join('')}
-                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-emerald-800 bg-emerald-50/40">${hCnt}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-blue-800 bg-blue-50/40">${iCnt}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-amber-800 bg-amber-50/40">${sCnt}</td>
-                        <td class="py-1.5 px-1.5 border border-slate-200 text-center font-extrabold text-rose-800 bg-rose-50/40">${aCnt}</td>
-                    </tr>
-                `;
-            }).join('');
+            const signDateStr = getLastEffectiveWorkDateTextForMonth(monthVal);
+            renderDualElectronicSignatureBlock(
+                'adminMonthlySignatureBlock',
+                signDateStr,
+                `REKAP-BULANAN-${monthVal}`
+            );
         }
 
         function renderAll26QrCards() {
             const grid = document.getElementById('all26QrCardsGrid');
-            grid.innerHTML = '';
+            grid.innerHTML = appState.students.map(st => `
+                <div class="p-3.5 rounded-2xl border-2 border-mimblue-700 bg-white text-center space-y-2 break-inside-avoid">
+                    <div class="border-b border-slate-100 pb-1.5">
+                        <p class="text-[10px] font-black text-mimblue-900">MIM 1 SLINGA • KELAS 3</p>
+                    </div>
+                    <img src="${st.photo}" alt="${st.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-200 mx-auto">
+                    <div>
+                        <p class="text-xs font-extrabold text-slate-900 leading-tight">${st.name}</p>
+                        <p class="text-[10px] font-mono font-bold text-mimblue-700 mt-0.5">${st.nis}</p>
+                    </div>
+                    <div id="qr-holder-${st.nis}" class="flex justify-center py-1"></div>
+                </div>
+            `).join('');
 
             appState.students.forEach(st => {
-                const card = document.createElement('div');
-                card.className = 'p-3.5 rounded-2xl border border-slate-200 bg-white shadow-2xs flex flex-col items-center text-center space-y-2';
-                card.innerHTML = `
-                    <div class="flex items-center gap-1.5 w-full justify-center border-b border-slate-100 pb-1.5">
-                        <img src="${appState.settings.customLogoDataUrl || getDefaultMadrasahLogoSvg()}" alt="Logo" class="w-5 h-5 rounded-full object-contain">
-                        <span class="text-[10px] font-black text-mimblue-900">MIM 1 SLINGA • ABSEN ${st.no}</span>
-                    </div>
-                    <img src="${st.photo}" alt="${st.name}" class="w-12 h-12 rounded-xl object-cover border border-mimblue-700">
-                    <div class="w-full">
-                        <p class="text-xs font-extrabold text-slate-900 truncate" title="${st.name}">${st.name}</p>
-                        <p class="text-[10px] font-mono font-bold text-mimblue-700">${st.nis}</p>
-                    </div>
-                    <div id="qr-holder-${st.nis}" class="p-1 bg-white rounded-xl border border-slate-100"></div>
-                `;
-                grid.appendChild(card);
-
-                const holder = card.querySelector(`#qr-holder-${st.nis}`);
-                new QRCode(holder, {
-                    text: `MIM1SLINGA|${st.nis}`,
-                    width: 96,
-                    height: 96,
-                    colorDark: '#07399C',
-                    colorLight: '#ffffff'
-                });
+                const holder = document.getElementById(`qr-holder-${st.nis}`);
+                if (holder && typeof QRCode !== 'undefined') {
+                    holder.innerHTML = '';
+                    new QRCode(holder, {
+                        text: `MIM1SLINGA|${st.nis}`,
+                        width: 88,
+                        height: 88,
+                        colorDark: '#07399C',
+                        colorLight: '#ffffff'
+                    });
+                }
             });
         }
 
@@ -4388,12 +4415,12 @@ H	S	H	H	H	..."
                             <span class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[10px] font-extrabold">${mat.subject}</span>
                             <span class="text-[10px] text-slate-400">${mat.createdAt || ''}</span>
                         </div>
-                        <h4 class="font-extrabold text-xs sm:text-sm text-slate-900 mt-2">${mat.title}</h4>
-                        <p class="text-xs text-slate-500 mt-1 line-clamp-2">${mat.content}</p>
+                        <h4 class="font-extrabold text-sm text-slate-900 mt-2">${mat.title}</h4>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-3">${mat.content}</p>
                     </div>
-                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-200/70">
-                        <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="px-3 py-1 rounded-lg bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 text-[11px] font-bold cursor-pointer">Pratinjau</button>
-                        <button type="button" onclick="deleteMaterialById('${mat.id}')" class="px-3 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-bold cursor-pointer">Hapus</button>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="openMaterialPreviewModal('${mat.id}')" class="flex-1 py-2 rounded-xl bg-white hover:bg-slate-100 text-mimblue-800 border border-slate-200 text-xs font-bold cursor-pointer">Pratinjau</button>
+                        <button type="button" onclick="deleteMaterialById('${mat.id}')" class="px-3 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold cursor-pointer">Hapus</button>
                     </div>
                 </div>
             `).join('');
@@ -4417,15 +4444,15 @@ H	S	H	H	H	..."
             saveDatabase();
             e.target.reset();
             renderTeacherMaterialsGrid();
-            showToast('Materi baru berhasil dipublikasikan ke Portal Siswa!', 'success');
+            showToast('Materi pelajaran berhasil dipublikasikan!', 'success');
         }
 
         function deleteMaterialById(id) {
-            openCustomConfirm('Hapus Materi?', 'Hapus materi pelajaran ini dari portal?', () => {
+            openCustomConfirm('Hapus Materi?', 'Hapus materi pelajaran ini dari portal siswa?', () => {
                 appState.materials = appState.materials.filter(m => m.id !== id);
                 saveDatabase();
                 renderTeacherMaterialsGrid();
-                showToast('Materi dihapus.', 'info');
+                showToast('Materi telah dihapus.', 'info');
             });
         }
 
@@ -4436,7 +4463,7 @@ H	S	H	H	H	..."
 
             document.getElementById('matModalSubjectBadge').textContent = mat.subject;
             document.getElementById('matModalTitle').textContent = mat.title;
-            document.getElementById('matModalMeta').textContent = `Mata Pelajaran: ${mat.subject} • Diperbarui: ${mat.createdAt || '-'}`;
+            document.getElementById('matModalMeta').textContent = `Mata Pelajaran: ${mat.subject} • Diperbarui: ${mat.createdAt || formatTodayIndonesianDDMMYYYY()}`;
             document.getElementById('matModalBody').textContent = mat.content;
 
             updateGlobalBrandingUI();
@@ -4451,48 +4478,49 @@ H	S	H	H	H	..."
             modal.classList.remove('flex');
         }
 
-        function downloadActiveMaterialDOCX() {
-            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            if (!mat) return;
-
-            const safeParagraphs = mat.content
-                .split('\n')
-                .map(line => `<p style="font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5;margin:0 0 8pt 0;">${line || ' '}</p>`)
-                .join('');
-
-            const htmlDoc = `
-                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head><meta charset='utf-8'><title>${mat.title}</title></head>
-                <body>
-                    <h2 style="color:#07399C;font-family:Arial,sans-serif;margin-bottom:2px;">MADRASAH IBTIDAIYAH MUHAMMADIYAH 1 SLINGA</h2>
-                    <p style="color:#555;font-size:10pt;margin-top:0;">Kelas 3 • Mata Pelajaran: <strong>${mat.subject}</strong></p>
-                    <hr style="border:1px solid #07399C;">
-                    <h3 style="font-family:Arial,sans-serif;">${mat.title}</h3>
-                    ${safeParagraphs}
-                </body>
-                </html>
-            `;
-
-            const blob = new Blob(['\ufeff', htmlDoc], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${mat.title.replace(/[^a-zA-Z0-9_-]/g, '_')}.doc`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('Dokumen Word (.doc) materi berhasil diunduh!', 'success');
-        }
-
         function downloadActiveMaterialPNG() {
             const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            const filePrefix = mat ? mat.title.replace(/[^a-zA-Z0-9_-]/g, '_') : 'Materi_Kelas3';
-            exportElementToPNG('materialPrintSheet', filePrefix);
+            const filename = mat ? `Materi_${mat.title.replace(/[^a-zA-Z0-9_-]/g, '_')}` : 'Materi_Pelajaran';
+            exportElementToPNG('materialPrintSheet', filename);
         }
 
         function downloadActiveMaterialPDF() {
             const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
-            const filePrefix = mat ? mat.title.replace(/[^a-zA-Z0-9_-]/g, '_') : 'Materi_Kelas3';
-            exportElementToPDF('materialPrintSheet', filePrefix);
+            const filename = mat ? `Materi_${mat.title.replace(/[^a-zA-Z0-9_-]/g, '_')}` : 'Materi_Pelajaran';
+            exportElementToPDF('materialPrintSheet', filename);
+        }
+
+        function downloadActiveMaterialDOCX() {
+            const mat = appState.materials.find(m => m.id === appState.activePreviewMaterialId);
+            if (!mat) return;
+
+            const safeContent = mat.content
+                .split('\n')
+                .map(line => `<p style="font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5;margin:4px 0;">${line || ' '}</p>`)
+                .join('');
+
+            const docHtml = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office"
+                      xmlns:w="urn:schemas-microsoft-com:office:word"
+                      xmlns="http://www.w3.org/TR/REC-html40">
+                <head><meta charset="utf-8"><title>${mat.title}</title></head>
+                <body>
+                    <h2 style="font-family:Calibri,Arial,sans-serif;color:#07399C;margin-bottom:2px;">MADRASAH IBTIDAIYAH MUHAMMADIYAH 1 SLINGA</h2>
+                    <p style="font-family:Calibri,Arial,sans-serif;font-size:10pt;color:#555;margin-top:0;">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga • Kelas 3</p>
+                    <hr/>
+                    <h3 style="font-family:Calibri,Arial,sans-serif;color:#111;">${mat.title}</h3>
+                    <p style="font-family:Calibri,Arial,sans-serif;font-size:10pt;color:#444;"><strong>Mata Pelajaran:</strong> ${mat.subject}</p>
+                    <div>${safeContent}</div>
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob(['\ufeff', docHtml], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Materi_${mat.title.replace(/[^a-zA-Z0-9_-]/g, '_')}.doc`;
+            link.click();
+            showToast('Dokumen Word (.doc) materi berhasil diunduh!', 'success');
         }
 
         function renderTeacherSettingsForm() {
@@ -4504,11 +4532,10 @@ H	S	H	H	H	..."
 
         function saveTeacherClassSettings(e) {
             e.preventDefault();
-            appState.settings.teacherName = document.getElementById('settingTeacherName').value.trim() || 'ALFAM ATTHAMI';
+            appState.settings.teacherName = document.getElementById('settingTeacherName').value.trim() || DEFAULT_HOMEROOM_NAME;
             appState.settings.academicYear = document.getElementById('settingAcademicYear').value.trim() || '2025/2026';
             appState.settings.adminPin = document.getElementById('settingAdminPin').value.trim() || '123456';
             saveDatabase();
-            updateGlobalBrandingUI();
             showToast('Pengaturan kelas & PIN berhasil disimpan!', 'success');
         }
 
@@ -4516,13 +4543,12 @@ H	S	H	H	H	..."
             const file = event.target.files[0];
             if (!file) return;
             try {
-                const compressedLogo = await compressBlobOrFile(file, 240, 0.85);
-                appState.settings.customLogoDataUrl = compressedLogo;
+                const compressed = await compressStudentImageFile(file, 240, 0.8);
+                appState.settings.customLogoDataUrl = compressed;
                 saveDatabase();
-                updateGlobalBrandingUI();
-                showToast('Logo Madrasah berhasil diperbarui di seluruh halaman!', 'success');
+                showToast('Logo madrasah berhasil diperbarui!', 'success');
             } catch (e) {
-                showToast('Gagal memuat logo.', 'error');
+                showToast('Gagal memproses gambar logo.', 'error');
             }
             event.target.value = '';
         }
@@ -4530,66 +4556,86 @@ H	S	H	H	H	..."
         function resetMadrasahLogoDefault() {
             appState.settings.customLogoDataUrl = '';
             saveDatabase();
-            updateGlobalBrandingUI();
-            showToast('Logo Madrasah dikembalikan ke logo bawaan MIM 1 Slinga.', 'info');
+            showToast('Logo madrasah dikembalikan ke bawaan.', 'info');
         }
 
-        async function exportElementToPNG(elementId, filePrefix) {
-            const el = document.getElementById(elementId);
-            if (!el || typeof html2canvas === 'undefined') {
-                showToast('Fitur ekspor gambar belum siap.', 'error');
+        async function exportElementToPNG(elementId, filenamePrefix) {
+            const target = document.getElementById(elementId);
+            if (!target || typeof html2canvas === 'undefined') {
+                showToast('Fitur ekspor PNG belum siap.', 'error');
                 return;
             }
-            showToast('Menyiapkan gambar PNG...', 'info');
             try {
-                const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+                const canvas = await html2canvas(target, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
                 const link = document.createElement('a');
-                link.download = `${filePrefix}_MIM1Slinga.png`;
+                link.download = `${filenamePrefix}_MIM1Slinga.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                showToast('Berhasil mengunduh PNG!', 'success');
+                showToast(`Berhasil mengunduh ${filenamePrefix}.png!`, 'success');
             } catch (e) {
-                showToast('Gagal membuat gambar PNG.', 'error');
+                showToast('Gagal mengekspor gambar PNG.', 'error');
             }
         }
 
-        async function exportElementToPDF(elementId, filePrefix) {
-            const el = document.getElementById(elementId);
-            if (!el || typeof html2canvas === 'undefined' || !window.jspdf) {
+        async function exportElementToPDF(elementId, filenamePrefix) {
+            const target = document.getElementById(elementId);
+            if (!target || typeof html2canvas === 'undefined' || !window.jspdf) {
                 showToast('Fitur ekspor PDF belum siap.', 'error');
                 return;
             }
-            showToast('Menyiapkan dokumen PDF...', 'info');
             try {
-                const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+                const canvas = await html2canvas(target, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
+                const isLandscape = canvas.width > canvas.height;
                 const pdf = new jsPDF({
-                    orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+                    orientation: isLandscape ? 'landscape' : 'portrait',
                     unit: 'mm',
                     format: 'a4'
                 });
+
                 const pageWidth = pdf.internal.pageSize.getWidth();
                 const pageHeight = pdf.internal.pageSize.getHeight();
                 const margin = 8;
                 const usableWidth = pageWidth - margin * 2;
-                const imgHeight = (canvas.height * usableWidth) / canvas.width;
+                const usableHeight = pageHeight - margin * 2;
 
-                let heightLeft = imgHeight;
-                let position = margin;
+                const imgProps = pdf.getImageProperties(imgData);
+                const totalPdfHeight = (imgProps.height * usableWidth) / imgProps.width;
 
-                pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
-                heightLeft -= (pageHeight - margin * 2);
+                if (totalPdfHeight <= usableHeight) {
+                    pdf.addImage(imgData, 'PNG', margin, margin, usableWidth, totalPdfHeight);
+                } else {
+                    const pageCanvasHeightPx = Math.floor((usableHeight * canvas.width) / usableWidth);
+                    let yOffsetPx = 0;
+                    let pageIndex = 0;
 
-                while (heightLeft > 0) {
-                    position = heightLeft - imgHeight + margin;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
-                    heightLeft -= (pageHeight - margin * 2);
+                    while (yOffsetPx < canvas.height) {
+                        const sliceHeightPx = Math.min(pageCanvasHeightPx, canvas.height - yOffsetPx);
+                        const sliceCanvas = document.createElement('canvas');
+                        sliceCanvas.width = canvas.width;
+                        sliceCanvas.height = sliceHeightPx;
+                        const sliceCtx = sliceCanvas.getContext('2d');
+                        sliceCtx.fillStyle = '#ffffff';
+                        sliceCtx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
+                        sliceCtx.drawImage(
+                            canvas,
+                            0, yOffsetPx, canvas.width, sliceHeightPx,
+                            0, 0, canvas.width, sliceHeightPx
+                        );
+
+                        const sliceDataUrl = sliceCanvas.toDataURL('image/png');
+                        const slicePdfHeight = (sliceHeightPx * usableWidth) / canvas.width;
+                        if (pageIndex > 0) pdf.addPage();
+                        pdf.addImage(sliceDataUrl, 'PNG', margin, margin, usableWidth, slicePdfHeight);
+
+                        yOffsetPx += sliceHeightPx;
+                        pageIndex++;
+                    }
                 }
 
-                pdf.save(`${filePrefix}_MIM1Slinga.pdf`);
-                showToast('Berhasil mengunduh PDF!', 'success');
+                pdf.save(`${filenamePrefix}_MIM1Slinga.pdf`);
+                showToast(`Berhasil mengunduh ${filenamePrefix}.pdf!`, 'success');
             } catch (e) {
                 showToast('Gagal membuat file PDF.', 'error');
             }
@@ -4597,12 +4643,6 @@ H	S	H	H	H	..."
 
         Object.assign(window, {
             switchLoginMode,
-            startPublicQrScanner,
-            stopPublicQrScanner,
-            switchPublicCameraFacing,
-            handlePublicQrImageUpload,
-            handlePublicManualBarcodeSubmit,
-            renderPublicTodayScanList,
             handleStudentLogin,
             handleTeacherLogin,
             logout,
@@ -4615,8 +4655,18 @@ H	S	H	H	H	..."
             renderStudentTugasTab,
             renderStudentAsasTab,
             renderStudentRaporTab,
-            renderStudentMaterials,
+            openMaterialPreviewModal,
+            closeMaterialModal,
+            downloadActiveMaterialPNG,
+            downloadActiveMaterialPDF,
+            downloadActiveMaterialDOCX,
             switchTeacherTab,
+            startPublicQrScanner,
+            stopPublicQrScanner,
+            switchPublicCameraFacing,
+            handlePublicQrImageUpload,
+            handlePublicManualBarcodeSubmit,
+            renderPublicTodayScanList,
             startAdminQrScanner,
             stopAdminQrScanner,
             handleAdminManualNisScan,
@@ -4657,21 +4707,12 @@ H	S	H	H	H	..."
             exportCurrentStudentsXls,
             handleImportStudentsXls,
             handleBulkStudentPhotosSelect,
-            updatePendingPhotoStudent,
             cancelBulkPhotoPreview,
             applyBulkStudentPhotos,
             exportAllStudentPhotosZip,
             renderAdminMonthlyRecapTable,
-            renderAll26QrCards,
-            renderTeacherMaterialsGrid,
             handleAddMaterial,
             deleteMaterialById,
-            openMaterialPreviewModal,
-            closeMaterialModal,
-            downloadActiveMaterialDOCX,
-            downloadActiveMaterialPNG,
-            downloadActiveMaterialPDF,
-            renderTeacherSettingsForm,
             saveTeacherClassSettings,
             handleMadrasahLogoUpload,
             resetMadrasahLogoDefault,
