@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Info Kelas 3 - Portal Admin &amp; Wali Kelas (MIM 1 Slinga)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+  .tab-btn.active { background-color: #0f766e; color: #ffffff; box-shadow: 0 2px 6px rgba(15,118,110,0.25); }
+  .subtab-btn.active { background-color: #1e293b; color: #ffffff; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background-color: #ffffff; }
+    .print-container { box-shadow: none !important; border: none !important; padding: 0 !important; }
+  }
+  .custom-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+  .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+  .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>
+</head>
+<body class="text-slate-800 antialiased">
+
+<!-- Top Header / Portal Info Kelas 3 -->
+<header class="bg-teal-900 text-white shadow-md no-print">
+  <div class="max-w-[1440px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-teal-700 flex items-center justify-center text-amber-300 font-extrabold text-lg shadow">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight">Info Kelas 3 — Portal Admin &amp; Wali Kelas</h1>
+          <span class="text-xs bg-teal-800 text-teal-200 px-2 py-0.5 rounded-full border border-teal-700">Kurikulum Merdeka</span>
+        </div>
+        <p class="text-xs text-teal-200">Manajemen Nilai, Legger, KKTP &amp; Katrol, Kalender Pendidikan, Perangkat Ajar AI &amp; Analisis Butir Soal (26 Siswa)</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 text-xs">
+      <div class="bg-teal-800/90 px-3 py-1.5 rounded-lg border border-teal-700 flex items-center gap-2">
+        <span class="text-teal-300 font-semibold">KKTP / KKM:</span>
+        <input id="globalKktpInput" type="number" min="1" max="100" value="70" onchange="updateGlobalKktp(this.value)"
+          class="w-14 bg-teal-950 text-amber-300 font-bold text-center rounded border border-teal-600 py-0.5 focus:outline-none">
+      </div>
+      <button onclick="exportAllDataJSON()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition">
+        <i class="fa-solid fa-download"></i> Backup JSON
+      </button>
+      <label class="bg-sky-700 hover:bg-sky-600 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 cursor-pointer transition">
+        <i class="fa-solid fa-upload"></i> Restore JSON
+        <input type="file" accept=".json" onchange="importAllDataJSON(event)" class="hidden">
+      </label>
+      <button onclick="resetDemoData()" class="bg-rose-700 hover:bg-rose-600 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition" title="Reset data ke contoh awal">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-teal-950/70 border-t border-teal-800 px-4 py-2 overflow-x-auto custom-scroll">
+    <div class="max-w-[1440px] mx-auto flex items-center gap-1.5 min-w-max">
+      <button onclick="switchMainTab('nilai')" id="tab-nilai" class="tab-btn active px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-2 transition">
+        <i class="fa-solid fa-table-list"></i> Input Nilai &amp; Katrol
+      </button>
+      <button onclick="switchMainTab('legger')" id="tab-legger" class="tab-btn px-3.5 py-2 rounded-lg text-xs font-bold text-teal-100 hover:bg-teal-800/60 flex items-center gap-2 transition">
+        <i class="fa-solid fa-award"></i> Legger Nilai &amp; Ranking
+      </button>
+      <button onclick="switchMainTab('kalender')" id="tab-kalender" class="tab-btn px-3.5 py-2 rounded-lg text-xs font-bold text-teal-100 hover:bg-teal-800/60 flex items-center gap-2 transition">
+        <i class="fa-solid fa-calendar-days"></i> Kalender Pendidikan
+      </button>
+      <button onclick="switchMainTab('perangkat')" id="tab-perangkat" class="tab-btn px-3.5 py-2 rounded-lg text-xs font-bold text-teal-100 hover:bg-teal-800/60 flex items-center gap-2 transition">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Perangkat Pembelajaran (AI)
+      </button>
+      <button onclick="switchMainTab('butir')" id="tab-butir" class="tab-btn px-3.5 py-2 rounded-lg text-xs font-bold text-teal-100 hover:bg-teal-800/60 flex items-center gap-2 transition">
+        <i class="fa-solid fa-square-poll-vertical"></i> Analisis Butir Soal &amp; Kisi-Kisi
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main class="max-w-[1440px] mx-auto px-4 py-5 space-y-5">
+
+  <!-- ===================================================================== -->
+  <!-- TAB 1: INPUT NILAI, KKTP (DEFAULT 70) & KATROL NILAI ADIL           -->
+  <!-- ===================================================================== -->
+  <section id="section-nilai" class="space-y-4">
+    <!-- Control & KKTP / Katrol Panel -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 no-print">
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
+        <div>
+          <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+            <span class="w-2.5 h-6 bg-teal-600 rounded-full inline-block"></span>
+            Input Nilai Tugas/Ulangan &amp; ASAS/ASAT (26 Siswa)
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Aturan otomatis: Nilai input &lt; <span id="kktpBadgeText" class="font-bold text-teal-700">70</span> otomatis disesuaikan menjadi <span id="kktpBadgeVal" class="font-bold text-teal-700">70</span> (karena input dilakukan setelah tuntas). Kosongkan bila belum ada nilai.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <label class="text-xs font-bold text-slate-600">Mata Pelajaran:</label>
+          <select id="nilaiMapelSelect" onchange="renderNilaiTable()" class="bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-teal-500">
+          </select>
+          <button onclick="openMateriLabelModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-tag"></i> Label Materi Tugas 1–10
+          </button>
+          <button onclick="exportNilaiExcel()" class="bg-teal-700 hover:bg-teal-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-file-excel"></i> Export XLSX
+          </button>
+        </div>
+      </div>
+
+      <!-- KKTP & Katrol Nilai / Dongkrak Nilai Logis & Adil -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-4">
+        <!-- KKTP Config -->
+        <div class="lg:col-span-4 bg-teal-50/70 border border-teal-200 rounded-xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-teal-900 uppercase tracking-wide">
+              <i class="fa-solid fa-shield-check mr-1"></i> Ketuntasan Minimal (KKTP)
+            </span>
+            <span class="text-[11px] bg-teal-200/70 text-teal-900 px-2 py-0.5 rounded-full font-bold">Default: 70</span>
+          </div>
+          <p class="text-[11px] text-teal-800 leading-relaxed">
+            Dalam Kurikulum Merdeka disebut <strong>KKTP</strong> (Kriteria Ketercapaian Tujuan Pembelajaran) / batas ketuntasan minimal. Nilai yang diketik di bawah batas ini otomatis naik ke batas minimal saat disimpan/diblur.
+          </p>
+          <div class="flex items-center gap-2">
+            <input type="number" id="kktpInputBox" min="1" max="100" value="70"
+              class="w-20 bg-white border border-teal-300 rounded-lg px-2.5 py-1.5 text-xs font-extrabold text-teal-900">
+            <button onclick="applyKktpAndClampAll()" class="bg-teal-700 hover:bg-teal-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+              Terapkan &amp; Sesuaikan Nilai
+            </button>
+          </div>
+        </div>
+
+        <!-- Katrol / Dongkrak Nilai Logis & Adil -->
+        <div class="lg:col-span-8 bg-amber-50/70 border border-amber-200 rounded-xl p-3.5 space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-amber-950 uppercase tracking-wide">
+              <i class="fa-solid fa-scale-balanced mr-1"></i> Fitur Katrol / Dongkrak Nilai (Logis &amp; Adil)
+            </span>
+            <span class="text-[11px] text-amber-900 font-semibold">Menggunakan fungsi kompresi proporsional (batas atas 100, menjaga urutan ranking)</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 items-end">
+            <div>
+              <label class="block text-[11px] font-bold text-amber-900 mb-1">Target Komponen</label>
+              <select id="katrolTarget" class="w-full bg-white border border-amber-300 rounded-lg px-2 py-1.5 text-xs font-bold">
+                <option value="tugas">Semua Tugas/Ulangan (Mapel ini)</option>
+                <option value="asas">Nilai ASAS/ASAT (Mapel ini)</option>
+                <option value="both">Tugas &amp; ASAS/ASAT (Mapel ini)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-amber-900 mb-1">Metode Katrol Adil</label>
+              <select id="katrolMethod" class="w-full bg-white border border-amber-300 rounded-lg px-2 py-1.5 text-xs font-bold">
+                <option value="linear_cap">Linear Terbatas (Max 100)</option>
+                <option value="proportional_gap">Kompresi Sisa Gap (Adil ke Nilai Tinggi)</option>
+                <option value="target_floor">Angkat Rata-Rata ke Batas</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-amber-900 mb-1">Besar Poin / Target</label>
+              <input type="number" id="katrolValue" step="0.5" value="5" min="0" max="30"
+                class="w-full bg-white border border-amber-300 rounded-lg px-2.5 py-1.5 text-xs font-extrabold">
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="previewKatrol()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold">
+                Simulasi
+              </button>
+              <button onclick="applyKatrol()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold">
+                Terapkan
+              </button>
+            </div>
+          </div>
+          <div id="katrolPreviewBox" class="text-[11px] text-amber-950 bg-white/80 rounded-lg px-3 py-2 border border-amber-200 hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nilai Table -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="overflow-x-auto custom-scroll">
+        <table class="w-full text-xs border-collapse" id="nilaiInputTable">
+          <thead>
+            <tr class="bg-slate-800 text-white text-center">
+              <th class="p-2.5 border border-slate-700 w-10 sticky left-0 bg-slate-800 z-10">No</th>
+              <th class="p-2.5 border border-slate-700 min-w-[180px] text-left sticky left-10 bg-slate-800 z-10">Nama Siswa (26)</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 1">T1</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 2">T2</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 3">T3</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 4">T4</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 5">T5</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 6">T6</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 7">T7</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 8">T8</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 9">T9</th>
+              <th class="p-2 border border-slate-700 w-14" title="Tugas/Ulangan 10">T10</th>
+              <th class="p-2 border border-slate-700 bg-teal-900 w-16">Rata Tugas</th>
+              <th class="p-2 border border-slate-700 bg-indigo-900 w-16">ASAS / ASAT</th>
+              <th class="p-2 border border-slate-700 bg-emerald-900 w-16">Nilai Akhir</th>
+            </tr>
+          </thead>
+          <tbody id="nilaiTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 2: LEGGER NILAI & RANKING (3 JENIS LEGGER)                        -->
+  <!-- ===================================================================== -->
+  <section id="section-legger" class="hidden space-y-4">
+    <!-- Sub-tabs & Controls -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 space-y-4 no-print">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap gap-2">
+          <button onclick="switchLeggerType('tugas')" id="subtab-tugas" class="subtab-btn active px-3.5 py-2 rounded-lg text-xs font-bold transition">
+            1. Legger Rata-Rata Tugas (Tanpa ASAS/ASAT)
+          </button>
+          <button onclick="switchLeggerType('asas')" id="subtab-asas" class="subtab-btn px-3.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+            2. Legger Nilai ASAS / ASAT
+          </button>
+          <button onclick="switchLeggerType('rapor')" id="subtab-rapor" class="subtab-btn px-3.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+            3. Legger Rapor (Rata-Rata Tugas + ASAS/ASAT)
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="toggleSortLegger()" id="btnSortLegger" class="bg-amber-600 hover:bg-amber-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+            <i class="fa-solid fa-arrow-down-1-9"></i> Urutkan Rank 1 → 26
+          </button>
+          <button onclick="exportCurrentLeggerXLSX()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-file-excel"></i> Export XLSX
+          </button>
+          <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-print"></i> Cetak / PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Dropdown Materi Khusus Legger Tugas -->
+      <div id="leggerMateriFilterBar" class="flex flex-wrap items-center justify-between gap-3 bg-teal-50 border border-teal-200 rounded-xl px-4 py-2.5">
+        <div class="flex flex-wrap items-center gap-2">
+          <label for="leggerMateriSelect" class="text-xs font-extrabold text-teal-900">
+            <i class="fa-solid fa-filter mr-1"></i> Pilih Materi / Tugas Ke-:
+          </label>
+          <select id="leggerMateriSelect" onchange="renderLegger()" class="bg-white border border-teal-300 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-800">
+            <option value="all">Semua Materi yang Sudah Diisi (Rata-Rata Keseluruhan)</option>
+          </select>
+        </div>
+        <span class="text-[11px] text-teal-800 font-medium">
+          *Dropdown hanya menampilkan slot Tugas/Materi yang minimal sudah memiliki nilai terisi pada salah satu mapel.
+        </span>
+      </div>
+
+      <!-- Identitas Kepala Sekolah & Wali Kelas (Tanggal dikosongkan untuk diisi manual sebelum ekspor/cetak) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Nama Satuan Pendidikan / Kelas</label>
+          <input id="metaSekolah" type="text" value="MIM 1 Slinga — Kelas III (3)" oninput="syncTtdLabels()"
+            class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Nama Kepala Madrasah / Sekolah</label>
+          <input id="metaKepsek" type="text" value="Kepala Madrasah, S.Pd.I" oninput="syncTtdLabels()"
+            class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Nama Wali Kelas III</label>
+          <input id="metaWalikelas" type="text" value="Wali Kelas 3, S.Pd." oninput="syncTtdLabels()"
+            class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold">
+        </div>
+      </div>
+    </div>
+
+    <!-- Printable Legger Sheet -->
+    <div id="leggerPrintable" class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+      <div class="text-center border-b-2 border-slate-800 pb-3">
+        <h2 id="leggerTitle" class="text-lg font-extrabold uppercase tracking-wide text-slate-900">
+          LEGGER RATA-RATA NILAI TUGAS SEMUA MATA PELAJARAN (TANPA ASAS/ASAT)
+        </h2>
+        <p id="leggerSubtitle" class="text-xs font-semibold text-slate-600 mt-0.5">
+          MIM 1 Slinga — Kelas III (3) | Filter: Semua Materi Terisi | KKTP: 70
+        </p>
+      </div>
+
+      <div class="overflow-x-auto custom-scroll">
+        <table class="w-full text-xs border-collapse" id="leggerTable">
+          <thead id="leggerThead"></thead>
+          <tbody id="leggerTbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Kolom Tanda Tangan Kepala Sekolah & Wali Kelas (Tanggal Bulan Tahun kosong untuk diisi manual) -->
+      <div class="pt-6 grid grid-cols-2 gap-8 text-xs text-slate-800 break-inside-avoid">
+        <div class="flex flex-col items-center text-center">
+          <p class="font-semibold">Mengetahui,</p>
+          <p class="font-bold mt-0.5">Kepala Madrasah / Sekolah</p>
+          <div class="h-20"></div>
+          <p id="ttdKepsekName" class="font-extrabold underline decoration-slate-400">Kepala Madrasah, S.Pd.I</p>
+          <p class="text-[11px] text-slate-500">NIP. ........................................</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center">
+          <p class="font-semibold">
+            <span class="inline-block min-w-[90px] border-b border-dotted border-slate-600">&nbsp;</span>,
+            <span class="inline-block min-w-[36px] border-b border-dotted border-slate-600">&nbsp;</span>
+            <span class="inline-block min-w-[80px] border-b border-dotted border-slate-600">&nbsp;</span>
+            <span class="inline-block min-w-[48px] border-b border-dotted border-slate-600">&nbsp;</span>
+          </p>
+          <p class="font-bold mt-0.5">Wali Kelas III</p>
+          <div class="h-20"></div>
+          <p id="ttdWalikelasName" class="font-extrabold underline decoration-slate-400">Wali Kelas 3, S.Pd.</p>
+          <p class="text-[11px] text-slate-500">NIP. ........................................</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 3: IMPOR KALENDER PENDIDIKAN (XLSX, DOCX, PDF)                    -->
+  <!-- ===================================================================== -->
+  <section id="section-kalender" class="hidden space-y-4">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div>
+          <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-calendar-check text-teal-600"></i> Kalender Pendidikan &amp; Impor Multi-Format (XLSX, DOCX, PDF)
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Unggah file Kalender Pendidikan berformat <strong>.xlsx / .xls / .csv</strong>, <strong>.docx</strong>, atau <strong>.pdf</strong>, atau tambah agenda manual.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <label class="bg-teal-700 hover:bg-teal-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold cursor-pointer flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-file-import"></i> Impor File (.xlsx, .docx, .pdf)
+            <input id="kaldikFileInput" type="file" accept=".xlsx,.xls,.csv,.docx,.pdf" onchange="handleKaldikImport(event)" class="hidden">
+          </label>
+          <button onclick="exportKaldikXLSX()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-file-excel"></i> Export XLSX
+          </button>
+        </div>
+      </div>
+
+      <!-- Manual Agenda Form -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs">
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Tanggal / Rentang</label>
+          <input id="kaldikTanggal" type="text" placeholder="Contoh: 2026-07-13 s.d. 2026-07-18"
+            class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Kategori</label>
+          <select id="kaldikKategori" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold">
+            <option value="Efektif KBM">Efektif KBM</option>
+            <option value="Libur Nasional / Cuti">Libur Nasional / Cuti</option>
+            <option value="Asesmen / ASAS / ASAT">Asesmen / ASAS / ASAT</option>
+            <option value="Rapor / Jeda Semester">Rapor / Jeda Semester</option>
+            <option value="Kegiatan Madrasah/Sekolah">Kegiatan Madrasah/Sekolah</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Uraian Kegiatan / Keterangan</label>
+          <input id="kaldikUraian" type="text" placeholder="Contoh: Hari Pertama Masuk TP 2026/2027"
+            class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5">
+        </div>
+        <div class="flex items-end">
+          <button onclick="addKaldikManual()" class="w-full bg-slate-800 hover:bg-slate-700 text-white py-1.5 px-3 rounded-lg font-bold">
+            <i class="fa-solid fa-plus mr-1"></i> Tambah Agenda
+          </button>
+        </div>
+      </div>
+
+      <div id="kaldikStatusBox" class="text-xs text-slate-600 bg-sky-50 border border-sky-200 rounded-xl px-4 py-2.5">
+        Menampilkan <strong id="kaldikCount">0</strong> agenda kalender pendidikan.
+      </div>
+
+      <!-- Raw Extracted Text Preview (for DOCX/PDF if needed) -->
+      <div id="kaldikRawPreviewWrap" class="hidden space-y-1.5">
+        <label class="block text-xs font-bold text-slate-700">Cuplikan Teks Terekstrak dari Dokumen (DOCX/PDF):</label>
+        <textarea id="kaldikRawPreview" rows="4" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono"></textarea>
+      </div>
+
+      <!-- Kalender Table -->
+      <div class="overflow-x-auto custom-scroll">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-800 text-white text-left">
+              <th class="p-2.5 border border-slate-700 w-12 text-center">No</th>
+              <th class="p-2.5 border border-slate-700 w-52">Tanggal / Periode</th>
+              <th class="p-2.5 border border-slate-700 w-48">Kategori</th>
+              <th class="p-2.5 border border-slate-700">Uraian Kegiatan</th>
+              <th class="p-2.5 border border-slate-700 w-20 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="kaldikTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 4: PERANGKAT PEMBELAJARAN (GEMINI AI GENERATOR)                   -->
+  <!-- ===================================================================== -->
+  <section id="section-perangkat" class="hidden space-y-4">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> Generator Perangkat Pembelajaran (Gemini AI)
+        </h2>
+        <p class="text-xs text-slate-500 mt-0.5">
+          Generate <strong>Silabus, Prota, Promes, CP, ATP, Modul Ajar,</strong> dan <strong>Instrumen Penilaian</strong> Kelas 3 Kurikulum Merdeka via Gemini API (atau template lokal instan bila tanpa API Key).
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Gemini API Key (Disimpan Lokal)</label>
+          <input id="geminiApiKey" type="password" placeholder="AIzaSy..." onchange="saveGeminiKey(this.value)"
+            class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Jenis Perangkat Pembelajaran</label>
+          <select id="perangkatJenis" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-bold">
+            <option value="Modul Ajar">Modul Ajar (Kurikulum Merdeka)</option>
+            <option value="CP (Capaian Pembelajaran)">CP (Capaian Pembelajaran)</option>
+            <option value="ATP (Alur Tujuan Pembelajaran)">ATP (Alur Tujuan Pembelajaran)</option>
+            <option value="Prota (Program Tahunan)">Prota (Program Tahunan)</option>
+            <option value="Promes (Program Semester)">Promes (Program Semester)</option>
+            <option value="Silabus">Silabus</option>
+            <option value="Instrumen Penilaian">Instrumen Penilaian (Rubrik &amp; Soal)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Mata Pelajaran</label>
+          <select id="perangkatMapel" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-bold"></select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Topik / Bab / Materi Pokok</label>
+          <input id="perangkatTopik" type="text" placeholder="Contoh: Pecahan Sederhana / Ekosistem"
+            class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-semibold">
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="generatePerangkatPembelajaran()" id="btnGeneratePerangkat"
+          class="bg-purple-700 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm transition">
+          <i class="fa-solid fa-sparkles"></i> Generate Perangkat Pembelajaran
+        </button>
+        <button onclick="copyPerangkatText()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-3.5 py-2 rounded-lg text-xs font-bold">
+          <i class="fa-solid fa-copy mr-1"></i> Salin Hasil
+        </button>
+        <button onclick="downloadPerangkatDoc()" class="bg-blue-700 hover:bg-blue-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold">
+          <i class="fa-solid fa-file-word mr-1"></i> Unduh (.doc)
+        </button>
+      </div>
+
+      <textarea id="perangkatOutput" rows="16" placeholder="Hasil perangkat pembelajaran akan tampil di sini..."
+        class="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 text-xs leading-relaxed font-mono focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 5: ANALISIS BUTIR SOAL, KUNCI JAWABAN & KISI-KISI (MULTI-TIPE)    -->
+  <!-- ===================================================================== -->
+  <section id="section-butir" class="hidden space-y-4">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div>
+          <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-square-poll-vertical text-indigo-600"></i> Analisis Butir Soal, Kunci Jawaban &amp; Kisi-Kisi / Indikator
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Mendukung soal <strong>PG, PG Kompleks, Menjodohkan, Isian Singkat,</strong> dan <strong>Uraian</strong>. Impor kisi-kisi/soal via ketik manual, copy-paste, atau file <strong>.xlsx, .docx, .pdf</strong>.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <label class="bg-indigo-700 hover:bg-indigo-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold cursor-pointer flex items-center gap-1.5">
+            <i class="fa-solid fa-file-import"></i> Impor Kisi-Kisi (.xlsx, .docx, .pdf)
+            <input id="butirFileInput" type="file" accept=".xlsx,.xls,.csv,.docx,.pdf" onchange="handleButirImport(event)" class="hidden">
+          </label>
+          <button onclick="addButirSoalRow()" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold">
+            <i class="fa-solid fa-plus mr-1"></i> Tambah Butir Soal
+          </button>
+          <button onclick="exportAnalisisButirXLSX()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold">
+            <i class="fa-solid fa-file-excel mr-1"></i> Export Analisis XLSX
+          </button>
+        </div>
+      </div>
+
+      <!-- Copy-Paste / Manual Kisi-Kisi & Soal Parser -->
+      <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3.5 space-y-2">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <label for="pasteKisiInput" class="text-xs font-extrabold text-indigo-950">
+            <i class="fa-solid fa-paste mr-1"></i> Ketik Manual / Copy-Paste Kisi-Kisi, Indikator, Tipe Soal &amp; Kunci Jawaban
+          </label>
+          <span class="text-[11px] text-indigo-800">
+            Format per baris: <code class="bg-white px-1.5 py-0.5 rounded border">No | Tipe (PG/PGK/Jodoh/Isian/Uraian) | Indikator/Kisi-Kisi | Butir Soal | Kunci/Rubrik | SkorMax</code>
+          </span>
+        </div>
+        <textarea id="pasteKisiInput" rows="3" placeholder="Contoh:&#10;1 | PG | Menentukan nilai tempat ratusan | Nilai angka 7 pada bilangan 745 adalah... | A | 1&#10;2 | Uraian | Menjelaskan manfaat air bagi makhluk hidup | Sebutkan 3 manfaat air bagi tumbuhan dan hewan! | Fotosintesis, minum, habitat | 4"
+          class="w-full bg-white border border-indigo-300 rounded-lg p-2.5 text-xs font-mono"></textarea>
+        <div class="flex justify-end gap-2">
+          <button onclick="parsePastedKisiSoal()" class="bg-indigo-700 hover:bg-indigo-600 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold">
+            <i class="fa-solid fa-gears mr-1"></i> Terapkan Kisi-Kisi &amp; Susun Butir Soal
+          </button>
+        </div>
+      </div>
+
+      <!-- Daftar Butir Soal & Kunci Jawaban (Bisa Disesuaikan Jumlah & Isinya) -->
+      <div class="overflow-x-auto custom-scroll">
+        <table class="w-full text-xs border-collapse" id="butirConfigTable">
+          <thead>
+            <tr class="bg-slate-800 text-white text-left">
+              <th class="p-2 border border-slate-700 w-12 text-center">No</th>
+              <th class="p-2 border border-slate-700 w-36">Tipe Soal</th>
+              <th class="p-2 border border-slate-700 min-w-[180px]">Kisi-Kisi / Indikator</th>
+              <th class="p-2 border border-slate-700 min-w-[220px]">Isi Butir Soal / Pertanyaan</th>
+              <th class="p-2 border border-slate-700 min-w-[150px]">Kunci / Jawaban Benar</th>
+              <th class="p-2 border border-slate-700 w-20 text-center">Skor Max</th>
+              <th class="p-2 border border-slate-700 w-24 text-center">Hapus</th>
+            </tr>
+          </thead>
+          <tbody id="butirConfigBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Matriks Skor Siswa per Butir Soal & Statistik Butir (Daya Serap / Tingkat Kesukaran / Tuntas) -->
+      <div class="pt-2 space-y-2">
+        <h3 class="text-sm font-extrabold text-slate-800">
+          <i class="fa-solid fa-chart-simple text-indigo-600 mr-1"></i> Matriks Skor Siswa &amp; Analisis Butir Soal (26 Siswa)
+        </h3>
+        <div class="overflow-x-auto custom-scroll">
+          <table class="w-full text-xs border-collapse" id="butirMatrixTable">
+            <thead id="butirMatrixThead"></thead>
+            <tbody id="butirMatrixTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Modal Label Materi Tugas 1-10 -->
+<div id="materiLabelModal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-5 space-y-4">
+    <div class="flex items-center justify-between border-b pb-2.5">
+      <h3 class="text-sm font-extrabold text-slate-800">Pengaturan Nama / Label Materi Tugas 1–10</h3>
+      <button onclick="closeMateriLabelModal()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+    <div id="materiLabelInputs" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-80 overflow-y-auto pr-1 text-xs"></div>
+    <div class="flex justify-end gap-2 pt-2 border-t">
+      <button onclick="closeMateriLabelModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">Batal</button>
+      <button onclick="saveMateriLabels()" class="px-4 py-1.5 rounded-lg bg-teal-700 text-white text-xs font-bold">Simpan Label</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// =========================================================================
+// KONFIGURASI AWAL & STATE DATA (INFO KELAS 3 - 26 SISWA)
+// =========================================================================
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+const STORAGE_KEY = 'info_kelas_3_portal_v1';
+
+const DEFAULT_MAPLES = [
+  'Bahasa Indonesia',
+  'Matematika',
+  'IPAS',
+  'Pendidikan Pancasila',
+  'Seni & Budaya',
+  'PJOK',
+  'Bahasa Jawa',
+  'PAI / Al-Islam'
+];
+
+const DEFAULT_STUDENTS = [
+  'Ahmad Fauzi', 'Aisyah Zahra', 'Alvaro Pratama', 'Anindya Putri', 'Arkananta Wijaya',
+  'Aulia Rahma', 'Bagas Aditya', 'Bilqis Nurul', 'Candra Kirana', 'Daffa Rizky',
+  'Dea Maharani', 'Dimas Saputra', 'Elina Safitri', 'Fajar Ramadhan', 'Gita Permata',
+  'Hafiz Maulana', 'Inayah Azzahra', 'Jovan Ardiansyah', 'Kayla Novita', 'Luthfi Hakim',
+  'Maya Anggraini', 'Naufal Zaki', 'Olivia Kusuma', 'Raka Setiawan', 'Salsabila Hani',
+  'Zidan Alfarizi'
+];
+
+function createInitialState() {
+  const scores = {};
+  DEFAULT_MAPLES.forEach((mp, mIdx) => {
+    scores[mp] = {};
+    DEFAULT_STUDENTS.forEach((st, sIdx) => {
+      // Nilai awal realistis >= 70 agar langsung terlihat siap pakai
+      const base = 74 + ((sIdx * 3 + mIdx * 5) % 21);
+      const t = Array.from({ length: 10 }, (_, i) => {
+        if (i < 4) return Math.min(100, Math.max(70, base + ((i + sIdx) % 7) - 2));
+        return null; // Tugas 5-10 kosong awal agar dropdown materi cerdas hanya menampilkan yang terisi
+      });
+      const asas = Math.min(100, Math.max(70, base + ((sIdx + mIdx) % 8) - 2));
+      scores[mp][st] = { tugas: t, asas: asas };
+    });
+  });
+
+  return {
+    kktp: 70,
+    maples: [...DEFAULT_MAPLES],
+    students: [...DEFAULT_STUDENTS],
+    materiLabels: Array.from({ length: 10 }, (_, i) => `Materi / Tugas ${i + 1}`),
+    scores: scores,
+    meta: {
+      sekolah: 'MIM 1 Slinga — Kelas III (3)',
+      kepsek: 'Kepala Madrasah, S.Pd.I',
+      walikelas: 'Wali Kelas 3, S.Pd.'
+    },
+    kalender: [
+      { tanggal: '2026-07-13 s.d. 2026-07-18', kategori: 'Efektif KBM', uraian: 'Awal Tahun Ajaran & Masa Pengenalan Lingkungan' },
+      { tanggal: '2026-08-17', kategori: 'Libur Nasional / Cuti', uraian: 'Hari Kemerdekaan Republik Indonesia' },
+      { tanggal: '2026-09-21 s.d. 2026-09-26', kategori: 'Asesmen / ASAS / ASAT', uraian: 'Asesmen Sumatif Tengah / Formatif Berkala' },
+      { tanggal: '2026-11-30 s.d. 2026-12-05', kategori: 'Asesmen / ASAS / ASAT', uraian: 'Asesmen Sumatif Akhir Semester (ASAS)' },
+      { tanggal: '2026-12-19', kategori: 'Rapor / Jeda Semester', uraian: 'Pembagian Laporan Hasil Belajar (Rapor)' }
+    ],
+    geminiKey: '',
+    butirSoal: [
+      { no: 1, tipe: 'PG', indikator: 'Menentukan nilai tempat bilangan cacah', soal: 'Nilai angka 8 pada bilangan 834 adalah...', kunci: 'A (800)', skorMax: 1 },
+      { no: 2, tipe: 'PG Kompleks', indikator: 'Mengidentifikasi wujud benda', soal: 'Pilih benda yang berwujud cair (lebih dari satu)!', kunci: 'Air, Minyak goreng', skorMax: 2 },
+      { no: 3, tipe: 'Menjodohkan', indikator: 'Menghubungkan simbol Pancasila dengan makna', soal: 'Pasangkan simbol Sila ke-2 dan ke-3 dengan maknanya.', kunci: '2-Kemanusiaan, 3-Persatuan', skorMax: 2 },
+      { no: 4, tipe: 'Isian Singkat', indikator: 'Menyelesaikan operasi penjumlahan', soal: 'Hasil dari 245 + 135 adalah...', kunci: '380', skorMax: 2 },
+      { no: 5, tipe: 'Uraian', indikator: 'Menjelaskan cara merawat lingkungan sekolah', soal: 'Tuliskan 2 cara menjaga kebersihan kelas!', kunci: 'Piket rutin, buang sampah pada tempatnya', skorMax: 3 }
+    ],
+    butirSkorSiswa: {}
+  };
+}
+
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return createInitialState();
+    const parsed = JSON.parse(raw);
+    const init = createInitialState();
+    return {
+      ...init,
+      ...parsed,
+      kktp: Number(parsed.kktp) || 70,
+      meta: { ...init.meta, ...(parsed.meta || {}) },
+      scores: parsed.scores || init.scores,
+      kalender: Array.isArray(parsed.kalender) ? parsed.kalender : init.kalender,
+      butirSoal: Array.isArray(parsed.butirSoal) ? parsed.butirSoal : init.butirSoal,
+      butirSkorSiswa: parsed.butirSkorSiswa || {}
+    };
+  } catch (e) {
+    console.error('Load state error:', e);
+    return createInitialState();
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.warn('Storage full or restricted:', e);
+  }
+}
+
+// =========================================================================
+// NAVIGASI TAB & UTILITAS
+// =========================================================================
+let currentLeggerType = 'tugas';
+let isLeggerSortedByRank = false;
+
+function switchMainTab(tabName) {
+  const tabs = ['nilai', 'legger', 'kalender', 'perangkat', 'butir'];
+  tabs.forEach(t => {
+    document.getElementById('section-' + t).classList.toggle('hidden', t !== tabName);
+    const btn = document.getElementById('tab-' + t);
+    btn.classList.toggle('active', t === tabName);
+    if (t !== tabName) {
+      btn.classList.add('text-teal-100');
+    } else {
+      btn.classList.remove('text-teal-100');
+    }
+  });
+
+  if (tabName === 'legger') {
+    populateLeggerMateriDropdown();
+    renderLegger();
+  } else if (tabName === 'butir') {
+    renderButirConfig();
+    renderButirMatrix();
+  } else if (tabName === 'kalender') {
+    renderKaldik();
+  } else if (tabName === 'nilai') {
+    renderNilaiTable();
+  }
+}
+
+function syncTtdLabels() {
+  state.meta.sekolah = document.getElementById('metaSekolah').value;
+  state.meta.kepsek = document.getElementById('metaKepsek').value;
+  state.meta.walikelas = document.getElementById('metaWalikelas').value;
+  document.getElementById('ttdKepsekName').textContent = state.meta.kepsek || 'Kepala Madrasah / Sekolah';
+  document.getElementById('ttdWalikelasName').textContent = state.meta.walikelas || 'Wali Kelas III';
+  saveState();
+}
+
+// =========================================================================
+// KKTP (DEFAULT 70) & KATROL NILAI LOGIS & ADIL
+// =========================================================================
+function clampToKktp(val) {
+  if (val === '' || val === null || val === undefined) return null;
+  const num = Number(val);
+  if (Number.isNaN(num)) return null;
+  const bounded = Math.min(100, Math.max(0, num));
+  return bounded < state.kktp ? state.kktp : bounded;
+}
+
+function updateGlobalKktp(newVal) {
+  const k = Math.min(100, Math.max(1, Number(newVal) || 70));
+  state.kktp = k;
+  document.getElementById('globalKktpInput').value = k;
+  document.getElementById('kktpInputBox').value = k;
+  document.getElementById('kktpBadgeText').textContent = k;
+  document.getElementById('kktpBadgeVal').textContent = k;
+  saveState();
+  renderNilaiTable();
+  if (!document.getElementById('section-legger').classList.contains('hidden')) {
+    renderLegger();
+  }
+}
+
+function applyKktpAndClampAll() {
+  const k = Math.min(100, Math.max(1, Number(document.getElementById('kktpInputBox').value) || 70));
+  state.kktp = k;
+  document.getElementById('globalKktpInput').value = k;
+  document.getElementById('kktpBadgeText').textContent = k;
+  document.getElementById('kktpBadgeVal').textContent = k;
+
+  state.maples.forEach(mp => {
+    state.students.forEach(st => {
+      const rec = state.scores[mp][st];
+      rec.tugas = rec.tugas.map(v => v === null ? null : clampToKktp(v));
+      if (rec.asas !== null && rec.asas !== undefined) {
+        rec.asas = clampToKktp(rec.asas);
+      }
+    });
+  });
+
+  saveState();
+  renderNilaiTable();
+  alert(`KKTP ${k} diterapkan. Seluruh nilai terisi yang di bawah ${k} otomatis disesuaikan menjadi ${k}.`);
+}
+
+/**
+ * Menghitung nilai katrol secara logis dan adil:
+ * - linear_cap: x' = min(100, max(kktp, x + bonus))
+ * - proportional_gap: siswa dengan nilai lebih rendah mendapat dorongan lebih besar pada sisa gap menuju 100,
+ *   sehingga tidak menabrak plafon 100 terlalu cepat dan tetap adil serta menjaga urutan ranking.
+ * - target_floor: mengangkat rata-rata kelas/mapel mendekati target secara proporsional.
+ */
+function computeKatrolValue(rawVal, method, param, avgCurrent) {
+  if (rawVal === null || rawVal === undefined || Number.isNaN(Number(rawVal))) return null;
+  let x = clampToKktp(Number(rawVal));
+  let result = x;
+
+  if (method === 'linear_cap') {
+    result = x + param;
+  } else if (method === 'proportional_gap') {
+    // param dalam persen kompresi (misal 25% menutup sisa jarak ke 100)
+    const ratio = Math.min(0.9, Math.max(0, param / 100));
+    const gap = Math.max(0, 100 - x);
+    result = x + gap * ratio;
+  } else if (method === 'target_floor') {
+    // param = target rata-rata yang diinginkan (misal 82)
+    const lift = Math.max(0, param - avgCurrent);
+    result = x + lift;
+  }
+
+  result = Math.min(100, Math.max(state.kktp, result));
+  return Math.round(result * 10) / 10;
+}
+
+function getMapelAverageForKatrol(mp, target) {
+  const vals = [];
+  state.students.forEach(st => {
+    const rec = state.scores[mp][st];
+    if (target === 'tugas' || target === 'both') {
+      rec.tugas.forEach(v => { if (v !== null) vals.push(v); });
+    }
+    if (target === 'asas' || target === 'both') {
+      if (rec.asas !== null && rec.asas !== undefined) vals.push(rec.asas);
+    }
+  });
+  if (!vals.length) return state.kktp;
+  return vals.reduce((a, b) => a + b, 0) / vals.length;
+}
+
+function previewKatrol() {
+  const mp = document.getElementById('nilaiMapelSelect').value;
+  const target = document.getElementById('katrolTarget').value;
+  const method = document.getElementById('katrolMethod').value;
+  const param = Number(document.getElementById('katrolValue').value) || 0;
+  const avgCurr = getMapelAverageForKatrol(mp, target);
+
+  const sampleStudent = state.students[0];
+  const sampleRaw = target === 'asas'
+    ? state.scores[mp][sampleStudent].asas
+    : (state.scores[mp][sampleStudent].tugas.find(v => v !== null) ?? 75);
+  const sampleAfter = computeKatrolValue(sampleRaw, method, param, avgCurr);
+
+  const box = document.getElementById('katrolPreviewBox');
+  box.classList.remove('hidden');
+  box.innerHTML = `Simulasi <strong>${mp}</strong> (Rata-rata saat ini: <strong>${avgCurr.toFixed(1)}</strong>): Contoh nilai <strong>${sampleRaw}</strong> → menjadi <strong>${sampleAfter}</strong> (maksimal 100, minimal KKTP ${state.kktp}).`;
+}
+
+function applyKatrol() {
+  const mp = document.getElementById('nilaiMapelSelect').value;
+  const target = document.getElementById('katrolTarget').value;
+  const method = document.getElementById('katrolMethod').value;
+  const param = Number(document.getElementById('katrolValue').value) || 0;
+  const avgCurr = getMapelAverageForKatrol(mp, target);
+
+  state.students.forEach(st => {
+    const rec = state.scores[mp][st];
+    if (target === 'tugas' || target === 'both') {
+      rec.tugas = rec.tugas.map(v => computeKatrolValue(v, method, param, avgCurr));
+    }
+    if (target === 'asas' || target === 'both') {
+      rec.asas = computeKatrolValue(rec.asas, method, param, avgCurr);
+    }
+  });
+
+  saveState();
+  renderNilaiTable();
+  previewKatrol();
+  alert(`Katrol nilai berhasil diterapkan pada mata pelajaran ${mp}.`);
+}
+
+// =========================================================================
+// RENDER TAB 1: INPUT NILAI
+// =========================================================================
+function initMapelDropdowns() {
+  const selNilai = document.getElementById('nilaiMapelSelect');
+  const selPerangkat = document.getElementById('perangkatMapel');
+  selNilai.innerHTML = '';
+  selPerangkat.innerHTML = '';
+  state.maples.forEach(mp => {
+    const o1 = document.createElement('option');
+    o1.value = mp;
+    o1.textContent = mp;
+    selNilai.appendChild(o1);
+
+    const o2 = document.createElement('option');
+    o2.value = mp;
+    o2.textContent = mp;
+    selPerangkat.appendChild(o2);
+  });
+}
+
+function avgArray(arr) {
+  const valid = arr.filter(v => v !== null && v !== undefined && !Number.isNaN(Number(v))).map(Number);
+  if (!valid.length) return null;
+  return valid.reduce((a, b) => a + b, 0) / valid.length;
+}
+
+function getStudentMapelSummary(mp, student) {
+  const rec = state.scores[mp][student];
+  const rataTugas = avgArray(rec.tugas);
+  const asas = (rec.asas === null || rec.asas === undefined || rec.asas === '') ? null : Number(rec.asas);
+
+  let nilaiAkhir = null;
+  if (rataTugas !== null && asas !== null) {
+    // Bobot 60% rata-rata tugas + 40% ASAS/ASAT
+    nilaiAkhir = rataTugas * 0.6 + asas * 0.4;
+  } else if (rataTugas !== null) {
+    nilaiAkhir = rataTugas;
+  } else if (asas !== null) {
+    nilaiAkhir = asas;
+  }
+
+  return { rataTugas, asas, nilaiAkhir };
+}
+
+function renderNilaiTable() {
+  const mp = document.getElementById('nilaiMapelSelect').value || state.maples[0];
+  const tbody = document.getElementById('nilaiTableBody');
+  tbody.innerHTML = '';
+
+  state.students.forEach((st, idx) => {
+    const rec = state.scores[mp][st];
+    const sum = getStudentMapelSummary(mp, st);
+    const tr = document.createElement('tr');
+    tr.className = idx % 2 === 0 ? 'bg-white hover:bg-slate-50' : 'bg-slate-50/60 hover:bg-slate-100/60';
+
+    let tugasCells = '';
+    for (let i = 0; i < 10; i++) {
+      const val = rec.tugas[i] ?? '';
+      tugasCells += `
+        <td class="p-1 border border-slate-200 text-center">
+          <input type="number" min="0" max="100" step="0.1" value="${val}"
+            title="${state.materiLabels[i]}"
+            onblur="onScoreBlur('${mp.replace(/'/g, "\'")}', '${st.replace(/'/g, "\'")}', 'tugas', ${i}, this.value)"
+            class="w-12 text-center bg-transparent focus:bg-amber-50 border border-transparent focus:border-teal-500 rounded py-1 font-semibold text-slate-800">
+        </td>
+      `;
+    }
+
+    const asasVal = (rec.asas === null || rec.asas === undefined) ? '' : rec.asas;
+    tr.innerHTML = `
+      <td class="p-2 border border-slate-200 text-center font-bold text-slate-500 sticky left-0 bg-inherit z-10">${idx + 1}</td>
+      <td class="p-2 border border-slate-200 font-bold text-slate-800 sticky left-10 bg-inherit z-10">${st}</td>
+      ${tugasCells}
+      <td class="p-2 border border-slate-200 text-center font-extrabold text-teal-800 bg-teal-50/50">
+        ${sum.rataTugas !== null ? sum.rataTugas.toFixed(1) : '-'}
+      </td>
+      <td class="p-1 border border-slate-200 text-center bg-indigo-50/40">
+        <input type="number" min="0" max="100" step="0.1" value="${asasVal}"
+          onblur="onScoreBlur('${mp.replace(/'/g, "\'")}', '${st.replace(/'/g, "\'")}', 'asas', 0, this.value)"
+          class="w-14 text-center bg-transparent focus:bg-indigo-100/70 border border-transparent focus:border-indigo-500 rounded py-1 font-bold text-indigo-900">
+      </td>
+      <td class="p-2 border border-slate-200 text-center font-extrabold text-emerald-900 bg-emerald-50/60">
+        ${sum.nilaiAkhir !== null ? sum.nilaiAkhir.toFixed(1) : '-'}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function onScoreBlur(mp, st, kind, idx, rawInput) {
+  const rec = state.scores[mp][st];
+  if (rawInput === '' || rawInput === null || rawInput === undefined) {
+    if (kind === 'tugas') rec.tugas[idx] = null;
+    else rec.asas = null;
+  } else {
+    const clamped = clampToKktp(rawInput);
+    if (kind === 'tugas') rec.tugas[idx] = clamped;
+    else rec.asas = clamped;
+  }
+  saveState();
+  renderNilaiTable();
+}
+
+// Modal Label Materi 1-10
+function openMateriLabelModal() {
+  const wrap = document.getElementById('materiLabelInputs');
+  wrap.innerHTML = '';
+  state.materiLabels.forEach((lbl, i) => {
+    wrap.innerHTML += `
+      <div>
+        <label class="block font-bold text-slate-600 mb-1">Tugas / Materi ${i + 1}</label>
+        <input type="text" id="matLblInput_${i}" value="${lbl}" class="w-full border border-slate-300 rounded-lg px-2.5 py-1.5">
+      </div>
+    `;
+  });
+  const modal = document.getElementById('materiLabelModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeMateriLabelModal() {
+  const modal = document.getElementById('materiLabelModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+function saveMateriLabels() {
+  for (let i = 0; i < 10; i++) {
+    const v = document.getElementById(`matLblInput_${i}`).value.trim();
+    state.materiLabels[i] = v || `Materi / Tugas ${i + 1}`;
+  }
+  saveState();
+  closeMateriLabelModal();
+  populateLeggerMateriDropdown();
+  renderLegger();
+}
+
+// =========================================================================
+// TAB 2: LEGGER NILAI (TUGAS, ASAS/ASAT, RAPOR) + DROPDOWN MATERI + RANK
+// =========================================================================
+function switchLeggerType(type) {
+  currentLeggerType = type;
+  ['tugas', 'asas', 'rapor'].forEach(t => {
+    const btn = document.getElementById('subtab-' + t);
+    btn.classList.toggle('active', t === type);
+    if (t === type) {
+      btn.classList.remove('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+    } else {
+      btn.classList.add('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+    }
+  });
+  document.getElementById('leggerMateriFilterBar').classList.toggle('hidden', type !== 'tugas');
+  renderLegger();
+}
+
+/**
+ * Mengisi dropdown materi pada Legger Tugas hanya dengan slot (0..9)
+ * yang sudah memiliki minimal 1 nilai terisi di salah satu mata pelajaran & siswa.
+ */
+function populateLeggerMateriDropdown() {
+  const sel = document.getElementById('leggerMateriSelect');
+  const prevVal = sel.value;
+  sel.innerHTML = '<option value="all">Semua Materi yang Sudah Diisi (Rata-Rata Keseluruhan)</option>';
+
+  for (let i = 0; i < 10; i++) {
+    let hasAnyValue = false;
+    for (const mp of state.maples) {
+      for (const st of state.students) {
+        const v = state.scores[mp]?.[st]?.tugas?.[i];
+        if (v !== null && v !== undefined && v !== '') {
+          hasAnyValue = true;
+          break;
+        }
+      }
+      if (hasAnyValue) break;
+    }
+    if (hasAnyValue) {
+      const opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = `Materi / Tugas ${i + 1}: ${state.materiLabels[i]}`;
+      sel.appendChild(opt);
+    }
+  }
+
+  if ([...sel.options].some(o => o.value === prevVal)) {
+    sel.value = prevVal;
+  } else {
+    sel.value = 'all';
+  }
+}
+
+function computeLeggerRows() {
+  const materiFilter = document.getElementById('leggerMateriSelect').value;
+
+  const rows = state.students.map((student, originalIdx) => {
+    const perMapel = {};
+    let total = 0;
+    let countValidMapel = 0;
+
+    state.maples.forEach(mp => {
+      const rec = state.scores[mp][student];
+      let val = null;
+
+      if (currentLeggerType === 'tugas') {
+        if (materiFilter === 'all') {
+          val = avgArray(rec.tugas);
+        } else {
+          const mIdx = Number(materiFilter);
+          const v = rec.tugas[mIdx];
+          val = (v !== null && v !== undefined && v !== '') ? Number(v) : null;
+        }
+      } else if (currentLeggerType === 'asas') {
+        val = (rec.asas === null || rec.asas === undefined || rec.asas === '') ? null : Number(rec.asas);
+      } else if (currentLeggerType === 'rapor') {
+        const sum = getStudentMapelSummary(mp, student);
+        val = sum.nilaiAkhir;
+      }
+
+      perMapel[mp] = val;
+      if (val !== null && !Number.isNaN(val)) {
+        total += val;
+        countValidMapel++;
+      }
+    });
+
+    const rata = countValidMapel > 0 ? total / countValidMapel : null;
+    return {
+      originalNo: originalIdx + 1,
+      student,
+      perMapel,
+      jumlah: countValidMapel > 0 ? total : null,
+      rata: rata,
+      rank: null
+    };
+  });
+
+  // Hitung ranking (nilai rata-rata / jumlah tertinggi = Rank 1)
+  const sortedForRank = [...rows].sort((a, b) => (b.rata ?? -1) - (a.rata ?? -1));
+  sortedForRank.forEach((item, idx) => {
+    item.rank = item.rata !== null ? idx + 1 : '-';
+  });
+
+  if (isLeggerSortedByRank) {
+    return [...rows].sort((a, b) => {
+      const ra = typeof a.rank === 'number' ? a.rank : 999;
+      const rb = typeof b.rank === 'number' ? b.rank : 999;
+      return ra - rb;
+    });
+  }
+  return rows;
+}
+
+function toggleSortLegger() {
+  isLeggerSortedByRank = !isLeggerSortedByRank;
+  const btn = document.getElementById('btnSortLegger');
+  if (isLeggerSortedByRank) {
+    btn.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Kembali Urutan Awal (No. 1–26)';
+    btn.classList.remove('bg-amber-600', 'hover:bg-amber-500');
+    btn.classList.add('bg-indigo-700', 'hover:bg-indigo-600');
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-arrow-down-1-9"></i> Urutkan Rank 1 → 26';
+    btn.classList.remove('bg-indigo-700', 'hover:bg-indigo-600');
+    btn.classList.add('bg-amber-600', 'hover:bg-amber-500');
+  }
+  renderLegger();
+}
+
+function renderLegger() {
+  const titleEl = document.getElementById('leggerTitle');
+  const subEl = document.getElementById('leggerSubtitle');
+  const materiSel = document.getElementById('leggerMateriSelect');
+  const materiText = materiSel.options[materiSel.selectedIndex]?.text || 'Semua Materi Terisi';
+
+  if (currentLeggerType === 'tugas') {
+    titleEl.textContent = 'LEGGER RATA-RATA NILAI TUGAS SEMUA MATA PELAJARAN (TANPA ASAS/ASAT)';
+    subEl.textContent = `${state.meta.sekolah} | Mode: ${materiText} | KKTP: ${state.kktp}`;
+  } else if (currentLeggerType === 'asas') {
+    titleEl.textContent = 'LEGGER NILAI ASAS / ASAT SEMUA MATA PELAJARAN';
+    subEl.textContent = `${state.meta.sekolah} | Komponen: ASAS / ASAT | KKTP: ${state.kktp}`;
+  } else {
+    titleEl.textContent = 'LEGGER RAPOR (RATA-RATA TUGAS + ASAS/ASAT SEMUA MATA PELAJARAN)';
+    subEl.textContent = `${state.meta.sekolah} | Bobot 60% Tugas + 40% ASAS/ASAT | KKTP: ${state.kktp}`;
+  }
+
+  const thead = document.getElementById('leggerThead');
+  const tbody = document.getElementById('leggerTbody');
+
+  let thMapel = '';
+  state.maples.forEach(mp => {
+    thMapel += `<th class="p-2 border border-slate-700 text-center min-w-[84px]">${mp}</th>`;
+  });
+
+  thead.innerHTML = `
+    <tr class="bg-slate-800 text-white">
+      <th class="p-2 border border-slate-700 w-10 text-center">No</th>
+      <th class="p-2 border border-slate-700 min-w-[170px] text-left">Nama Siswa</th>
+      ${thMapel}
+      <th class="p-2 border border-slate-700 bg-teal-900 w-16 text-center">Jumlah</th>
+      <th class="p-2 border border-slate-700 bg-indigo-900 w-16 text-center">Rata-Rata</th>
+      <th class="p-2 border border-slate-700 bg-amber-800 w-16 text-center">Rank</th>
+    </tr>
+  `;
+
+  const rows = computeLeggerRows();
+  tbody.innerHTML = '';
+
+  rows.forEach((r, idx) => {
+    let tds = '';
+    state.maples.forEach(mp => {
+      const v = r.perMapel[mp];
+      const below = v !== null && v < state.kktp;
+      tds += `
+        <td class="p-2 border border-slate-200 text-center font-semibold ${below ? 'text-rose-600 bg-rose-50' : 'text-slate-700'}">
+          ${v !== null ? v.toFixed(1) : '-'}
+        </td>
+      `;
+    });
+
+    const isTop3 = r.rank === 1 || r.rank === 2 || r.rank === 3;
+    tbody.innerHTML += `
+      <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'} hover:bg-teal-50/40">
+        <td class="p-2 border border-slate-200 text-center font-bold text-slate-500">${r.originalNo}</td>
+        <td class="p-2 border border-slate-200 font-bold text-slate-800">${r.student}</td>
+        ${tds}
+        <td class="p-2 border border-slate-200 text-center font-extrabold text-teal-900 bg-teal-50/40">
+          ${r.jumlah !== null ? r.jumlah.toFixed(1) : '-'}
+        </td>
+        <td class="p-2 border border-slate-200 text-center font-extrabold text-indigo-900 bg-indigo-50/40">
+          ${r.rata !== null ? r.rata.toFixed(2) : '-'}
+        </td>
+        <td class="p-2 border border-slate-200 text-center font-extrabold ${isTop3 ? 'bg-amber-100 text-amber-900' : 'text-slate-800'}">
+          ${r.rank}
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function exportCurrentLeggerXLSX() {
+  const rows = computeLeggerRows();
+  const data = rows.map((r, i) => {
+    const obj = { No: r.originalNo, 'Nama Siswa': r.student };
+    state.maples.forEach(mp => {
+      obj[mp] = r.perMapel[mp] !== null ? Number(r.perMapel[mp].toFixed(2)) : '';
+    });
+    obj['Jumlah'] = r.jumlah !== null ? Number(r.jumlah.toFixed(2)) : '';
+    obj['Rata-Rata'] = r.rata !== null ? Number(r.rata.toFixed(2)) : '';
+    obj['Ranking'] = r.rank;
+    return obj;
+  });
+
+  // Tambahkan blok tanda tangan kosong tanggal di bagian bawah sheet
+  data.push({});
+  data.push({
+    'Nama Siswa': 'Mengetahui, Kepala Madrasah / Sekolah',
+    [state.maples[0]]: '................., ....... ................ 20...'
+  });
+  data.push({
+    'Nama Siswa': state.meta.kepsek,
+    [state.maples[0]]: 'Wali Kelas III: ' + state.meta.walikelas
+  });
+
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, `Legger_${currentLeggerType}`);
+  XLSX.writeFile(wb, `Legger_${currentLeggerType}_Kelas3.xlsx`);
+}
+
+function exportNilaiExcel() {
+  const mp = document.getElementById('nilaiMapelSelect').value;
+  const rows = state.students.map((st, idx) => {
+    const rec = state.scores[mp][st];
+    const sum = getStudentMapelSummary(mp, st);
+    const obj = { No: idx + 1, 'Nama Siswa': st };
+    for (let i = 0; i < 10; i++) {
+      obj[`T${i + 1}`] = rec.tugas[i] ?? '';
+    }
+    obj['Rata Tugas'] = sum.rataTugas !== null ? Number(sum.rataTugas.toFixed(2)) : '';
+    obj['ASAS/ASAT'] = sum.asas ?? '';
+    obj['Nilai Akhir'] = sum.nilaiAkhir !== null ? Number(sum.nilaiAkhir.toFixed(2)) : '';
+    return obj;
+  });
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, mp.slice(0, 30));
+  XLSX.writeFile(wb, `Nilai_${mp.replace(/\s+/g, '_')}_Kelas3.xlsx`);
+}
+
+// =========================================================================
+// TAB 3: KALENDER PENDIDIKAN (XLSX, DOCX, PDF)
+// =========================================================================
+function renderKaldik() {
+  const tbody = document.getElementById('kaldikTableBody');
+  tbody.innerHTML = '';
+  document.getElementById('kaldikCount').textContent = state.kalender.length;
+
+  state.kalender.forEach((item, idx) => {
+    tbody.innerHTML += `
+      <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
+        <td class="p-2.5 border border-slate-200 text-center font-bold text-slate-500">${idx + 1}</td>
+        <td class="p-2.5 border border-slate-200 font-semibold">${item.tanggal}</td>
+        <td class="p-2.5 border border-slate-200">
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-teal-100 text-teal-900">${item.kategori}</span>
+        </td>
+        <td class="p-2.5 border border-slate-200">${item.uraian}</td>
+        <td class="p-2.5 border border-slate-200 text-center">
+          <button onclick="deleteKaldik(${idx})" class="text-rose-600 hover:text-rose-800 font-bold" title="Hapus">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function addKaldikManual() {
+  const tanggal = document.getElementById('kaldikTanggal').value.trim();
+  const kategori = document.getElementById('kaldikKategori').value;
+  const uraian = document.getElementById('kaldikUraian').value.trim();
+  if (!tanggal || !uraian) {
+    alert('Mohon isi tanggal dan uraian kegiatan.');
+    return;
+  }
+  state.kalender.push({ tanggal, kategori, uraian });
+  document.getElementById('kaldikTanggal').value = '';
+  document.getElementById('kaldikUraian').value = '';
+  saveState();
+  renderKaldik();
+}
+
+function deleteKaldik(idx) {
+  state.kalender.splice(idx, 1);
+  saveState();
+  renderKaldik();
+}
+
+async function extractTextFromFile(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (['xlsx', 'xls', 'csv'].includes(ext)) {
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array' });
+    const firstSheet = wb.Sheets[wb.SheetNames[0]];
+    const jsonRows = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+    return { type: 'sheet', rows: jsonRows, text: XLSX.utils.sheet_to_txt(firstSheet) };
+  }
+  if (ext === 'docx') {
+    const buf = await file.arrayBuffer();
+    const res = await mammoth.extractRawText({ arrayBuffer: buf });
+    return { type: 'text', text: res.value || '' };
+  }
+  if (ext === 'pdf' && window.pdfjsLib) {
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+    let fullText = '';
+    for (let p = 1; p <= pdf.numPages; p++) {
+      const page = await pdf.getPage(p);
+      const tc = await page.getTextContent();
+      fullText += tc.items.map(it => it.str).join(' ') + '
+';
+    }
+    return { type: 'text', text: fullText };
+  }
+  throw new Error('Format file tidak didukung.');
+}
+
+function parseLinesToKaldikItems(text) {
+  const lines = text.split(/
+?
+/).map(l => l.trim()).filter(Boolean);
+  const items = [];
+  lines.forEach(line => {
+    const parts = line.split(/\s*\|\s*|\s+-\s+|	/).map(s => s.trim()).filter(Boolean);
+    if (parts.length >= 2) {
+      items.push({
+        tanggal: parts[0],
+        kategori: parts.length >= 3 ? parts[1] : 'Kalender Pendidikan',
+        uraian: parts.slice(parts.length >= 3 ? 2 : 1).join(' - ')
+      });
+    }
+  });
+  return items;
+}
+
+async function handleKaldikImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  try {
+    const extracted = await extractTextFromFile(file);
+    let added = 0;
+
+    if (extracted.type === 'sheet' && extracted.rows.length > 0) {
+      extracted.rows.forEach(r => {
+        const vals = Object.values(r).map(v => String(v).trim()).filter(Boolean);
+        if (vals.length >= 2) {
+          state.kalender.push({
+            tanggal: vals[0],
+            kategori: vals[2] || 'Impor XLSX',
+            uraian: vals[1] || vals.join(' - ')
+          });
+          added++;
+        }
+      });
+      document.getElementById('kaldikRawPreviewWrap').classList.add('hidden');
+    } else {
+      const parsedItems = parseLinesToKaldikItems(extracted.text || '');
+      parsedItems.forEach(it => {
+        state.kalender.push(it);
+        added++;
+      });
+      const previewWrap = document.getElementById('kaldikRawPreviewWrap');
+      previewWrap.classList.remove('hidden');
+      document.getElementById('kaldikRawPreview').value = extracted.text || '';
+    }
+
+    saveState();
+    renderKaldik();
+    alert(`Berhasil membaca file "${file.name}" (${added} baris agenda ditambahkan).`);
+  } catch (err) {
+    alert('Gagal membaca file: ' + err.message);
+  } finally {
+    event.target.value = '';
+  }
+}
+
+function exportKaldikXLSX() {
+  const ws = XLSX.utils.json_to_sheet(state.kalender);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Kalender_Pendidikan');
+  XLSX.writeFile(wb, 'Kalender_Pendidikan_Kelas3.xlsx');
+}
+
+// =========================================================================
+// TAB 4: PERANGKAT PEMBELAJARAN (GEMINI AI GENERATOR)
+// =========================================================================
+function saveGeminiKey(val) {
+  state.geminiKey = val.trim();
+  saveState();
+}
+
+async function generatePerangkatPembelajaran() {
+  const jenis = document.getElementById('perangkatJenis').value;
+  const mapel = document.getElementById('perangkatMapel').value;
+  const topik = document.getElementById('perangkatTopik').value.trim() || 'Materi Pokok Semester';
+  const apiKey = (document.getElementById('geminiApiKey').value || state.geminiKey || '').trim();
+  const outEl = document.getElementById('perangkatOutput');
+  const btn = document.getElementById('btnGeneratePerangkat');
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sedang Menyusun...';
+
+  const promptText = `Buatkan dokumen "${jenis}" lengkap untuk Kelas 3 SD/MI (Kurikulum Merdeka, KKTP ${state.kktp}) pada mata pelajaran "${mapel}" dengan topik/materi "${topik}" di satuan pendidikan "${state.meta.sekolah}". Susun secara sistematis, jelas, dan siap digunakan guru.`;
+
+  if (!apiKey) {
+    // Fallback terstruktur lokal bila API Key belum diisi
+    outEl.value = [
+      `====================================================================`,
+      `${jenis.toUpperCase()} — KURIKULUM MERDEKA`,
+      `Satuan Pendidikan : ${state.meta.sekolah}`,
+      `Kelas / Fase     : III (3) / Fase B`,
+      `Mata Pelajaran   : ${mapel}`,
+      `Topik / Materi   : ${topik}`,
+      `KKTP Minimal     : ${state.kktp}`,
+      `====================================================================`,
+      ``,
+      `1. TUJUAN PEMBELAJARAN`,
+      `   Peserta didik mampu memahami, menerapkan, dan mengomunikasikan konsep "${topik}" pada mata pelajaran ${mapel} dengan tepat dan mandiri.`,
+      ``,
+      `2. LANGKAH-LANGKAH KEGIATAN PEMBELAJARAN`,
+      `   a. Pendahuluan (15 menit): Apersepsi, doa, pemantik terkait "${topik}", dan penyampaian tujuan.`,
+      `   b. Kegiatan Inti (45 menit): Eksplorasi konsep, diskusi kelompok/praktik, dan penguatan pemahaman.`,
+      `   c. Penutup (10 menit): Refleksi terbimbing, kesimpulan bersama, dan tindak lanjut/asesmen.`,
+      ``,
+      `3. ASESMEN & KRITERIA KETERCAPAIAN (KKTP: ${state.kktp})`,
+      `   - Formatif: Observasi keaktifan & LKPD/Tugas.`,
+      `   - Sumatif: Tes tertulis / unjuk kerja sesuai indikator (batas tuntas minimal ${state.kktp}).`,
+      ``,
+      `Catatan: Masukkan Gemini API Key di kolom atas untuk generate otomatis penuh melalui model Gemini AI.`
+    ].join('
+');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-sparkles"></i> Generate Perangkat Pembelajaran';
+    return;
+  }
+
+  try {
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: promptText }] }]
+        })
+      }
+    );
+    const data = await resp.json();
+    if (!resp.ok) {
+      throw new Error(data.error?.message || 'Respons Gemini API gagal.');
+    }
+    const generated = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('
+') || 'Tidak ada teks dihasilkan.';
+    outEl.value = generated;
+  } catch (err) {
+    alert('Error Gemini AI: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-sparkles"></i> Generate Perangkat Pembelajaran';
+  }
+}
+
+function copyPerangkatText() {
+  const text = document.getElementById('perangkatOutput').value;
+  if (!text) return;
+  navigator.clipboard.writeText(text);
+  alert('Teks perangkat pembelajaran disalin ke clipboard.');
+}
+
+function downloadPerangkatDoc() {
+  const jenis = document.getElementById('perangkatJenis').value;
+  const mapel = document.getElementById('perangkatMapel').value;
+  const content = document.getElementById('perangkatOutput').value || '';
+  const htmlDoc = `<html><head><meta charset="utf-8"></head><body><pre style="font-family:Calibri,sans-serif;white-space:pre-wrap;">${content.replace(/</g, '&lt;')}</pre></body></html>`;
+  const blob = new Blob([htmlDoc], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${jenis.replace(/[^a-zA-Z0-9]/g, '_')}_${mapel.replace(/\s+/g, '_')}.doc`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// =========================================================================
+// TAB 5: ANALISIS BUTIR SOAL, KUNCI JAWABAN & KISI-KISI
+// =========================================================================
+const TIPE_SOAL_OPTIONS = ['PG', 'PG Kompleks', 'Menjodohkan', 'Isian Singkat', 'Uraian'];
+
+function ensureButirScoresInitialized() {
+  state.students.forEach(st => {
+    if (!Array.isArray(state.butirSkorSiswa[st])) {
+      state.butirSkorSiswa[st] = [];
+    }
+    while (state.butirSkorSiswa[st].length < state.butirSoal.length) {
+      const bIdx = state.butirSkorSiswa[st].length;
+      const maxS = Number(state.butirSoal[bIdx]?.skorMax) || 1;
+      state.butirSkorSiswa[st].push(maxS);
+    }
+    if (state.butirSkorSiswa[st].length > state.butirSoal.length) {
+      state.butirSkorSiswa[st] = state.butirSkorSiswa[st].slice(0, state.butirSoal.length);
+    }
+  });
+}
+
+function addButirSoalRow() {
+  const nextNo = state.butirSoal.length + 1;
+  state.butirSoal.push({
+    no: nextNo,
+    tipe: 'PG',
+    indikator: 'Indikator baru',
+    soal: 'Tuliskan butir soal...',
+    kunci: 'A',
+    skorMax: 1
+  });
+  ensureButirScoresInitialized();
+  saveState();
+  renderButirConfig();
+  renderButirMatrix();
+}
+
+function deleteButirSoalRow(idx) {
+  state.butirSoal.splice(idx, 1);
+  state.butirSoal.forEach((b, i) => b.no = i + 1);
+  state.students.forEach(st => {
+    if (Array.isArray(state.butirSkorSiswa[st])) {
+      state.butirSkorSiswa[st].splice(idx, 1);
+    }
+  });
+  saveState();
+  renderButirConfig();
+  renderButirMatrix();
+}
+
+function parsePastedKisiSoal() {
+  const raw = document.getElementById('pasteKisiInput').value.trim();
+  if (!raw) {
+    alert('Silakan ketik atau tempelkan kisi-kisi / butir soal terlebih dahulu.');
+    return;
+  }
+  const lines = raw.split(/
+?
+/).map(l => l.trim()).filter(Boolean);
+  const parsed = [];
+
+  lines.forEach((line, idx) => {
+    const cols = line.split('|').map(c => c.trim());
+    if (cols.length >= 4) {
+      const tipeRaw = cols[1] || 'PG';
+      const matchedTipe = TIPE_SOAL_OPTIONS.find(t => t.toLowerCase() === tipeRaw.toLowerCase()) || tipeRaw;
+      parsed.push({
+        no: Number(cols[0]) || (idx + 1),
+        tipe: matchedTipe,
+        indikator: cols[2] || '-',
+        soal: cols[3] || '-',
+        kunci: cols[4] || '-',
+        skorMax: Math.max(0.5, Number(cols[5]) || 1)
+      });
+    }
+  });
+
+  if (!parsed.length) {
+    alert('Format baris tidak terbaca. Gunakan pemisah tanda pipa (|).');
+    return;
+  }
+
+  state.butirSoal = parsed;
+  state.butirSkorSiswa = {};
+  ensureButirScoresInitialized();
+  saveState();
+  renderButirConfig();
+  renderButirMatrix();
+  alert(`Berhasil memuat ${parsed.length} butir soal & kisi-kisi.`);
+}
+
+async function handleButirImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  try {
+    const extracted = await extractTextFromFile(file);
+    const items = [];
+
+    if (extracted.type === 'sheet' && extracted.rows.length > 0) {
+      extracted.rows.forEach((r, idx) => {
+        const vals = Object.values(r).map(v => String(v).trim());
+        if (vals.some(Boolean)) {
+          items.push({
+            no: Number(vals[0]) || (idx + 1),
+            tipe: vals[1] || 'PG',
+            indikator: vals[2] || '-',
+            soal: vals[3] || '-',
+            kunci: vals[4] || '-',
+            skorMax: Math.max(0.5, Number(vals[5]) || 1)
+          });
+        }
+      });
+    } else {
+      const lines = (extracted.text || '').split(/
+?
+/).map(l => l.trim()).filter(Boolean);
+      lines.forEach((line, idx) => {
+        const cols = line.split('|').map(c => c.trim());
+        if (cols.length >= 3) {
+          items.push({
+            no: Number(cols[0]) || (idx + 1),
+            tipe: cols[1] || 'PG',
+            indikator: cols[2] || '-',
+            soal: cols[3] || cols[2] || '-',
+            kunci: cols[4] || '-',
+            skorMax: Math.max(0.5, Number(cols[5]) || 1)
+          });
+        }
+      });
+    }
+
+    if (items.length > 0) {
+      state.butirSoal = items;
+      state.butirSkorSiswa = {};
+      ensureButirScoresInitialized();
+      saveState();
+      renderButirConfig();
+      renderButirMatrix();
+      alert(`Berhasil mengimpor ${items.length} butir soal dari "${file.name}".`);
+    } else {
+      alert('File terbaca, namun tidak ditemukan baris kisi-kisi berformat terstruktur. Periksa teks yang diekstrak.');
+    }
+  } catch (err) {
+    alert('Gagal mengimpor file butir soal: ' + err.message);
+  } finally {
+    event.target.value = '';
+  }
+}
+
+function renderButirConfig() {
+  ensureButirScoresInitialized();
+  const tbody = document.getElementById('butirConfigBody');
+  tbody.innerHTML = '';
+
+  state.butirSoal.forEach((b, idx) => {
+    const typeSelectHtml = `
+      <select onchange="updateButirField(${idx}, 'tipe', this.value)" class="w-full border border-slate-300 rounded px-1.5 py-1 font-bold bg-white">
+        ${TIPE_SOAL_OPTIONS.map(opt => `<option value="${opt}" ${b.tipe === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+        ${!TIPE_SOAL_OPTIONS.includes(b.tipe) ? `<option value="${b.tipe}" selected>${b.tipe}</option>` : ''}
+      </select>
+    `;
+
+    tbody.innerHTML += `
+      <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
+        <td class="p-1.5 border border-slate-200 text-center font-bold">${b.no}</td>
+        <td class="p-1.5 border border-slate-200">${typeSelectHtml}</td>
+        <td class="p-1.5 border border-slate-200">
+          <input type="text" value="${b.indikator.replace(/"/g, '&quot;')}" onchange="updateButirField(${idx}, 'indikator', this.value)"
+            class="w-full border border-slate-300 rounded px-2 py-1">
+        </td>
+        <td class="p-1.5 border border-slate-200">
+          <input type="text" value="${b.soal.replace(/"/g, '&quot;')}" onchange="updateButirField(${idx}, 'soal', this.value)"
+            class="w-full border border-slate-300 rounded px-2 py-1">
+        </td>
+        <td class="p-1.5 border border-slate-200">
+          <input type="text" value="${b.kunci.replace(/"/g, '&quot;')}" onchange="updateButirField(${idx}, 'kunci', this.value)"
+            class="w-full border border-slate-300 rounded px-2 py-1 font-semibold text-emerald-900">
+        </td>
+        <td class="p-1.5 border border-slate-200 text-center">
+          <input type="number" min="0.5" max="100" step="0.5" value="${b.skorMax}" onchange="updateButirField(${idx}, 'skorMax', Number(this.value) || 1)"
+            class="w-16 text-center border border-slate-300 rounded px-1.5 py-1 font-bold">
+        </td>
+        <td class="p-1.5 border border-slate-200 text-center">
+          <button onclick="deleteButirSoalRow(${idx})" class="text-rose-600 hover:text-rose-800 font-bold px-2 py-1">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function updateButirField(idx, field, value) {
+  state.butirSoal[idx][field] = value;
+  saveState();
+  renderButirMatrix();
+}
+
+function renderButirMatrix() {
+  ensureButirScoresInitialized();
+  const thead = document.getElementById('butirMatrixThead');
+  const tbody = document.getElementById('butirMatrixTbody');
+
+  const totalMaxSkor = state.butirSoal.reduce((acc, b) => acc + (Number(b.skorMax) || 1), 0);
+
+  let thButir = '';
+  state.butirSoal.forEach((b, idx) => {
+    thButir += `
+      <th class="p-2 border border-slate-700 text-center min-w-[74px]" title="${b.indikator} (Kunci: ${b.kunci})">
+        B${b.no}<br><span class="text-[10px] text-amber-300 font-normal">Max ${b.skorMax}</span>
+      </th>
+    `;
+  });
+
+  thead.innerHTML = `
+    <tr class="bg-slate-800 text-white">
+      <th class="p-2 border border-slate-700 w-10 text-center">No</th>
+      <th class="p-2 border border-slate-700 min-w-[160px] text-left">Nama Siswa</th>
+      ${thButir}
+      <th class="p-2 border border-slate-700 bg-indigo-900 w-16 text-center">Skor</th>
+      <th class="p-2 border border-slate-700 bg-teal-900 w-16 text-center">Nilai (0-100)</th>
+    </tr>
+  `;
+
+  tbody.innerHTML = '';
+  state.students.forEach((st, sIdx) => {
+    const scoresArr = state.butirSkorSiswa[st];
+    let sumSkor = 0;
+    let cells = '';
+
+    state.butirSoal.forEach((b, bIdx) => {
+      const maxS = Number(b.skorMax) || 1;
+      const sc = Math.min(maxS, Math.max(0, Number(scoresArr[bIdx] ?? 0)));
+      sumSkor += sc;
+      cells += `
+        <td class="p-1 border border-slate-200 text-center">
+          <input type="number" min="0" max="${maxS}" step="0.5" value="${sc}"
+            onchange="onButirStudentScoreChange('${st.replace(/'/g, "\'")}', ${bIdx}, ${maxS}, this.value)"
+            class="w-14 text-center border border-slate-200 rounded py-1 font-semibold">
+        </td>
+      `;
+    });
+
+    const nilaiSkala100 = totalMaxSkor > 0 ? (sumSkor / totalMaxSkor) * 100 : 0;
+    tbody.innerHTML += `
+      <tr class="${sIdx % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'}">
+        <td class="p-2 border border-slate-200 text-center font-bold text-slate-500">${sIdx + 1}</td>
+        <td class="p-2 border border-slate-200 font-bold text-slate-800">${st}</td>
+        ${cells}
+        <td class="p-2 border border-slate-200 text-center font-extrabold text-indigo-900">${sumSkor.toFixed(1)}</td>
+        <td class="p-2 border border-slate-200 text-center font-extrabold text-teal-900">${nilaiSkala100.toFixed(1)}</td>
+      </tr>
+    `;
+  });
+
+  // Baris Statistik Tingkat Kesukaran / Daya Serap per Butir Soal
+  let statCells = '';
+  state.butirSoal.forEach((b, bIdx) => {
+    const maxS = Number(b.skorMax) || 1;
+    const avgButir = state.students.reduce((acc, st) => acc + (Number(state.butirSkorSiswa[st]?.[bIdx]) || 0), 0) / state.students.length;
+    const pct = (avgButir / (maxS * state.students.length)) * state.students.length * 100;
+    statCells += `
+      <td class="p-2 border border-slate-300 text-center font-bold text-indigo-950">
+        ${avgButir.toFixed(2)}<br><span class="text-[10px] font-normal text-slate-600">(${pct.toFixed(0)}%)</span>
+      </td>
+    `;
+  });
+
+  tbody.innerHTML += `
+    <tr class="bg-indigo-100/80">
+      <td colspan="2" class="p-2 border border-slate-300 font-extrabold text-indigo-950">
+        Rata-Rata Skor &amp; Daya Serap per Butir
+      </td>
+      ${statCells}
+      <td colspan="2" class="p-2 border border-slate-300 text-center font-bold text-indigo-950">
+        Max Skor: ${totalMaxSkor}
+      </td>
+    </tr>
+  `;
+}
+
+function onButirStudentScoreChange(student, bIdx, maxS, val) {
+  const num = Math.min(maxS, Math.max(0, Number(val) || 0));
+  state.butirSkorSiswa[student][bIdx] = num;
+  saveState();
+  renderButirMatrix();
+}
+
+function exportAnalisisButirXLSX() {
+  ensureButirScoresInitialized();
+  const totalMaxSkor = state.butirSoal.reduce((acc, b) => acc + (Number(b.skorMax) || 1), 0);
+  const rows = state.students.map((st, idx) => {
+    const obj = { No: idx + 1, 'Nama Siswa': st };
+    let sumSkor = 0;
+    state.butirSoal.forEach((b, bIdx) => {
+      const sc = Number(state.butirSkorSiswa[st]?.[bIdx]) || 0;
+      sumSkor += sc;
+      obj[`B${b.no} (${b.tipe})`] = sc;
+    });
+    obj['Total Skor'] = sumSkor;
+    obj['Nilai (0-100)'] = totalMaxSkor > 0 ? Number(((sumSkor / totalMaxSkor) * 100).toFixed(2)) : 0;
+    return obj;
+  });
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Analisis_Butir_Soal');
+  XLSX.writeFile(wb, 'Analisis_Butir_Soal_Kelas3.xlsx');
+}
+
+// =========================================================================
+// BACKUP / RESTORE / RESET DATA
+// =========================================================================
+function exportAllDataJSON() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'info_kelas_3_backup.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importAllDataJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+      state = loadState();
+      bootApp();
+      alert('Data berhasil dipulihkan dari file JSON.');
+    } catch (e) {
+      alert('File JSON tidak valid.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function resetDemoData() {
+  if (!confirm('Reset seluruh data ke pengaturan awal?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = createInitialState();
+  bootApp();
+}
+
+// =========================================================================
+// INISIALISASI APLIKASI
+// =========================================================================
+function bootApp() {
+  document.getElementById('globalKktpInput').value = state.kktp;
+  document.getElementById('kktpInputBox').value = state.kktp;
+  document.getElementById('kktpBadgeText').textContent = state.kktp;
+  document.getElementById('kktpBadgeVal').textContent = state.kktp;
+  document.getElementById('metaSekolah').value = state.meta.sekolah;
+  document.getElementById('metaKepsek').value = state.meta.kepsek;
+  document.getElementById('metaWalikelas').value = state.meta.walikelas;
+  document.getElementById('geminiApiKey').value = state.geminiKey || '';
+
+  syncTtdLabels();
+  initMapelDropdowns();
+  populateLeggerMateriDropdown();
+  renderNilaiTable();
+  renderLegger();
+  renderKaldik();
+  renderButirConfig();
+  renderButirMatrix();
+}
+
+document.addEventListener('DOMContentLoaded', bootApp);
+</script>
+</body>
+</html>
