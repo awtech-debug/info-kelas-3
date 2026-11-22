@@ -3,70 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info Kelas 3 - Portal SIAKAD & Akademik MIM 1 Slinga</title>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
+    <title>SIAKAD Kelas 3 — MIM 1 Slinga</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- QRCode.js Generator -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- HTML5-QRCode Scanner -->
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <!-- SheetJS (XLSX / XLS) -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <!-- html2canvas & jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- JSZip -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- Mammoth.js (.docx reader) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <!-- PDF.js (.pdf reader) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        mimblue: {
-                            50: '#eef4ff',
-                            100: '#d9e6ff',
-                            200: '#bcd4ff',
-                            300: '#8eb8ff',
-                            400: '#5992ff',
-                            500: '#2e6aff',
-                            600: '#1649f5',
-                            700: '#07399C',
-                            800: '#0a2f7d',
-                            900: '#092561',
-                            950: '#05163d',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f4f7fb;
+            background-color: #f8fafc;
             color: #0f172a;
         }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .bg-mimblue-700 { background-color: #07399C; }
+        .bg-mimblue-800 { background-color: #052c78; }
+        .bg-mimblue-900 { background-color: #031e54; }
+        .bg-mimblue-50  { background-color: #eef4ff; }
+        .bg-mimblue-100 { background-color: #dbe8ff; }
+        .text-mimblue-700 { color: #07399C; }
+        .text-mimblue-800 { color: #052c78; }
+        .text-mimblue-900 { color: #031e54; }
+        .text-mimblue-950 { color: #021336; }
+        .border-mimblue-200 { border-color: #bfd6ff; }
+        .border-mimblue-400 { border-color: #7aa8ff; }
+        .border-mimblue-600 { border-color: #0a47bd; }
+        .border-mimblue-700 { border-color: #07399C; }
+        .hover\:bg-mimblue-800:hover { background-color: #052c78; }
+        .hover\:bg-mimblue-100:hover { background-color: #dbe8ff; }
+        .focus\:border-mimblue-600:focus { border-color: #0a47bd; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -74,661 +50,662 @@
         .animate-fade-up {
             animation: fadeUp 0.28s ease-out forwards;
         }
+
         @media print {
             .no-print { display: none !important; }
-            body { background: #ffffff !important; }
+            body { background: #fff !important; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <!-- Toast Container -->
-    <div id="toastContainer" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+    <div id="toastContainer" class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
     <!-- Custom Confirm Modal -->
-    <div id="customConfirmModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-fade-up space-y-4">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+    <div id="customConfirmModal" class="fixed inset-0 z-[90] hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-fade-up">
+            <div class="flex items-center gap-3 text-amber-600 mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
+                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                 </div>
-                <div>
-                    <h3 id="confirmModalTitle" class="font-extrabold text-base text-slate-900">Konfirmasi Tindakan</h3>
-                    <p id="confirmModalMessage" class="text-xs text-slate-600 mt-0.5">Apakah Anda yakin?</p>
-                </div>
+                <h3 id="confirmModalTitle" class="font-bold text-lg text-slate-900">Konfirmasi Tindakan</h3>
             </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button type="button" onclick="closeCustomConfirm()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer">Batal</button>
-                <button type="button" id="confirmModalYesBtn" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer">Ya, Lanjutkan</button>
+            <p id="confirmModalMessage" class="text-sm text-slate-600 mb-6 leading-relaxed"></p>
+            <div class="flex justify-end gap-2.5">
+                <button type="button" onclick="closeCustomConfirm()" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Batal</button>
+                <button type="button" id="confirmModalYesBtn" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-rose-600 hover:bg-rose-700 text-white transition shadow-sm cursor-pointer">Ya, Lanjutkan</button>
             </div>
         </div>
     </div>
 
-    <!-- Material Preview Modal -->
-    <div id="materialPreviewModal" class="fixed inset-0 z-[90] hidden items-center justify-center bg-slate-950/65 backdrop-blur-xs p-3 sm:p-6">
-        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-up">
-            <div class="px-5 py-4 bg-mimblue-700 text-white flex items-center justify-between gap-3">
-                <div class="flex items-center gap-2.5 min-w-0">
-                    <i data-lucide="book-open" class="w-5 h-5 text-yellow-300 shrink-0"></i>
-                    <span id="matModalSubjectBadge" class="text-xs font-extrabold uppercase tracking-wider truncate">Mata Pelajaran</span>
+    <!-- Material Reader & Export Modal -->
+    <div id="materialPreviewModal" class="fixed inset-0 z-[80] hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border border-slate-100 overflow-hidden my-auto animate-fade-up">
+            <div class="flex items-center justify-between px-6 py-4 bg-mimblue-700 text-white">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <span class="font-bold text-sm sm:text-base">Pratinjau & Unduh Materi Pembelajaran</span>
                 </div>
-                <button type="button" onclick="closeMaterialModal()" class="p-1.5 rounded-xl bg-white/15 hover:bg-white/25 transition cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
+                <button type="button" onclick="closeMaterialModal()" class="p-1.5 rounded-xl hover:bg-white/15 transition cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <div class="p-5 sm:p-7 overflow-y-auto flex-1 bg-slate-50">
-                <div id="materialPrintSheet" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-5">
-                    <div class="flex items-center gap-4 border-b-2 border-mimblue-700 pb-4">
-                        <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-14 h-14 rounded-full object-contain shrink-0">
-                        <div>
-                            <p class="text-[11px] font-extrabold text-mimblue-700 uppercase tracking-wider">Madrasah Ibtidaiyah Muhammadiyah 1 Slinga</p>
-                            <h3 id="matModalTitle" class="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">Judul Materi</h3>
-                            <p id="matModalMeta" class="text-xs text-slate-500 mt-0.5">Kelas 3 • Tahun Pelajaran 2025/2026</p>
-                        </div>
+
+            <div id="materialPrintSheet" class="p-6 sm:p-8 bg-white">
+                <div class="flex items-center gap-4 border-b-2 border-mimblue-700 pb-4 mb-6">
+                    <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-14 h-14 rounded-full object-contain shrink-0">
+                    <div>
+                        <p class="text-xs font-extrabold uppercase tracking-wider text-mimblue-700">MI Muhammadiyah 1 Slinga • Kelas 3</p>
+                        <h2 id="matModalTitle" class="text-xl font-extrabold text-slate-900 mt-0.5"></h2>
+                        <p id="matModalMeta" class="text-xs text-slate-500 mt-1"></p>
                     </div>
-                    <div id="matModalBody" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line"></div>
                 </div>
+                <span id="matModalSubjectBadge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-mimblue-100 text-mimblue-800 mb-4"></span>
+                <div id="matModalBody" class="text-sm sm:text-base text-slate-700 leading-relaxed whitespace-pre-line"></div>
             </div>
-            <div class="px-5 py-3.5 bg-white border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
-                <span class="text-xs text-slate-500 font-medium">Unduh Lembar Materi:</span>
+
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                <span class="text-xs text-slate-500 font-medium">Unduh materi untuk belajar luring / cetak:</span>
                 <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="downloadActiveMaterialPNG()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <button type="button" onclick="downloadActiveMaterialPNG()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1.5 transition cursor-pointer">
                         <i data-lucide="image" class="w-3.5 h-3.5"></i> PNG
                     </button>
-                    <button type="button" onclick="downloadActiveMaterialDOCX()" class="px-3.5 py-2 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
-                        <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Word (.doc)
+                    <button type="button" onclick="downloadActiveMaterialDOCX()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 flex items-center gap-1.5 transition cursor-pointer">
+                        <i data-lucide="file-text" class="w-3.5 h-3.5"></i> DOCX
                     </button>
-                    <button type="button" onclick="downloadActiveMaterialPDF()" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
-                        <i data-lucide="download" class="w-3.5 h-3.5"></i> PDF
+                    <button type="button" onclick="downloadActiveMaterialPDF()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-mimblue-700 hover:bg-mimblue-800 text-white flex items-center gap-1.5 transition cursor-pointer">
+                        <i data-lucide="file-down" class="w-3.5 h-3.5"></i> PDF
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add/Edit Student Modal (Teacher) -->
-    <div id="studentFormModal" class="fixed inset-0 z-[90] hidden items-center justify-center bg-slate-950/65 backdrop-blur-xs p-3 sm:p-6">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-up">
-            <div class="px-6 py-4 bg-mimblue-700 text-white flex items-center justify-between">
-                <h3 id="studentModalTitle" class="font-extrabold text-base">Tambah Data Siswa Baru</h3>
-                <button type="button" onclick="closeStudentFormModal()" class="p-1.5 rounded-xl bg-white/15 hover:bg-white/25 cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
+    <!-- Add / Edit Student Modal (Teacher) -->
+    <div id="studentFormModal" class="fixed inset-0 z-[85] hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 shadow-2xl border border-slate-100 my-auto animate-fade-up">
+            <div class="flex items-center justify-between mb-5">
+                <h3 id="studentModalTitle" class="text-lg font-extrabold text-slate-900">Tambah Data Siswa</h3>
+                <button type="button" onclick="closeStudentFormModal()" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500 cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <form id="studentModalForm" onsubmit="saveStudentModalForm(event)" class="p-6 overflow-y-auto space-y-4">
+            <form id="studentFormElement" onsubmit="saveStudentModalForm(event)" class="space-y-4">
                 <input type="hidden" id="modalStudentOriginalNis">
-                <div class="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                    <img id="modalStudentPhotoPreview" src="" alt="Preview Foto" class="w-20 h-20 rounded-2xl object-cover border-2 border-mimblue-700 bg-white shrink-0">
-                    <div class="space-y-1.5 text-center sm:text-left">
-                        <p class="text-xs font-bold text-slate-800">Pas Foto Profil Siswa</p>
-                        <p class="text-[11px] text-slate-500">Unggah foto formal siswa (JPG/PNG). Otomatis dikompresi agar ringan & tersinkronisasi.</p>
-                        <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">
-                            <i data-lucide="camera" class="w-3.5 h-3.5"></i> Pilih Foto Siswa
-                            <input type="file" accept="image/*" onchange="handleModalStudentPhotoChange(event)" class="hidden">
+                <div class="flex items-center gap-4">
+                    <img id="modalStudentPhotoPreview" src="" alt="Preview Foto" class="w-20 h-20 rounded-2xl object-cover border-2 border-mimblue-200 bg-slate-100 shrink-0">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-slate-700">Pas Foto Siswa</label>
+                        <label class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 text-xs font-bold cursor-pointer transition">
+                            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Pilih Foto
+                            <input type="file" id="modalStudentPhotoInput" accept="image/*" onchange="handleModalStudentPhotoChange(event)" class="hidden">
                         </label>
+                        <p class="text-[11px] text-slate-400">Otomatis dikompresi agar ringan & tersimpan.</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">NIS (Kode Login & QR) *</label>
-                        <input id="modalStudentNis" type="text" required placeholder="Contoh: kelas3_27" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap Siswa *</label>
-                        <input id="modalStudentName" type="text" required placeholder="Nama lengkap sesuai rapor" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">NIS (Nomor Induk Siswa)</label>
+                        <input type="text" id="modalStudentNis" required placeholder="Contoh: kelas3_27" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-mimblue-600">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Jenis Kelamin</label>
-                        <select id="modalStudentGender" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium">
+                        <select id="modalStudentGender" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-mimblue-600">
                             <option value="Laki-laki">Laki-laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap Siswa</label>
+                    <input type="text" id="modalStudentName" required placeholder="Nama lengkap sesuai rapor" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-mimblue-600">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Tempat Lahir</label>
-                        <input id="modalStudentBirthPlace" type="text" placeholder="Contoh: Purbalingga" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                        <input type="text" id="modalStudentBirthPlace" placeholder="Purbalingga" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-mimblue-600">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Tanggal Lahir</label>
-                        <input id="modalStudentBirthDate" type="date" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Orang Tua / Wali</label>
-                        <input id="modalStudentParent" type="text" placeholder="Nama Ayah / Ibu" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">No. HP / WhatsApp</label>
-                        <input id="modalStudentPhone" type="text" placeholder="08xxxxxxxxxx" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Alamat Rumah</label>
-                        <input id="modalStudentAddress" type="text" placeholder="Desa Slinga, Kec. Kaligondang" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                        <input type="date" id="modalStudentBirthDate" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-mimblue-600">
                     </div>
                 </div>
 
-                <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
-                    <button type="button" onclick="closeStudentFormModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer">Batal</button>
-                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">Simpan Data Siswa</button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Orang Tua / Wali</label>
+                        <input type="text" id="modalStudentParent" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-mimblue-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">No. HP / WhatsApp</label>
+                        <input type="text" id="modalStudentPhone" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-mimblue-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Alamat Lengkap</label>
+                    <input type="text" id="modalStudentAddress" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-mimblue-600">
+                </div>
+
+                <div class="flex justify-end gap-2.5 pt-3">
+                    <button type="button" onclick="closeStudentFormModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-mimblue-700 hover:bg-mimblue-800 text-white shadow-sm cursor-pointer">Simpan Data Siswa</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ==================== 1. LOGIN & PUBLIC SCAN PAGE ==================== -->
-    <div id="loginPage" class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-mimblue-950 via-mimblue-800 to-mimblue-700">
-        <div class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 animate-fade-up">
-
-            <!-- Left Branding Panel -->
-            <div class="lg:col-span-5 bg-mimblue-900 text-white p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-yellow-400/10 pointer-events-none"></div>
-                <div class="space-y-5 relative z-10">
-                    <div class="flex items-center gap-3.5">
-                        <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-16 h-16 rounded-full bg-white p-1 object-contain shadow-lg shrink-0">
-                        <div>
-                            <span class="inline-block px-2.5 py-0.5 rounded-full bg-yellow-400 text-mimblue-950 text-[10px] font-extrabold uppercase tracking-wider">Portal Akademik</span>
-                            <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight mt-1">Info Kelas 3</h1>
-                            <p class="text-xs text-mimblue-200 font-medium">MIM 1 Slinga • Kab. Purbalingga</p>
+    <!-- ==================== LOGIN PAGE ==================== -->
+    <div id="loginPage" class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-mimblue-900 via-mimblue-700 to-sky-800 text-white">
+        <div class="flex-1 flex items-center justify-center p-4 sm:p-8">
+            <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                <!-- Left Branding -->
+                <div class="lg:col-span-6 space-y-5 text-center lg:text-left animate-fade-up">
+                    <div class="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2.5">
+                        <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-11 h-11 rounded-full object-contain shrink-0">
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-amber-300 font-extrabold">Portal Akademik Digital</p>
+                            <p class="text-sm font-bold text-white">MI Muhammadiyah 1 Slinga</p>
                         </div>
                     </div>
 
-                    <div class="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-2">
-                        <div class="flex items-center justify-between gap-2">
-                            <p id="loginAcademicYearBadge" class="text-xs font-bold text-yellow-300">Tahun Pelajaran 2025/2026</p>
-                            <span id="cloudSyncStatusBadge" class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 text-[10px] font-bold flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span>Cloud Aktif</span>
-                            </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
+                        SIAKAD <span class="text-amber-300">Kelas 3</span>
+                    </h1>
+                    <p class="text-sky-100 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Sistem Informasi Akademik, Presensi QR & Barcode, Nilai 12 Mata Pelajaran, Materi Pelajaran, dan Kartu Identitas Digital Siswa Kelas 3.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-3 max-w-md mx-auto lg:mx-0 pt-2">
+                        <div class="bg-white/10 border border-white/15 rounded-2xl p-3">
+                            <p id="loginTotalStudentsCount" class="text-xl sm:text-2xl font-extrabold text-amber-300">26</p>
+                            <p class="text-[11px] text-sky-100 font-medium">Siswa Terdaftar</p>
                         </div>
-                        <p class="text-xs text-mimblue-100 leading-relaxed">
-                            Sistem Informasi Akademik Terpadu: Biodata Siswa, Presensi Harian & Rekap Bulanan, Penilaian 12 Mata Pelajaran, Legger, Analisis Butir Soal, Kalender Pendidikan, & Perangkat Ajar AI.
-                        </p>
+                        <div class="bg-white/10 border border-white/15 rounded-2xl p-3">
+                            <p class="text-xl sm:text-2xl font-extrabold text-amber-300">12</p>
+                            <p class="text-[11px] text-sky-100 font-medium">Mata Pelajaran</p>
+                        </div>
+                        <div class="bg-white/10 border border-white/15 rounded-2xl p-3">
+                            <p class="text-xs sm:text-sm font-extrabold text-amber-300 leading-snug">Kelas 3</p>
+                            <p class="text-[11px] text-sky-100 font-medium">Wali Kelas</p>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-sky-200/90 space-y-0.5 pt-1">
+                        <p>Wali Kelas: <strong id="loginHomeroomTeacherName" class="text-white">Alfam Atthamimy, M.Pd.</strong></p>
+                        <p>Desa Slinga, Kec. Kaligondang, Kab. Purbalingga • <span id="loginAcademicYearBadge">Tahun Pelajaran 2025/2026</span></p>
                     </div>
                 </div>
 
-                <div class="space-y-3 pt-8 relative z-10">
-                    <div class="flex items-center justify-between text-xs border-t border-white/15 pt-4">
-                        <span class="text-mimblue-200">Wali Kelas 3:</span>
-                        <span id="loginHomeroomTeacherName" class="font-bold text-white">Alfam Atthamimy, M.Pd.</span>
+                <!-- Right Login / Public Scan Card -->
+                <div class="lg:col-span-6 bg-white text-slate-900 rounded-3xl p-6 sm:p-8 shadow-2xl animate-fade-up">
+                    <div class="grid grid-cols-3 gap-1 bg-slate-100 p-1.5 rounded-2xl mb-6">
+                        <button type="button" id="loginModeTab-student" onclick="switchLoginMode('student')" class="py-2.5 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1.5 bg-mimblue-700 text-white shadow-sm cursor-pointer">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 shrink-0"></i>
+                            <span>Login Siswa</span>
+                        </button>
+                        <button type="button" id="loginModeTab-publicscan" onclick="switchLoginMode('publicscan')" class="py-2.5 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
+                            <i data-lucide="qr-code" class="w-4 h-4 shrink-0"></i>
+                            <span>Scan Presensi</span>
+                        </button>
+                        <button type="button" id="loginModeTab-teacher" onclick="switchLoginMode('teacher')" class="py-2.5 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
+                            <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
+                            <span>Wali Kelas</span>
+                        </button>
                     </div>
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="text-mimblue-200">Jumlah Siswa Terdaftar:</span>
-                        <span class="font-bold text-yellow-300"><span id="loginTotalStudentsCount">26</span> Siswa</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Right Interactive Panel -->
-            <div class="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center">
-                <!-- Mode Switcher Tabs -->
-                <div class="grid grid-cols-3 gap-1.5 p-1.5 bg-slate-100 rounded-2xl mb-6">
-                    <button type="button" id="loginModeTab-student" onclick="switchLoginMode('student')"
-                        class="py-2.5 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1.5 bg-mimblue-700 text-white shadow-sm cursor-pointer">
-                        <i data-lucide="user-check" class="w-4 h-4 shrink-0"></i>
-                        <span>Login Siswa</span>
-                    </button>
-                    <button type="button" id="loginModeTab-publicscan" onclick="switchLoginMode('publicscan')"
-                        class="py-2.5 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
-                        <i data-lucide="qr-code" class="w-4 h-4 shrink-0"></i>
-                        <span>Scan QR / Barcode</span>
-                    </button>
-                    <button type="button" id="loginModeTab-teacher" onclick="switchLoginMode('teacher')"
-                        class="py-2.5 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
-                        <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
-                        <span>Wali Kelas</span>
-                    </button>
-                </div>
-
-                <!-- 1A. Student Login Form -->
-                <form id="studentLoginForm" onsubmit="handleStudentLogin(event)" class="space-y-4">
-                    <div>
-                        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Masuk Portal Siswa & Wali Murid</h2>
-                        <p class="text-xs text-slate-500 mt-1">Gunakan <strong>NIS</strong> serta <strong>Nama Depan & Nama Tengah</strong> siswa untuk melihat biodata, presensi, nilai 12 mapel, & kartu QR.</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5">NIS Siswa</label>
-                        <input id="loginNisInput" type="text" required placeholder="Contoh: kelas3_19"
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mimblue-600/20 focus:border-mimblue-600 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Nama Depan & Nama Tengah Siswa</label>
-                        <input id="loginNameInput" type="text" required placeholder="Contoh: mochamad gavin"
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mimblue-600/20 focus:border-mimblue-600 outline-none">
-                    </div>
-                    <button type="submit"
-                        class="w-full py-3.5 px-6 rounded-2xl bg-mimblue-700 hover:bg-mimblue-800 text-white font-extrabold text-sm shadow-lg shadow-mimblue-700/25 transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i data-lucide="log-in" class="w-4 h-4"></i>
-                        <span>Masuk ke Portal Kelas 3</span>
-                    </button>
-                </form>
-
-                <!-- 1B. Public QR & Barcode Attendance Scanner -->
-                <div id="publicScanPanel" class="hidden space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-2">
+                    <!-- Student Login Form -->
+                    <form id="studentLoginForm" onsubmit="handleStudentLogin(event)" class="space-y-4">
                         <div>
-                            <h2 class="text-base sm:text-lg font-extrabold text-slate-900">Presensi Cepat Scan QR / Barcode</h2>
-                            <p class="text-xs text-slate-500">Arahkan kamera ke Kartu QR siswa atau tempelkan kode NIS/Barcode tanpa perlu login.</p>
+                            <h2 class="text-xl font-extrabold text-slate-900">Masuk Portal Siswa</h2>
+                            <p class="text-xs text-slate-500 mt-1">Gunakan <strong>NIS</strong> dan <strong>Nama Depan + Nama Tengah</strong> untuk melihat biodata, presensi, nilai, materi, dan kartu QR.</p>
                         </div>
-                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold">Langsung Tercatat</span>
-                    </div>
 
-                    <!-- Date & Status Selector -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
                         <div>
-                            <label class="block text-[11px] font-extrabold text-slate-600 mb-1">Tanggal Presensi</label>
-                            <input id="publicScanDate" type="date" onchange="renderPublicTodayScanList()"
-                                class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-extrabold text-slate-600 mb-1">Status Kehadiran</label>
-                            <select id="publicScanStatusMode" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
-                                <option value="H">Hadir (H)</option>
-                                <option value="I">Izin (I)</option>
-                                <option value="S">Sakit (S)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Camera Scanner Viewport -->
-                    <div class="rounded-2xl overflow-hidden border-2 border-dashed border-mimblue-300 bg-slate-900 relative">
-                        <div id="publicQrReaderBox" class="w-full min-h-[210px] flex items-center justify-center text-white">
-                            <div id="publicQrPlaceholder" class="p-6 text-center space-y-2">
-                                <i data-lucide="camera" class="w-9 h-9 text-yellow-400 mx-auto"></i>
-                                <p class="text-xs font-bold text-slate-200">Kamera Pemindai Belum Aktif</p>
-                                <p class="text-[11px] text-slate-400">Klik tombol "Aktifkan Kamera" di bawah, atau unggah foto kartu QR.</p>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Nomor Induk Siswa (NIS)</label>
+                            <div class="relative">
+                                <input type="text" id="loginNisInput" required placeholder="Contoh: kelas3_19" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-mimblue-600 focus:outline-none text-sm font-semibold transition">
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Camera Controls & Upload QR Image -->
-                    <div class="flex flex-wrap items-center gap-2">
-                        <button type="button" onclick="startPublicQrScanner()"
-                            class="flex-1 py-2.5 px-3 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="video" class="w-4 h-4"></i> Aktifkan Kamera
-                        </button>
-                        <button type="button" onclick="switchPublicCameraFacing()"
-                            class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Ganti Kamera Depan / Belakang">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Balik Kamera
-                        </button>
-                        <label class="py-2.5 px-3 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
-                            <i data-lucide="image-plus" class="w-4 h-4"></i> Upload Foto QR
-                            <input type="file" accept="image/*" onchange="handlePublicQrImageUpload(event)" class="hidden">
-                        </label>
-                    </div>
-                    <div id="publicQrFileHiddenReader" class="hidden"></div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Nama Depan & Nama Tengah</label>
+                            <input type="text" id="loginNameInput" required placeholder="Contoh: mochamad gavin" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-mimblue-600 focus:outline-none text-sm font-semibold transition">
+                        </div>
 
-                    <!-- Manual / USB Barcode Gun Input -->
-                    <form onsubmit="handlePublicManualBarcodeSubmit(event)" class="flex gap-2">
-                        <input id="publicBarcodeInput" type="text" placeholder="Ketik / Scan USB Barcode NIS (contoh: kelas3_1)..."
-                            class="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:border-mimblue-600 outline-none">
-                        <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold cursor-pointer">
-                            Catat
+                        <button type="submit" class="w-full py-3.5 px-5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white font-bold text-sm shadow-lg shadow-mimblue-700/25 flex items-center justify-center gap-2 transition cursor-pointer">
+                            <span>Masuk ke Dashboard Siswa</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
+
+                        <div class="p-3.5 rounded-2xl bg-mimblue-50 border border-mimblue-100 text-xs text-mimblue-900 space-y-1">
+                            <p class="font-bold">Contoh Akun Siswa:</p>
+                            <p>NIS: <code class="font-mono font-bold">kelas3_19</code> • Nama: <code class="font-mono font-bold">mochamad gavin</code></p>
+                        </div>
                     </form>
 
-                    <!-- Last Scanned Result Card -->
-                    <div id="publicLastScanCard" class="hidden p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-3.5 animate-fade-up">
-                        <img id="publicLastScanPhoto" src="" alt="Foto Siswa" class="w-12 h-12 rounded-xl object-cover border-2 border-emerald-500 bg-white shrink-0">
-                        <div class="min-w-0 flex-1">
-                            <div class="flex items-center gap-2">
-                                <span id="publicLastScanBadge" class="px-2 py-0.5 rounded-md bg-emerald-600 text-white text-[10px] font-extrabold">HADIR</span>
-                                <span id="publicLastScanTime" class="text-[11px] font-mono text-emerald-800 font-bold">07:00</span>
+                    <!-- Public QR & Barcode Presensi Panel -->
+                    <div id="publicScanPanel" class="hidden space-y-4">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Presensi Mandiri QR & Barcode</h2>
+                                <p class="text-xs text-slate-500 mt-0.5">Arahkan QR Code / Barcode kartu siswa ke kamera, unggah foto kode, atau ketik/scan NIS.</p>
                             </div>
-                            <p id="publicLastScanName" class="text-sm font-extrabold text-slate-900 truncate mt-0.5">Nama Siswa</p>
-                            <p id="publicLastScanNis" class="text-[11px] text-slate-600 font-mono">kelas3_1</p>
+                            <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold shrink-0">SCAN LANGSUNG</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 mb-1">Tanggal Presensi</label>
+                                <input type="date" id="publicScanDate" onchange="renderPublicTodayScanList()" class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 mb-1">Status Kehadiran</label>
+                                <select id="publicScanStatusMode" class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
+                                    <option value="H">Hadir (H)</option>
+                                    <option value="I">Izin (I)</option>
+                                    <option value="S">Sakit (S)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-dashed border-mimblue-300 bg-slate-900 min-h-[210px] flex items-center justify-center">
+                            <div id="publicQrReaderBox" class="w-full"></div>
+                            <div id="publicQrPlaceholder" class="text-center p-5 text-white space-y-2">
+                                <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mx-auto">
+                                    <i data-lucide="scan-line" class="w-6 h-6 text-amber-300"></i>
+                                </div>
+                                <p class="text-xs font-bold">Kamera QR & Barcode Siap Dinyalakan</p>
+                                <p class="text-[11px] text-slate-300">Mendukung QR Code kartu siswa maupun barcode NIS</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" onclick="startPublicQrScanner()" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                                <i data-lucide="camera" class="w-4 h-4"></i>
+                                <span>Nyalakan Kamera</span>
+                            </button>
+                            <button type="button" onclick="switchPublicCameraFacing()" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer" title="Ganti Kamera Depan/Belakang">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                <span>Ganti Kamera</span>
+                            </button>
+                            <button type="button" onclick="stopPublicQrScanner()" class="py-2.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                                <i data-lucide="square" class="w-4 h-4"></i>
+                                <span>Stop</span>
+                            </button>
+                            <label class="py-2.5 px-3 rounded-xl bg-mimblue-50 hover:bg-mimblue-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                                <i data-lucide="image-up" class="w-4 h-4"></i>
+                                <span>Upload Foto QR</span>
+                                <input type="file" accept="image/*" onchange="handlePublicQrImageUpload(event)" class="hidden">
+                            </label>
+                        </div>
+                        <div id="publicQrFileHiddenReader" class="hidden"></div>
+
+                        <form onsubmit="handlePublicManualBarcodeSubmit(event)" class="flex gap-2">
+                            <input type="text" id="publicBarcodeInput" placeholder="Scan barcode / ketik NIS (misal: kelas3_1) lalu Enter..." class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-mimblue-600 focus:outline-none text-xs font-mono font-bold">
+                            <button type="submit" class="px-4 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold transition cursor-pointer">Catat</button>
+                        </form>
+
+                        <div id="publicLastScanCard" class="hidden p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-3.5 animate-fade-up">
+                            <img id="publicLastScanPhoto" src="" alt="Foto Siswa" class="w-12 h-12 rounded-xl object-cover border border-emerald-300 bg-white shrink-0">
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span id="publicLastScanBadge" class="px-2 py-0.5 rounded-md bg-emerald-600 text-white text-[10px] font-extrabold">TERCATAT HADIR</span>
+                                    <span id="publicLastScanTime" class="text-[11px] font-mono text-emerald-800 font-bold"></span>
+                                </div>
+                                <p id="publicLastScanName" class="text-sm font-extrabold text-slate-900 truncate mt-1"></p>
+                                <p id="publicLastScanNis" class="text-xs font-mono text-slate-600"></p>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-slate-100 pt-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span id="publicTodayScanHeading" class="text-xs font-extrabold text-slate-700">Riwayat Presensi</span>
+                                <span id="publicTodayScanCount" class="text-[11px] font-bold text-mimblue-700">0 / 26 Siswa</span>
+                            </div>
+                            <div id="publicTodayScanList" class="max-h-36 overflow-y-auto space-y-1.5 pr-1"></div>
                         </div>
                     </div>
 
-                    <!-- Live Today Scanned List -->
-                    <div class="pt-2 border-t border-slate-100">
-                        <div class="flex items-center justify-between mb-2">
-                            <span id="publicTodayScanHeading" class="text-xs font-extrabold text-slate-700">Riwayat Presensi</span>
-                            <span id="publicTodayScanCount" class="text-xs font-bold text-mimblue-700">0 Siswa</span>
+                    <!-- Teacher Login Form -->
+                    <form id="teacherLoginForm" onsubmit="handleTeacherLogin(event)" class="hidden space-y-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Login Wali Kelas</h2>
+                            <p class="text-xs text-slate-500 mt-1">Kelola 26 data siswa, upload foto massal, presensi QR/Excel, nilai 12 mapel, legger, analisis soal, kalender pendidikan, & perangkat AI.</p>
                         </div>
-                        <div id="publicTodayScanList" class="max-h-32 overflow-y-auto space-y-1.5 pr-1"></div>
-                    </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">PIN Keamanan Wali Kelas</label>
+                            <input type="password" id="teacherPinInput" required placeholder="Masukkan PIN Wali Kelas" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-mimblue-600 focus:outline-none text-sm font-semibold transition">
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition cursor-pointer">
+                            <span>Buka Dashboard Wali Kelas</span>
+                            <i data-lucide="lock-open" class="w-4 h-4"></i>
+                        </button>
+
+                        <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+                            <p class="font-bold">PIN Default Wali Kelas: <code class="font-mono bg-amber-100 px-1.5 py-0.5 rounded">123456</code></p>
+                            <p class="text-[11px] mt-0.5 text-amber-800">Anda dapat mengubah PIN ini di menu Pengaturan setelah masuk.</p>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- 1C. Teacher Login Form -->
-                <form id="teacherLoginForm" onsubmit="handleTeacherLogin(event)" class="hidden space-y-4">
-                    <div>
-                        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Login Dashboard Wali Kelas 3</h2>
-                        <p class="text-xs text-slate-500 mt-1">Masukkan PIN Administrator Wali Kelas untuk mengelola data siswa, presensi, penilaian, legger, analisis soal, kalender pendidikan, & perangkat pembelajaran AI.</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5">PIN Wali Kelas</label>
-                        <input id="teacherPinInput" type="password" required placeholder="Masukkan PIN Wali Kelas"
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mimblue-600/20 focus:border-mimblue-600 outline-none">
-                    </div>
-                    <button type="submit"
-                        class="w-full py-3.5 px-6 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i data-lucide="key-round" class="w-4 h-4"></i>
-                        <span>Buka Dashboard Wali Kelas</span>
-                    </button>
-                </form>
             </div>
         </div>
+
+        <footer class="py-4 px-6 text-center text-xs text-sky-200/80 border-t border-white/10">
+            © 2026 SIAKAD Kelas 3 — MI Muhammadiyah 1 Slinga, Kec. Kaligondang, Kab. Purbalingga.
+        </footer>
     </div>
 
-    <!-- ==================== 2. STUDENT DASHBOARD ==================== -->
-    <div id="studentDashboard" class="hidden min-h-screen flex-col">
-        <!-- Top Header -->
-        <header class="bg-mimblue-700 text-white sticky top-0 z-30 shadow-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-3">
-                <div class="flex items-center gap-3">
-                    <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-10 h-10 rounded-full bg-white p-0.5 object-contain shrink-0">
-                    <div>
-                        <h1 class="font-extrabold text-sm sm:text-base leading-tight">Info Kelas 3 • MIM 1 Slinga</h1>
-                        <p class="text-[11px] text-mimblue-200">Portal Akademik Siswa & Orang Tua</p>
+    <!-- ==================== STUDENT DASHBOARD ==================== -->
+    <div id="studentDashboard" class="hidden min-h-screen flex-col bg-slate-50">
+        <header class="sticky top-0 z-40 bg-mimblue-700 text-white shadow-md no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-10 h-10 rounded-full object-contain shrink-0">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-extrabold truncate">SIAKAD Kelas 3 • MIM 1 Slinga</p>
+                        <p class="text-[11px] text-sky-200 truncate">Portal Akademik Siswa</p>
                     </div>
                 </div>
+
                 <div class="flex items-center gap-3">
+                    <div id="cloudSyncStatusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold text-sky-100">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span>Cloud Aktif</span>
+                    </div>
                     <div class="hidden sm:flex items-center gap-2.5 bg-white/10 px-3 py-1.5 rounded-2xl border border-white/15">
-                        <img id="headerStudentPhoto" src="" alt="Foto" class="w-7 h-7 rounded-full object-cover bg-white">
-                        <div class="text-left">
-                            <p id="headerStudentName" class="text-xs font-extrabold leading-none">Nama Siswa</p>
-                            <p id="headerStudentNis" class="text-[10px] text-yellow-300 font-mono mt-0.5">kelas3_1</p>
+                        <img id="headerStudentPhoto" src="" alt="Foto Siswa" class="w-7 h-7 rounded-full object-cover border border-white/40">
+                        <div class="text-left leading-tight">
+                            <p id="headerStudentName" class="text-xs font-bold truncate max-w-[140px]"></p>
+                            <p id="headerStudentNis" class="text-[10px] font-mono text-sky-200"></p>
                         </div>
                     </div>
-                    <button type="button" onclick="logout()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
-                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                    <button type="button" onclick="logout()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-rose-600 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
                         <span>Keluar</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 space-y-6">
-            <!-- Hero Student Profile Card -->
-            <div class="bg-gradient-to-r from-mimblue-900 via-mimblue-800 to-mimblue-700 rounded-3xl p-5 sm:p-7 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4 sm:gap-5">
-                    <div class="relative">
-                        <img id="heroStudentPhoto" src="" alt="Foto Profil Siswa" class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl object-cover border-4 border-yellow-400 bg-white shadow-lg">
-                        <span id="heroStudentNoBadge" class="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-yellow-400 text-mimblue-950 text-[11px] font-black shadow">No. 1</span>
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+            <!-- Hero Banner -->
+            <section class="bg-gradient-to-r from-mimblue-800 via-mimblue-700 to-sky-700 text-white rounded-3xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="flex items-center gap-4 sm:gap-5">
+                        <img id="heroStudentPhoto" src="" alt="Pas Foto" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-4 border-amber-300 shadow-lg bg-white shrink-0">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-amber-300 text-xs font-extrabold mb-2">
+                                <span>KELAS 3</span>
+                                <span>•</span>
+                                <span id="heroStudentNoBadge">No. 1</span>
+                            </div>
+                            <h1 id="heroStudentName" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h1>
+                            <p class="text-xs sm:text-sm text-sky-100 mt-1">
+                                NIS: <strong id="heroStudentNis" class="font-mono text-white"></strong> • Wali Kelas: <strong id="heroHomeroomName" class="text-white"></strong>
+                            </p>
+                        </div>
                     </div>
-                    <div class="space-y-1">
-                        <span class="px-2.5 py-0.5 rounded-full bg-white/15 text-yellow-300 text-[11px] font-bold">Siswa Aktif Kelas 3</span>
-                        <h2 id="heroStudentName" class="text-xl sm:text-2xl font-extrabold tracking-tight">Nama Siswa</h2>
-                        <p class="text-xs text-mimblue-200 font-mono">NIS: <strong id="heroStudentNis" class="text-white">kelas3_1</strong> • Wali Kelas: <span id="heroHomeroomName">Alfam Atthamimy, M.Pd.</span></p>
-                    </div>
-                </div>
 
-                <div class="grid grid-cols-3 gap-2.5 sm:gap-3 w-full md:w-auto">
-                    <div class="bg-white/10 border border-white/15 rounded-2xl p-3 text-center">
-                        <p class="text-[11px] text-mimblue-200">Kehadiran</p>
-                        <p id="statAttendancePct" class="text-lg sm:text-xl font-extrabold text-emerald-300 mt-0.5">100%</p>
-                    </div>
-                    <div class="bg-white/10 border border-white/15 rounded-2xl p-3 text-center">
-                        <p class="text-[11px] text-mimblue-200">Rerata Rapor</p>
-                        <p id="statAvgGrade" class="text-lg sm:text-xl font-extrabold text-yellow-300 mt-0.5">-</p>
-                    </div>
-                    <div class="bg-white/10 border border-white/15 rounded-2xl p-3 text-center">
-                        <p class="text-[11px] text-mimblue-200">Jumlah Mapel</p>
-                        <p class="text-lg sm:text-xl font-extrabold text-white mt-0.5">12</p>
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4 shrink-0">
+                        <div class="bg-white/10 backdrop-blur-xs border border-white/15 rounded-2xl px-4 py-3 text-center">
+                            <p id="statAttendancePct" class="text-xl sm:text-2xl font-extrabold text-amber-300">100%</p>
+                            <p class="text-[11px] text-sky-100 font-semibold">Tingkat Kehadiran</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-xs border border-white/15 rounded-2xl px-4 py-3 text-center">
+                            <p id="statAvgGrade" class="text-xl sm:text-2xl font-extrabold text-amber-300">-</p>
+                            <p class="text-[11px] text-sky-100 font-semibold">Rata-rata Nilai</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Navigation Tabs -->
-            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                <button type="button" id="sTabBtn-biodata" onclick="switchStudentTab('biodata')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer">
-                    <i data-lucide="user" class="w-4 h-4"></i> Biodata & Foto
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 no-print">
+                <button type="button" id="sTabBtn-biodata" onclick="switchStudentTab('biodata')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer">
+                    <i data-lucide="user-check" class="w-4 h-4"></i> Biodata Siswa
                 </button>
-                <button type="button" id="sTabBtn-attendance" onclick="switchStudentTab('attendance')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
-                    <i data-lucide="calendar-check" class="w-4 h-4"></i> Laporan Presensi
+                <button type="button" id="sTabBtn-attendance" onclick="switchStudentTab('attendance')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="calendar-check" class="w-4 h-4"></i> Rekap Presensi
                 </button>
-                <button type="button" id="sTabBtn-grades" onclick="switchStudentTab('grades')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
-                    <i data-lucide="award" class="w-4 h-4"></i> Ringkasan 12 Mapel
+                <button type="button" id="sTabBtn-grades" onclick="switchStudentTab('grades')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="award" class="w-4 h-4"></i> Nilai & Rapor
                 </button>
-                <button type="button" id="sTabBtn-tugas" onclick="switchStudentTab('tugas')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
-                    <i data-lucide="list-checks" class="w-4 h-4"></i> Nilai Tugas
+                <button type="button" id="sTabBtn-tugas" onclick="switchStudentTab('tugas')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="clipboard-list" class="w-4 h-4"></i> Nilai Tugas
                 </button>
-                <button type="button" id="sTabBtn-asas" onclick="switchStudentTab('asas')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
-                    <i data-lucide="file-check-2" class="w-4 h-4"></i> Nilai ASAS/ASAT
+                <button type="button" id="sTabBtn-asas" onclick="switchStudentTab('asas')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="file-check-2" class="w-4 h-4"></i> Nilai ASAS / ASAT
                 </button>
-                <button type="button" id="sTabBtn-rapor" onclick="switchStudentTab('rapor')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
-                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> Nilai Rapor
+                <button type="button" id="sTabBtn-rapor" onclick="switchStudentTab('rapor')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="scroll-text" class="w-4 h-4"></i> Nilai Rapor
                 </button>
-                <button type="button" id="sTabBtn-materials" onclick="switchStudentTab('materials')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                <button type="button" id="sTabBtn-materials" onclick="switchStudentTab('materials')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="book-open" class="w-4 h-4"></i> Materi Pelajaran
                 </button>
-                <button type="button" id="sTabBtn-qrcard" onclick="switchStudentTab('qrcard')"
-                    class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                <button type="button" id="sTabBtn-qrcard" onclick="switchStudentTab('qrcard')" class="student-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
                     <i data-lucide="qr-code" class="w-4 h-4"></i> Kartu QR Saya
                 </button>
             </div>
 
-            <!-- Tab 1: Biodata & Self-Edit Photo -->
-            <div id="sTabContent-biodata" class="student-tab-content bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
+            <!-- Tab 1: Biodata -->
+            <div id="sTabContent-biodata" class="student-tab-content bg-white rounded-3xl shadow-xs border border-slate-200 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Biodata Lengkap & Foto Profil Siswa</h3>
-                        <p class="text-xs text-slate-500">Siswa atau orang tua dapat memperbarui biodata dan mengunggah pas foto terbaru.</p>
+                        <h3 class="text-lg font-extrabold text-slate-900">Biodata Lengkap Siswa</h3>
+                        <p class="text-xs text-slate-500">Anda dapat melengkapi biodata dan memperbarui pas foto pribadi kapan saja.</p>
                     </div>
-                    <button type="button" id="toggleEditBioBtn" onclick="toggleStudentBioEdit(true)"
-                        class="px-4 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
-                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                        <span>Edit Biodata & Foto</span>
+                    <button type="button" id="toggleEditBioBtn" onclick="toggleStudentBioEdit(true)" class="px-4 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                        <i data-lucide="edit-3" class="w-4 h-4"></i> Edit Biodata & Foto
                     </button>
                 </div>
 
-                <!-- View Mode -->
                 <div id="studentBioViewMode" class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-                    <div class="md:col-span-4 flex flex-col items-center p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-3">
-                        <img id="bioViewPhoto" src="" alt="Foto Siswa" class="w-36 h-36 rounded-3xl object-cover border-4 border-mimblue-700 bg-white shadow">
-                        <div>
-                            <p id="bioViewNameBadge" class="font-extrabold text-sm text-slate-900">Nama Siswa</p>
-                            <p id="bioViewNisBadge" class="text-xs font-mono text-mimblue-700 font-bold">kelas3_1</p>
-                        </div>
+                    <div class="md:col-span-4 flex flex-col items-center text-center p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                        <img id="bioViewPhoto" src="" alt="Pas Foto Siswa" class="w-36 h-36 rounded-2xl object-cover border-4 border-white shadow-md mb-3">
+                        <p id="bioViewNameBadge" class="font-extrabold text-slate-900 text-base"></p>
+                        <p id="bioViewNisBadge" class="text-xs font-mono font-bold text-mimblue-700 mt-0.5"></p>
                     </div>
-                    <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">Nama Lengkap</p>
-                            <p id="bioViewName" class="text-sm font-extrabold text-slate-900 mt-0.5">-</p>
+                    <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">Nama Lengkap</p>
+                            <p id="bioViewName" class="font-bold text-slate-900 mt-1"></p>
                         </div>
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">NIS / NISN</p>
-                            <p id="bioViewNisNisn" class="text-sm font-extrabold text-slate-900 mt-0.5">-</p>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">NIS / NISN</p>
+                            <p id="bioViewNisNisn" class="font-bold text-slate-900 mt-1 font-mono"></p>
                         </div>
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">Jenis Kelamin</p>
-                            <p id="bioViewGender" class="text-sm font-bold text-slate-800 mt-0.5">-</p>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">Jenis Kelamin</p>
+                            <p id="bioViewGender" class="font-bold text-slate-900 mt-1"></p>
                         </div>
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">Tempat, Tanggal Lahir (DD-MM-YYYY)</p>
-                            <p id="bioViewBirth" class="text-sm font-bold text-slate-800 mt-0.5">-</p>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">Tempat, Tanggal Lahir</p>
+                            <p id="bioViewBirth" class="font-bold text-slate-900 mt-1"></p>
                         </div>
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">Nama Orang Tua / Wali</p>
-                            <p id="bioViewParent" class="text-sm font-bold text-slate-800 mt-0.5">-</p>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">Nama Orang Tua / Wali</p>
+                            <p id="bioViewParent" class="font-bold text-slate-900 mt-1"></p>
                         </div>
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">Nomor HP / WhatsApp</p>
-                            <p id="bioViewPhone" class="text-sm font-bold text-slate-800 mt-0.5">-</p>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">No. HP / WhatsApp</p>
+                            <p id="bioViewPhone" class="font-bold text-slate-900 mt-1 font-mono"></p>
                         </div>
-                        <div class="sm:col-span-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase">Alamat Lengkap</p>
-                            <p id="bioViewAddress" class="text-sm font-bold text-slate-800 mt-0.5">-</p>
+                        <div class="sm:col-span-2 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <p class="text-[11px] font-bold uppercase text-slate-400">Alamat Rumah</p>
+                            <p id="bioViewAddress" class="font-bold text-slate-900 mt-1"></p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Edit Mode -->
                 <form id="studentBioEditForm" onsubmit="saveStudentBioEdit(event)" class="hidden space-y-5">
-                    <div class="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-mimblue-50/70 border border-mimblue-200">
-                        <img id="bioEditPhotoPreview" src="" alt="Preview Foto" class="w-24 h-24 rounded-2xl object-cover border-2 border-mimblue-700 bg-white shrink-0">
+                    <div class="flex flex-col sm:flex-row items-center gap-5 p-4 rounded-2xl bg-mimblue-50/70 border border-mimblue-100">
+                        <img id="bioEditPhotoPreview" src="" alt="Preview" class="w-24 h-24 rounded-2xl object-cover border-2 border-white shadow-sm">
                         <div class="space-y-1.5 text-center sm:text-left">
-                            <p class="text-xs font-extrabold text-mimblue-950">Ganti Pas Foto Siswa</p>
-                            <p class="text-[11px] text-mimblue-800">Pilih foto terbaik siswa (seragam madrasah). Foto akan langsung tersimpan di portal kelas.</p>
-                            <label class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">
-                                <i data-lucide="upload" class="w-3.5 h-3.5"></i> Unggah Foto Baru
+                            <p class="text-xs font-extrabold text-slate-800">Ganti Pas Foto Profil</p>
+                            <label class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer transition">
+                                <i data-lucide="camera" class="w-4 h-4"></i> Pilih Foto dari Galeri
                                 <input type="file" accept="image/*" onchange="handleStudentSelfPhotoUpload(event)" class="hidden">
                             </label>
+                            <p class="text-[11px] text-slate-500">Foto otomatis disesuaikan ukurannya agar tersimpan rapi.</p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">NIS (Tetap)</label>
-                            <input id="bioEditNis" type="text" readonly class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-500">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">NIS (Terkunci)</label>
+                            <input type="text" id="bioEditNis" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-100 text-sm font-mono font-bold text-slate-500">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap *</label>
-                            <input id="bioEditName" type="text" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap</label>
+                            <input type="text" id="bioEditName" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">NISN</label>
-                            <input id="bioEditNisn" type="text" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <input type="text" id="bioEditNisn" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-mono">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Jenis Kelamin</label>
-                            <select id="bioEditGender" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <select id="bioEditGender" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold">
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Tempat Lahir</label>
-                            <input id="bioEditBirthPlace" type="text" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <input type="text" id="bioEditBirthPlace" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Tanggal Lahir</label>
-                            <input id="bioEditBirthDate" type="date" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <input type="date" id="bioEditBirthDate" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Nama Orang Tua / Wali</label>
-                            <input id="bioEditParent" type="text" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <input type="text" id="bioEditParent" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Nomor HP / WhatsApp</label>
-                            <input id="bioEditPhone" type="text" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">No. HP / WhatsApp</label>
+                            <input type="text" id="bioEditPhone" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-mono">
                         </div>
                         <div class="sm:col-span-2">
                             <label class="block text-xs font-bold text-slate-700 mb-1">Alamat Rumah</label>
-                            <input id="bioEditAddress" type="text" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <input type="text" id="bioEditAddress" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm">
                         </div>
                     </div>
 
-                    <div class="flex justify-end gap-2 pt-2">
-                        <button type="button" onclick="toggleStudentBioEdit(false)" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer">Batal</button>
-                        <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Simpan Perubahan</button>
+                    <div class="flex justify-end gap-2.5 pt-2">
+                        <button type="button" onclick="toggleStudentBioEdit(false)" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer">Batal</button>
+                        <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-mimblue-700 hover:bg-mimblue-800 text-white shadow-sm cursor-pointer">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
 
-            <!-- Tab 2: Student Attendance Report -->
-            <div id="sTabContent-attendance" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-center justify-between gap-3 no-print">
+            <!-- Tab 2: Attendance Report -->
+            <div id="sTabContent-attendance" class="student-tab-content hidden space-y-5">
+                <div class="bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4 no-print">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Laporan Presensi Kehadiran Siswa</h3>
-                        <p class="text-xs text-slate-500">Rekap harian per bulan (1 bulan penuh) lengkap dengan blok merah hari libur & Tanda Tangan Elektronik (TTE).</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Rekap Presensi Bulanan</h3>
+                        <p class="text-xs text-slate-500">Pilih bulan untuk melihat riwayat kehadiran serta mengunduh laporan.</p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <input id="studentAttendanceMonthPicker" type="month" onchange="renderStudentAttendanceReport()"
-                            class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
-                        <button type="button" onclick="exportElementToPNG('studentAttendanceReportSheet', 'Laporan_Presensi_Siswa')"
-                            class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <input type="month" id="studentAttendanceMonthPicker" onchange="renderStudentAttendanceReport()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold bg-slate-50">
+                        <button type="button" onclick="exportElementToPNG('studentAttendanceSheet', 'Rekap_Presensi_Siswa')" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
                             <i data-lucide="image" class="w-3.5 h-3.5"></i> PNG
                         </button>
-                        <button type="button" onclick="exportElementToPDF('studentAttendanceReportSheet', 'Laporan_Presensi_Siswa')"
-                            class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
-                            <i data-lucide="download" class="w-3.5 h-3.5"></i> PDF
+                        <button type="button" onclick="exportElementToPDF('studentAttendanceSheet', 'Rekap_Presensi_Siswa')" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="file-down" class="w-3.5 h-3.5"></i> PDF
                         </button>
                     </div>
                 </div>
 
-                <div id="studentAttendanceReportSheet" class="p-5 sm:p-7 rounded-2xl bg-white border border-slate-200 space-y-5">
-                    <div class="flex items-center gap-4 border-b-2 border-mimblue-700 pb-4">
-                        <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-14 h-14 rounded-full object-contain shrink-0">
-                        <div>
-                            <p class="text-[11px] font-extrabold text-mimblue-700 uppercase tracking-wider">Madrasah Ibtidaiyah Muhammadiyah 1 Slinga</p>
-                            <h4 class="text-base sm:text-lg font-extrabold text-slate-900">LAPORAN PRESENSI KEHADIRAN SISWA KELAS 3</h4>
-                            <p class="text-xs text-slate-500">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
+                <div id="studentAttendanceSheet" class="bg-white rounded-3xl shadow-xs border border-slate-200 p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center justify-between flex-wrap gap-4 border-b-2 border-mimblue-700 pb-4">
+                        <div class="flex items-center gap-4">
+                            <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-14 h-14 rounded-full object-contain shrink-0">
+                            <div>
+                                <h2 class="text-base sm:text-lg font-extrabold text-mimblue-900">LAPORAN PRESENSI SISWA — MI MUHAMMADIYAH 1 SLINGA</h2>
+                                <p class="text-xs text-slate-500">Kelas 3 • Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
+                            </div>
+                        </div>
+                        <div class="text-left sm:text-right text-xs">
+                            <p>Nama: <strong id="attReportName" class="text-slate-900"></strong></p>
+                            <p>NIS: <strong id="attReportNis" class="font-mono text-mimblue-700"></strong></p>
+                            <p>Bulan: <strong id="attReportMonthLabel" class="text-slate-900"></strong></p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <div><span class="text-slate-400 block">Nama Siswa</span><strong id="attReportName" class="text-slate-900">-</strong></div>
-                        <div><span class="text-slate-400 block">NIS</span><strong id="attReportNis" class="font-mono text-mimblue-700">-</strong></div>
-                        <div><span class="text-slate-400 block">Bulan Laporan</span><strong id="attReportMonthLabel" class="text-slate-900">-</strong></div>
-                        <div><span class="text-slate-400 block">Status</span><strong class="text-emerald-700">Siswa Aktif</strong></div>
-                    </div>
-
-                    <div class="grid grid-cols-4 gap-2.5 text-center">
-                        <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200">
-                            <p class="text-[11px] font-bold text-emerald-700">Hadir (H)</p>
-                            <p id="attCountH" class="text-lg font-extrabold text-emerald-900">0</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
+                            <p id="attCountH" class="text-xl font-extrabold text-emerald-700">0</p>
+                            <p class="text-xs font-bold text-emerald-800">Hadir (H)</p>
                         </div>
-                        <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200">
-                            <p class="text-[11px] font-bold text-amber-700">Sakit (S)</p>
-                            <p id="attCountS" class="text-lg font-extrabold text-amber-900">0</p>
+                        <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-center">
+                            <p id="attCountS" class="text-xl font-extrabold text-amber-700">0</p>
+                            <p class="text-xs font-bold text-amber-800">Sakit (S)</p>
                         </div>
-                        <div class="p-3 rounded-2xl bg-blue-50 border border-blue-200">
-                            <p class="text-[11px] font-bold text-blue-700">Izin (I)</p>
-                            <p id="attCountI" class="text-lg font-extrabold text-blue-900">0</p>
+                        <div class="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-center">
+                            <p id="attCountI" class="text-xl font-extrabold text-blue-700">0</p>
+                            <p class="text-xs font-bold text-blue-800">Izin (I)</p>
                         </div>
-                        <div class="p-3 rounded-2xl bg-rose-50 border border-rose-200">
-                            <p class="text-[11px] font-bold text-rose-700">Alpa (A)</p>
-                            <p id="attCountA" class="text-lg font-extrabold text-rose-900">0</p>
+                        <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-center">
+                            <p id="attCountA" class="text-xl font-extrabold text-rose-700">0</p>
+                            <p class="text-xs font-bold text-rose-800">Alpa (A)</p>
                         </div>
                     </div>
 
                     <div class="overflow-x-auto rounded-2xl border border-slate-200">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead class="bg-mimblue-700 text-white uppercase text-[11px]">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead class="bg-slate-100 text-slate-700 uppercase text-[11px]">
                                 <tr>
-                                    <th class="py-2.5 px-4">No</th>
-                                    <th class="py-2.5 px-4">Tanggal (DD-MM-YYYY)</th>
-                                    <th class="py-2.5 px-4">Status Kehadiran</th>
-                                    <th class="py-2.5 px-4">Keterangan / Jam Scan</th>
+                                    <th class="py-3 px-4">No</th>
+                                    <th class="py-3 px-4">Tanggal (DD-MM-YYYY)</th>
+                                    <th class="py-3 px-4">Status</th>
+                                    <th class="py-3 px-4">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody id="studentAttendanceTableBody" class="divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
 
-                    <div id="studentAttendanceSignatureBlock" class="pt-4"></div>
+                    <div id="studentAttendanceSignatureBlock" class="pt-4 border-t border-slate-100"></div>
                 </div>
             </div>
 
-            <!-- Tab 3: Ringkasan Nilai 12 Mata Pelajaran -->
+            <!-- Tab 3: Grades (All 12 Subjects) -->
             <div id="sTabContent-grades" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Ringkasan Nilai 12 Mata Pelajaran</h3>
-                        <p class="text-xs text-slate-500">Perbandingan Rerata Tugas (60%), ASAS/ASAT (40%), Nilai Rapor, Predikat, & Peringkat Pribadi.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Rekap Nilai 12 Mata Pelajaran</h3>
+                        <p class="text-xs text-slate-500">Rata-rata Tugas (dari materi/tugas yang sudah terisi nilai) dihitung terlebih dahulu, lalu digabung dengan bobot <strong>60% Tugas + 40% ASAS/ASAT</strong> setelah ASAS/ASAT terisi.</p>
                     </div>
-                    <select id="studentGradeSemesterSelect" onchange="renderStudentGrades()"
-                        class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-extrabold text-slate-800">
+                    <select id="studentGradeSemesterSelect" onchange="renderStudentGrades()" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
                         <option value="Ganjil">Semester Ganjil</option>
                         <option value="Genap">Semester Genap</option>
                     </select>
                 </div>
 
-                <!-- Subject Filter Pills -->
-                <div id="studentSubjectPills" class="flex flex-wrap gap-1.5"></div>
+                <div id="studentSubjectPills" class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1"></div>
 
                 <div class="overflow-x-auto rounded-2xl border border-slate-200">
                     <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-mimblue-700 text-white uppercase text-[11px]">
+                        <thead class="bg-mimblue-700 text-white uppercase text-[10px]">
                             <tr>
                                 <th class="py-3 px-2.5">No</th>
                                 <th class="py-3 px-3">Mata Pelajaran</th>
                                 <th class="py-3 px-2.5 text-center">Rerata Tugas</th>
-                                <th class="py-3 px-2.5 text-center">Pred. Tugas</th>
+                                <th class="py-3 px-2.5 text-center">Predikat Tugas</th>
                                 <th class="py-3 px-2.5 text-center">Rank Tugas</th>
-                                <th class="py-3 px-2.5 text-center">ASAS/ASAT</th>
+                                <th class="py-3 px-2.5 text-center">ASAS / ASAT</th>
                                 <th class="py-3 px-2.5 text-center">Rank ASAS</th>
-                                <th class="py-3 px-2.5 text-center bg-emerald-700">Nilai Rapor</th>
-                                <th class="py-3 px-2.5 text-center bg-emerald-700">Pred. Rapor</th>
-                                <th class="py-3 px-2.5 text-center bg-emerald-700">Rank Rapor</th>
+                                <th class="py-3 px-2.5 text-center">Nilai Akhir</th>
+                                <th class="py-3 px-2.5 text-center">Predikat Akhir</th>
+                                <th class="py-3 px-2.5 text-center">Rank Akhir</th>
                             </tr>
                         </thead>
                         <tbody id="studentGradesTableBody" class="divide-y divide-slate-100"></tbody>
@@ -736,18 +713,16 @@
                 </div>
             </div>
 
-            <!-- Tab 4: Nilai Tugas (Dropdown Mapel + Rincian Materi 1-10) -->
+            <!-- Tab 4: Nilai Tugas Khusus Siswa -->
             <div id="sTabContent-tugas" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Rincian Nilai Tugas Harian (T1 – T10)</h3>
-                        <p class="text-xs text-slate-500">Pilih mata pelajaran untuk melihat nilai per materi/tugas, jumlah nilai, rata-rata tugas aktif, predikat, & peringkat tugas.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Rincian Nilai Tugas 1–10 Per Mata Pelajaran</h3>
+                        <p class="text-xs text-slate-500">Pilih mata pelajaran dan semester untuk melihat nilai per materi/tugas, rata-rata tugas aktif, predikat, dan peringkat pribadi Anda.</p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <select id="tugasTabSubjectSelect" onchange="renderStudentTugasTab()"
-                            class="px-3.5 py-2 bg-mimblue-50 border border-mimblue-200 rounded-xl text-xs font-extrabold text-mimblue-900"></select>
-                        <select id="tugasTabSemesterSelect" onchange="renderStudentTugasTab()"
-                            class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-extrabold text-slate-800">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <select id="tugasTabSubjectSelect" onchange="renderStudentTugasTab()" class="px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold"></select>
+                        <select id="tugasTabSemesterSelect" onchange="renderStudentTugasTab()" class="px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
                             <option value="Ganjil">Semester Ganjil</option>
                             <option value="Genap">Semester Genap</option>
                         </select>
@@ -756,65 +731,62 @@
 
                 <div class="overflow-x-auto rounded-2xl border border-slate-200">
                     <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-sky-700 text-white uppercase text-[11px]">
+                        <thead class="bg-sky-900 text-white uppercase text-[10px]">
                             <tr>
-                                <th class="py-3 px-2.5">Mata Pelajaran</th>
-                                <th class="py-3 px-1.5 text-center">T1</th>
-                                <th class="py-3 px-1.5 text-center">T2</th>
-                                <th class="py-3 px-1.5 text-center">T3</th>
-                                <th class="py-3 px-1.5 text-center">T4</th>
-                                <th class="py-3 px-1.5 text-center">T5</th>
-                                <th class="py-3 px-1.5 text-center">T6</th>
-                                <th class="py-3 px-1.5 text-center">T7</th>
-                                <th class="py-3 px-1.5 text-center">T8</th>
-                                <th class="py-3 px-1.5 text-center">T9</th>
-                                <th class="py-3 px-1.5 text-center">T10</th>
-                                <th class="py-3 px-2.5 text-center bg-sky-900">Jumlah</th>
-                                <th class="py-3 px-2.5 text-center bg-mimblue-700">Rerata</th>
-                                <th class="py-3 px-2.5 text-center">Predikat</th>
-                                <th class="py-3 px-2.5 text-center">Peringkat</th>
+                                <th class="py-2.5 px-2.5">Mata Pelajaran</th>
+                                <th class="py-2 px-1.5 text-center">T1</th>
+                                <th class="py-2 px-1.5 text-center">T2</th>
+                                <th class="py-2 px-1.5 text-center">T3</th>
+                                <th class="py-2 px-1.5 text-center">T4</th>
+                                <th class="py-2 px-1.5 text-center">T5</th>
+                                <th class="py-2 px-1.5 text-center">T6</th>
+                                <th class="py-2 px-1.5 text-center">T7</th>
+                                <th class="py-2 px-1.5 text-center">T8</th>
+                                <th class="py-2 px-1.5 text-center">T9</th>
+                                <th class="py-2 px-1.5 text-center">T10</th>
+                                <th class="py-2.5 px-2.5 text-center bg-sky-950">Total</th>
+                                <th class="py-2.5 px-2.5 text-center bg-mimblue-800">Rerata</th>
+                                <th class="py-2.5 px-2.5 text-center">Predikat</th>
+                                <th class="py-2.5 px-2.5 text-center">Peringkat</th>
                             </tr>
                         </thead>
                         <tbody id="studentTugasTabBody" class="divide-y divide-slate-100"></tbody>
                     </table>
                 </div>
 
-                <!-- Keterangan Topik Materi Tugas -->
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                    <p class="text-xs font-extrabold text-slate-800">Keterangan Materi Tugas 1 – 10:</p>
-                    <div id="studentTugasTopicsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs text-slate-600"></div>
+                    <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Keterangan Topik Materi / Tugas (T1–T10)</h4>
+                    <div id="studentTugasTopicsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs text-slate-600"></div>
                 </div>
             </div>
 
-            <!-- Tab 5: Nilai ASAS / ASAT (Dropdown Mapel) -->
+            <!-- Tab 5: Nilai ASAS / ASAT Khusus Siswa -->
             <div id="sTabContent-asas" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Nilai Asesmen Sumatif Akhir (ASAS / ASAT)</h3>
-                        <p class="text-xs text-slate-500">Pilih mata pelajaran untuk melihat nilai ujian ASAS/ASAT, jumlah, rata-rata, predikat, dan peringkat Anda.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Rekap Nilai ASAS / ASAT</h3>
+                        <p class="text-xs text-slate-500">Nilai Asesmen Sumatif Akhir Semester / Tahun per mata pelajaran beserta predikat dan peringkat ASAS Anda.</p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <select id="asasTabSubjectSelect" onchange="renderStudentAsasTab()"
-                            class="px-3.5 py-2 bg-amber-50 border border-amber-200 rounded-xl text-xs font-extrabold text-amber-900"></select>
-                        <select id="asasTabSemesterSelect" onchange="renderStudentAsasTab()"
-                            class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-extrabold text-slate-800">
-                            <option value="Ganjil">Semester Ganjil (ASAS)</option>
-                            <option value="Genap">Semester Genap (ASAT)</option>
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <select id="asasTabSubjectSelect" onchange="renderStudentAsasTab()" class="px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold"></select>
+                        <select id="asasTabSemesterSelect" onchange="renderStudentAsasTab()" class="px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
+                            <option value="Ganjil">Semester Ganjil</option>
+                            <option value="Genap">Semester Genap</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto rounded-2xl border border-slate-200">
                     <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-amber-600 text-white uppercase text-[11px]">
+                        <thead class="bg-amber-600 text-white uppercase text-[10px]">
                             <tr>
                                 <th class="py-3 px-3">No</th>
                                 <th class="py-3 px-4">Mata Pelajaran</th>
-                                <th class="py-3 px-3 text-center">Nilai ASAS/ASAT</th>
+                                <th class="py-3 px-3 text-center">Nilai ASAS / ASAT</th>
                                 <th class="py-3 px-3 text-center">Jumlah</th>
                                 <th class="py-3 px-3 text-center">Rata-rata</th>
                                 <th class="py-3 px-3 text-center">Predikat</th>
-                                <th class="py-3 px-3 text-center">Peringkat Pribadi</th>
+                                <th class="py-3 px-3 text-center">Peringkat</th>
                             </tr>
                         </thead>
                         <tbody id="studentAsasTabBody" class="divide-y divide-slate-100"></tbody>
@@ -822,73 +794,653 @@
                 </div>
             </div>
 
-            <!-- Tab 6: Nilai Rapor (Gabungan Tugas 60% + ASAS/ASAT 40% + TTE) -->
-            <div id="sTabContent-rapor" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-center justify-between gap-3 no-print">
+            <!-- Tab 6: Nilai Rapor Khusus Siswa -->
+            <div id="sTabContent-rapor" class="student-tab-content hidden space-y-5">
+                <div class="bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4 no-print">
                     <div>
-                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Laporan Hasil Belajar (Nilai Rapor)</h3>
-                        <p class="text-xs text-slate-500">Perhitungan otomatis gabungan Rerata Tugas (60%) + Nilai ASAS/ASAT (40%) beserta TTE Kepala Madrasah & Wali Kelas.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Lembar Nilai Rapor Siswa</h3>
+                        <p class="text-xs text-slate-500">Nilai akhir gabungan (60% Rerata Tugas + 40% ASAS/ASAT) lengkap dengan predikat, peringkat, & TTE resmi.</p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <select id="raporTabSemesterSelect" onchange="renderStudentRaporTab()"
-                            class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-extrabold text-slate-800">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <select id="raporTabSemesterSelect" onchange="renderStudentRaporTab()" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
                             <option value="Ganjil">Semester Ganjil</option>
                             <option value="Genap">Semester Genap</option>
                         </select>
-                        <button type="button" onclick="exportElementToPNG('studentRaporPrintSheet', 'Laporan_Nilai_Rapor')"
-                            class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                        <button type="button" onclick="exportElementToPNG('studentRaporSheet', 'Nilai_Rapor_Siswa')" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
                             <i data-lucide="image" class="w-3.5 h-3.5"></i> PNG
                         </button>
-                        <button type="button" onclick="exportElementToPDF('studentRaporPrintSheet', 'Laporan_Nilai_Rapor')"
-                            class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
-                            <i data-lucide="download" class="w-3.5 h-3.5"></i> PDF
+                        <button type="button" onclick="exportElementToPDF('studentRaporSheet', 'Nilai_Rapor_Siswa')" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="file-down" class="w-3.5 h-3.5"></i> PDF
                         </button>
                     </div>
                 </div>
 
-                <div id="studentRaporPrintSheet" class="p-5 sm:p-7 rounded-2xl bg-white border border-slate-200 space-y-5">
-                    <div class="flex items-center gap-4 border-b-2 border-mimblue-700 pb-4">
-                        <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-14 h-14 rounded-full object-contain shrink-0">
-                        <div>
-                            <p class="text-[11px] font-extrabold text-mimblue-700 uppercase tracking-wider">Madrasah Ibtidaiyah Muhammadiyah 1 Slinga</p>
-                            <h4 class="text-base sm:text-lg font-extrabold text-slate-900">LAPORAN CAPAIAN KOMPETENSI PESERTA DIDIK (RAPOR)</h4>
-                            <p class="text-xs text-slate-500">Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
+                <div id="studentRaporSheet" class="bg-white rounded-3xl shadow-xs border border-slate-200 p-6 sm:p-8 space-y-6">
+                    <div class="flex items-center justify-between flex-wrap gap-4 border-b-2 border-mimblue-700 pb-4">
+                        <div class="flex items-center gap-4">
+                            <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-14 h-14 rounded-full object-contain shrink-0">
+                            <div>
+                                <h2 class="text-base sm:text-lg font-extrabold text-mimblue-900">RINGKASAN NILAI RAPOR — MI MUHAMMADIYAH 1 SLINGA</h2>
+                                <p class="text-xs text-slate-500">Kelas 3 • Desa Slinga, Kec. Kaligondang, Kab. Purbalingga</p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <div><span class="text-slate-400 block">Nama Siswa</span><strong id="raporStudentName" class="text-slate-900">-</strong></div>
-                        <div><span class="text-slate-400 block">NIS</span><strong id="raporStudentNis" class="font-mono text-mimblue-700">-</strong></div>
-                        <div><span class="text-slate-400 block">Kelas</span><strong class="text-slate-900">III (Tiga)</strong></div>
-                        <div><span class="text-slate-400 block">Semester</span><strong id="raporSemesterLabel" class="text-slate-900">Ganjil</strong></div>
+                        <div class="text-left sm:text-right text-xs">
+                            <p>Nama: <strong id="raporStudentName" class="text-slate-900"></strong></p>
+                            <p>NIS: <strong id="raporStudentNis" class="font-mono text-mimblue-700"></strong></p>
+                            <p>Semester: <strong id="raporSemesterLabel" class="text-slate-900"></strong></p>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto rounded-2xl border border-slate-200">
                         <table class="w-full text-left border-collapse text-xs">
-                            <thead class="bg-emerald-700 text-white uppercase text-[11px]">
+                            <thead class="bg-mimblue-700 text-white uppercase text-[10px]">
                                 <tr>
                                     <th class="py-3 px-3">No</th>
                                     <th class="py-3 px-4">Mata Pelajaran</th>
-                                    <th class="py-3 px-3 text-center">Rerata Tugas (60%)</th>
-                                    <th class="py-3 px-3 text-center">ASAS/ASAT (40%)</th>
-                                    <th class="py-3 px-3 text-center bg-emerald-900">Nilai Akhir Rapor</th>
+                                    <th class="py-3 px-3 text-center">Rerata Tugas</th>
+                                    <th class="py-3 px-3 text-center">ASAS / ASAT</th>
+                                    <th class="py-3 px-3 text-center">Nilai Rapor</th>
                                     <th class="py-3 px-3 text-center">Predikat</th>
-                                    <th class="py-3 px-3 text-center">Peringkat Pribadi</th>
+                                    <th class="py-3 px-3 text-center">Peringkat</th>
                                 </tr>
                             </thead>
                             <tbody id="studentRaporTableBody" class="divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
 
-                    <div id="studentRaporSignatureBlock" class="pt-4"></div>
+                    <div id="studentRaporSignatureBlock" class="pt-4 border-t border-slate-100"></div>
                 </div>
             </div>
 
-            <!-- Tab 7: Learning Materials -->
+            <!-- Tab 7: Materials -->
             <div id="sTabContent-materials" class="student-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
                 <div>
-                    <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Materi Pelajaran Kelas 3</h3>
-                    <p class="text-xs text-slate-500">Pilih mata pelajaran untuk membaca ringkasan materi atau mengunduh dokumen (PDF / Word / PNG).</p>
+                    <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Materi Pelajaran Kelas 3</h3>
+                    <p class="text-xs text-slate-500">Baca materi pelajaran langsung atau unduh dalam format PDF, DOCX, maupun PNG.</p>
                 </div>
-                <div id="studentMaterialSubjectPills" class="flex flex-wrap gap-1.5"></div>
-                <div id="studentMaterialsGrid" class="grid grid-cols-1 md:
+
+                <div id="studentMaterialSubjectPills" class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1"></div>
+
+                <div id="studentMaterialsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- Tab 8: Personal QR Card -->
+            <div id="sTabContent-qrcard" class="student-tab-content hidden space-y-5">
+                <div class="bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4 no-print">
+                    <div>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Kartu Identitas & QR Presensi Siswa</h3>
+                        <p class="text-xs text-slate-500">Tunjukkan atau unduh kartu QR ini untuk melakukan presensi kehadiran.</p>
+                    </div>
+                    <div class="flex gap-2.5">
+                        <button type="button" onclick="exportElementToPNG('personalStudentQrCardSheet', 'Kartu_QR_Siswa')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="image" class="w-4 h-4"></i> Unduh PNG
+                        </button>
+                        <button type="button" onclick="exportElementToPDF('personalStudentQrCardSheet', 'Kartu_QR_Siswa')" class="px-4 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="file-down" class="w-4 h-4"></i> Unduh PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-center py-2">
+                    <div id="personalStudentQrCardSheet" class="w-full max-w-sm rounded-3xl border-2 border-mimblue-700 bg-white shadow-xl overflow-hidden">
+                        <div class="bg-mimblue-700 text-white px-5 py-4 flex items-center gap-3">
+                            <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-11 h-11 rounded-full object-contain shrink-0">
+                            <div>
+                                <p class="text-[10px] font-extrabold uppercase tracking-wider text-amber-300">Kartu Pelajar Digital</p>
+                                <h4 class="text-sm font-extrabold leading-tight">MI MUHAMMADIYAH 1 SLINGA</h4>
+                                <p class="text-[11px] text-sky-200">Kelas 3 • Presensi QR</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex flex-col items-center text-center space-y-4">
+                            <img id="personalQrStudentPhoto" src="" alt="Foto Siswa" class="w-24 h-24 rounded-2xl object-cover border-2 border-mimblue-200 shadow-xs">
+                            <div>
+                                <h3 id="personalQrStudentName" class="text-lg font-extrabold text-slate-900"></h3>
+                                <p id="personalQrStudentNis" class="text-xs font-mono font-bold text-mimblue-700 mt-0.5"></p>
+                            </div>
+
+                            <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 inline-flex items-center justify-center">
+                                <div id="personalQrCodeBox"></div>
+                            </div>
+
+                            <p class="text-[11px] text-slate-400">Scan QR ini pada menu Presensi untuk mencatat kehadiran otomatis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== TEACHER / HOMEROOM DASHBOARD ==================== -->
+    <div id="teacherDashboard" class="hidden min-h-screen flex-col bg-slate-50">
+        <header class="sticky top-0 z-40 bg-mimblue-900 text-white shadow-md no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-10 h-10 rounded-full object-contain shrink-0">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-extrabold truncate">Dashboard Wali Kelas 3 — MIM 1 Slinga</p>
+                        <p class="text-[11px] text-sky-200 truncate">Administrasi Akademik & Presensi</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <div id="cloudSyncStatusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold text-sky-100">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span>Cloud Aktif</span>
+                    </div>
+                    <button type="button" onclick="logout()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-rose-600 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Keluar</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+            <!-- Teacher Navigation Tabs -->
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 no-print">
+                <button type="button" id="tTabBtn-students" onclick="switchTeacherTab('students')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-mimblue-700 text-white shadow-sm cursor-pointer">
+                    <i data-lucide="users" class="w-4 h-4"></i> Data Siswa & Foto
+                </button>
+                <button type="button" id="tTabBtn-attendance" onclick="switchTeacherTab('attendance')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="scan-line" class="w-4 h-4"></i> Presensi & Scan QR
+                </button>
+                <button type="button" id="tTabBtn-grades" onclick="switchTeacherTab('grades')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Input Nilai (12 Mapel)
+                </button>
+                <button type="button" id="tTabBtn-legger" onclick="switchTeacherTab('legger')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="table-2" class="w-4 h-4"></i> Legger Nilai
+                </button>
+                <button type="button" id="tTabBtn-itemanalysis" onclick="switchTeacherTab('itemanalysis')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="list-checks" class="w-4 h-4"></i> Analisis Butir Soal
+                </button>
+                <button type="button" id="tTabBtn-kaldik" onclick="switchTeacherTab('kaldik')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i> Kalender Pendidikan
+                </button>
+                <button type="button" id="tTabBtn-perangkat" onclick="switchTeacherTab('perangkat')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Perangkat AI
+                </button>
+                <button type="button" id="tTabBtn-qrcards" onclick="switchTeacherTab('qrcards')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Rekap & Kartu QR
+                </button>
+                <button type="button" id="tTabBtn-materials" onclick="switchTeacherTab('materials')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="book-plus" class="w-4 h-4"></i> Kelola Materi
+                </button>
+                <button type="button" id="tTabBtn-settings" onclick="switchTeacherTab('settings')" class="teacher-tab-btn px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="settings" class="w-4 h-4"></i> Pengaturan & Logo
+                </button>
+            </div>
+
+            <!-- Teacher Tab 1: Students & Bulk Photos -->
+            <div id="tTabContent-students" class="teacher-tab-content bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900">Manajemen Data Siswa (<span id="adminStudentCountBadge">26</span>)</h3>
+                        <p class="text-xs text-slate-500">Tambah, edit, hapus siswa, impor/ekspor Excel, atau unggah foto banyak siswa sekaligus.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="openAddStudentModal()" class="px-3.5 py-2.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i> Tambah Siswa
+                        </button>
+                        <button type="button" onclick="downloadStudentsTemplateXls()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="download" class="w-4 h-4"></i> Template XLS
+                        </button>
+                        <button type="button" onclick="exportCurrentStudentsXls()" class="px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Ekspor Data
+                        </button>
+                        <button type="button" onclick="confirmClearAllStudents()" class="px-3.5 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> Kosongkan Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Import Excel & Bulk Photo Upload Box -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                        <p class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+                            <i data-lucide="file-up" class="w-4 h-4 text-mimblue-700"></i> Impor Data Siswa dari Excel (.xlsx / .xls)
+                        </p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <select id="importStudentModeSelect" class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold">
+                                <option value="merge">Gabung / Perbarui berdasarkan NIS</option>
+                                <option value="replace">Timpa Seluruh Data Siswa</option>
+                            </select>
+                            <label class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer transition">
+                                Pilih File Excel
+                                <input type="file" accept=".xlsx,.xls" onchange="handleImportStudentsXls(event)" class="hidden">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-mimblue-50/60 border border-mimblue-200 space-y-3">
+                        <p class="text-xs font-extrabold text-mimblue-950 flex items-center gap-1.5">
+                            <i data-lucide="images" class="w-4 h-4 text-mimblue-700"></i> Upload Foto Banyak Siswa Sekaligus (JPG/PNG atau .ZIP)
+                        </p>
+                        <p class="text-[11px] text-mimblue-800">Beri nama file sesuai NIS (misal <code class="font-mono font-bold">kelas3_1.jpg</code>) atau nama siswa agar otomatis cocok.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer transition flex items-center gap-1.5">
+                                <i data-lucide="upload" class="w-3.5 h-3.5"></i> Pilih Banyak Foto / ZIP
+                                <input type="file" accept="image/*,.zip" multiple onchange="handleBulkStudentPhotosSelect(event)" class="hidden">
+                            </label>
+                            <button type="button" onclick="exportAllStudentPhotosZip()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="archive" class="w-3.5 h-3.5"></i> Unduh Semua Foto (ZIP)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bulk Photo Preview & Assignment -->
+                <div id="bulkPhotoPreviewSection" class="hidden p-5 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-sm font-extrabold text-amber-950">Pratinjau & Pencocokan Foto Massal</h4>
+                            <p id="bulkPhotoSummaryText" class="text-xs text-amber-800"></p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="cancelBulkPhotoPreview()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-amber-200 cursor-pointer">Batal</button>
+                            <button type="button" onclick="applyBulkStudentPhotos()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Terapkan Semua Foto</button>
+                        </div>
+                    </div>
+                    <div id="bulkPhotoPreviewGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-80 overflow-y-auto pr-1"></div>
+                </div>
+
+                <!-- Search -->
+                <div class="flex items-center gap-3">
+                    <div class="relative flex-1 max-w-md">
+                        <input type="text" id="adminStudentSearchInput" oninput="renderTeacherStudentsTable()" placeholder="Cari nama siswa atau NIS..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-mimblue-600 focus:outline-none text-xs font-semibold">
+                    </div>
+                </div>
+
+                <!-- Students Table -->
+                <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-100 text-slate-700 uppercase text-[11px]">
+                            <tr>
+                                <th class="py-3 px-3">No</th>
+                                <th class="py-3 px-3">Foto</th>
+                                <th class="py-3 px-3">NIS</th>
+                                <th class="py-3 px-3">Nama Lengkap</th>
+                                <th class="py-3 px-3">L/P</th>
+                                <th class="py-3 px-3">Orang Tua / HP</th>
+                                <th class="py-3 px-3 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherStudentsTableBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Teacher Tab 2: Attendance & QR Scan -->
+            <div id="tTabContent-attendance" class="teacher-tab-content hidden space-y-6">
+                <div class="bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
+                    <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Input Presensi Harian & Template Bulanan</h3>
+                                <span id="attendanceMonthDaysInfoBadge" class="px-2.5 py-0.5 rounded-full bg-mimblue-100 text-mimblue-800 text-[11px] font-extrabold"></span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">
+                                Pilih <strong>Bulan Template</strong> (Juli–Oktober / bulan manapun) untuk unduh/impor template presensi sesuai jumlah hari bulan tersebut, atau pilih <strong>Tanggal</strong> untuk input harian.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5">
+                                <span class="text-[11px] font-bold text-slate-600">Bulan:</span>
+                                <input type="month" id="attendanceTemplateMonthPicker" onchange="syncAttendanceMonthPickers(this.value)" class="bg-transparent text-xs font-extrabold text-mimblue-900 focus:outline-none">
+                            </div>
+                            <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5">
+                                <span class="text-[11px] font-bold text-slate-600">Tanggal:</span>
+                                <input type="date" id="teacherAttendanceDate" onchange="renderTeacherAttendanceTable()" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none">
+                            </div>
+                            <button type="button" onclick="markAllPresentForDate()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Semua Hadir (H)</button>
+                            <button type="button" onclick="downloadAttendanceTemplateXls()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold cursor-pointer">Template XLS</button>
+                            <label class="px-3 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">
+                                Impor XLS
+                                <input type="file" accept=".xlsx,.xls" onchange="handleImportAttendanceXls(event)" class="hidden">
+                            </label>
+                            <button type="button" onclick="saveAttendanceManualAction()" class="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
+                                <i data-lucide="save" class="w-3.5 h-3.5"></i> Simpan
+                            </button>
+                            <button type="button" onclick="clearAttendanceManualAction()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
+                                <i data-lucide="eraser" class="w-3.5 h-3.5"></i> Bersihkan Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="teacherAttendanceHolidayBanner" class="hidden p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-xs font-bold text-rose-800">
+                        <span class="w-3 h-3 rounded-full bg-rose-600 shrink-0"></span>
+                        <span id="teacherAttendanceHolidayText"></span>
+                    </div>
+
+                    <!-- Direct Paste From Excel Box for Attendance -->
+                    <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                                <h4 class="text-xs sm:text-sm font-extrabold text-emerald-950 flex items-center gap-1.5">
+                                    <i data-lucide="clipboard-paste" class="w-4 h-4 text-emerald-700"></i>
+                                    <span>Paste Langsung Presensi Bulanan dari Excel (H / S / I / A)</span>
+                                </h4>
+                                <p class="text-[11px] text-emerald-800">
+                                    Blok baris siswa (urutan 1–26 ke bawah) dan kolom tanggal (1 s.d. akhir bulan ke kanan) berisi <code class="font-mono font-bold">H</code>, <code class="font-mono font-bold">S</code>, <code class="font-mono font-bold">I</code>, atau <code class="font-mono font-bold">A</code> di Excel, lalu tekan <strong>Ctrl+V</strong> di kotak bawah ini dan klik <strong>Terapkan Paste Presensi</strong>.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button type="button" onclick="clearAttendancePasteBox()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-emerald-200 text-xs font-bold cursor-pointer">Kosongkan Kotak</button>
+                                <button type="button" onclick="applyPastedMonthlyAttendance()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Terapkan Paste Presensi
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="attendanceExcelPasteArea" rows="3" placeholder="Tempel (Ctrl+V) blok sel H / S / I / A dari Excel di sini...
+Contoh per baris (dipisah Tab): H	H	S	H	I	H	A..." class="w-full px-3.5 py-2.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-600"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                        <div class="lg:col-span-4 p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                            <p class="text-xs font-extrabold text-slate-800">Scan QR / Barcode Presensi</p>
+                            <div class="relative rounded-2xl overflow-hidden bg-slate-900 min-h-[170px] flex items-center justify-center">
+                                <div id="adminQrReaderBox" class="w-full"></div>
+                                <div id="adminQrPlaceholder" class="text-center p-4 text-white text-xs space-y-1">
+                                    <i data-lucide="qr-code" class="w-6 h-6 text-amber-300 mx-auto"></i>
+                                    <p class="font-bold">Kamera QR Admin</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button type="button" onclick="startAdminQrScanner()" class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Aktifkan Kamera</button>
+                                <button type="button" onclick="stopAdminQrScanner()" class="py-2 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold cursor-pointer">Stop</button>
+                            </div>
+                            <form onsubmit="handleAdminManualNisScan(event)" class="flex gap-1.5">
+                                <input type="text" id="adminManualScanInput" placeholder="Ketik/scan NIS (kelas3_1)..." class="flex-1 px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-mono font-bold">
+                                <button type="submit" class="px-3 py-2 rounded-xl bg-mimblue-700 text-white text-xs font-bold cursor-pointer">Hadir</button>
+                            </form>
+                        </div>
+
+                        <div class="lg:col-span-8 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+                                <span>Daftar Presensi Tanggal: <strong id="teacherAttendanceSelectedDateBadge" class="font-mono text-mimblue-800"></strong></span>
+                                <span>Status: <strong>H</strong>=Hadir, <strong>S</strong>=Sakit, <strong>I</strong>=Izin, <strong>A</strong>=Alpa</span>
+                            </div>
+                            <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead class="bg-slate-100 text-slate-700 uppercase text-[11px]">
+                                        <tr>
+                                            <th class="py-2.5 px-3">No</th>
+                                            <th class="py-2.5 px-3">NIS</th>
+                                            <th class="py-2.5 px-3">Nama Siswa</th>
+                                            <th class="py-2.5 px-3 text-center">Status</th>
+                                            <th class="py-2.5 px-3">Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="teacherAttendanceTableBody" class="divide-y divide-slate-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Tab 3: Grades (12 Subjects, 10 Tasks, Auto-Cap >70, Katrol Nilai) -->
+            <div id="tTabContent-grades" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Input Nilai 12 Mata Pelajaran (10 Tugas + ASAS/ASAT)</h3>
+                        <p class="text-xs text-slate-500">
+                            KKTP saat ini: <strong id="gradeTabKktpLabel" class="text-mimblue-800">70</strong> • Nilai kosong default <strong>0</strong>. Rerata Tugas membagi jumlah nilai tugas yang terisi (>0), lalu digabung dengan bobot <strong>60% Tugas + 40% ASAS/ASAT</strong>.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <select id="teacherGradeSubjectSelect" onchange="renderTeacherGradesTable()" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold"></select>
+                        <select id="teacherGradeSemesterSelect" onchange="renderTeacherGradesTable()" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
+                            <option value="Ganjil">Semester Ganjil</option>
+                            <option value="Genap">Semester Genap</option>
+                        </select>
+                        <button type="button" onclick="downloadGradesTemplateXls()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold cursor-pointer">Template XLS</button>
+                        <label class="px-3 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">
+                            Impor XLS
+                            <input type="file" accept=".xlsx,.xls" onchange="handleImportGradesXls(event)" class="hidden">
+                        </label>
+                        <button type="button" onclick="exportAllSubjectsSummaryXls()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Ekspor Rekap 12 Mapel</button>
+                        <button type="button" onclick="saveGradesManualAction()" class="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
+                            <i data-lucide="save" class="w-3.5 h-3.5"></i> Simpan Nilai
+                        </button>
+                        <button type="button" onclick="clearGradesManualAction()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
+                            <i data-lucide="eraser" class="w-3.5 h-3.5"></i> Bersihkan Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KKTP, Auto-Cap >70 & Katrol Nilai Panel -->
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+                    <div class="xl:col-span-5 p-4 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <h4 class="text-xs sm:text-sm font-extrabold text-amber-950 flex items-center gap-1.5">
+                                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-700"></i>
+                                <span>KKTP & Batas Otomatis Nilai (> <span id="autoCapThresholdText">70</span>)</span>
+                            </h4>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[11px] font-bold text-amber-900">KKTP:</span>
+                                <input id="quickKktpInput" type="number" min="1" max="100" value="70" onchange="updateKktpFromGradeBar(this.value)"
+                                    class="w-16 px-2 py-1 rounded-lg bg-white border border-amber-300 text-xs font-extrabold text-center text-amber-950">
+                            </div>
+                        </div>
+                        <label class="flex items-start gap-2.5 cursor-pointer select-none bg-white/80 p-3 rounded-xl border border-amber-200">
+                            <input id="autoCap70Checkbox" type="checkbox" checked onchange="toggleAutoCap70(this.checked)" class="mt-0.5 w-4 h-4 accent-amber-700 cursor-pointer">
+                            <span class="text-[11px] text-amber-950 leading-snug">
+                                <strong>Auto-Cap Aktif:</strong> Jika nilai yang diinputkan (manual, impor Excel, atau paste) lebih dari <strong id="autoCapThresholdText2">70</strong>, sistem otomatis mengubahnya menjadi batas KKTP tersebut agar nilai yang masuk tidak melebihi ketuntasan.
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="xl:col-span-7 p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h4 class="text-xs sm:text-sm font-extrabold text-indigo-950 flex items-center gap-1.5">
+                                <i data-lucide="trending-up" class="w-4 h-4 text-indigo-700"></i>
+                                <span>Katrol Nilai Mapel Aktif (Dongkrak Proporsional)</span>
+                            </h4>
+                            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800">Rumus Linear Terukur</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 items-end">
+                            <div>
+                                <label class="block text-[10px] font-bold text-indigo-900 mb-1">Target Kolom</label>
+                                <select id="katrolTargetField" class="w-full px-2.5 py-2 rounded-xl bg-white border border-indigo-200 text-xs font-bold">
+                                    <option value="asas">Nilai ASAS / ASAT</option>
+                                    <option value="tasks">Nilai Tugas Aktif</option>
+                                    <option value="both">Tugas + ASAS/ASAT</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-indigo-900 mb-1">Target Terendah</label>
+                                <input id="katrolMinTarget" type="number" min="0" max="100" value="70" oninput="this.dataset.userEdited='1'" class="w-full px-2.5 py-2 rounded-xl bg-white border border-indigo-200 text-xs font-extrabold text-center">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-indigo-900 mb-1">Target Tertinggi</label>
+                                <input id="katrolMaxTarget" type="number" min="0" max="100" value="95" class="w-full px-2.5 py-2 rounded-xl bg-white border border-indigo-200 text-xs font-extrabold text-center">
+                            </div>
+                            <div class="flex gap-1.5">
+                                <button type="button" onclick="previewKatrolNilai()" class="px-2.5 py-2 rounded-xl bg-white hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-xs font-bold cursor-pointer">Cek</button>
+                                <button type="button" onclick="applyKatrolNilai()" class="flex-1 px-3 py-2 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white text-xs font-extrabold cursor-pointer">Katrol</button>
+                            </div>
+                        </div>
+                        <p id="katrolPreviewNote" class="text-[11px] text-indigo-800"></p>
+                    </div>
+                </div>
+
+                <!-- Editable 10 Assignment Topics per Subject -->
+                <div class="p-4 rounded-2xl bg-mimblue-50/60 border border-mimblue-100 space-y-3">
+                    <p class="text-xs font-extrabold text-mimblue-900">Keterangan Materi / Tugas 1–10 (Dapat Diedit Sesuai Mata Pelajaran)</p>
+                    <div id="tenAssignmentTopicsGrid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5"></div>
+                </div>
+
+                <!-- Direct Paste From Excel Box for Grades -->
+                <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-emerald-950 flex items-center gap-1.5">
+                                <i data-lucide="clipboard-paste" class="w-4 h-4 text-emerald-700"></i>
+                                <span>Paste Langsung Blok Nilai dari Excel (Tugas 1–10, ASAS/ASAT, Catatan)</span>
+                            </h4>
+                            <p class="text-[11px] text-emerald-800">
+                                Copy blok nilai (urutan siswa 1–26 ke bawah; kolom ke kanan: <code class="font-mono font-bold">Tugas 1</code> s.d. <code class="font-mono font-bold">Tugas 10</code>, lalu <code class="font-mono font-bold">ASAS/ASAT</code>, lalu <code class="font-mono font-bold">Catatan</code>) dari Excel, tempel (<strong>Ctrl+V</strong>) di bawah, lalu klik <strong>Terapkan Paste Nilai</strong>.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" onclick="clearGradesPasteBox()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-emerald-200 text-xs font-bold cursor-pointer">Kosongkan Kotak</button>
+                            <button type="button" onclick="applyPastedGradesBlock()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Terapkan Paste Nilai
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="gradesExcelPasteArea" rows="3" placeholder="Tempel (Ctrl+V) blok nilai dari Excel di sini...
+Contoh per baris (dipisah Tab): 85	90	88	0	0	0	0	0	0	0	92	Sangat baik" class="w-full px-3.5 py-2.5 bg-white border border-emerald-300 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-600"></textarea>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-100 text-slate-700 uppercase text-[10px]">
+                            <tr>
+                                <th class="py-2.5 px-2.5">No</th>
+                                <th class="py-2.5 px-2.5">NIS</th>
+                                <th class="py-2.5 px-3 min-w-[165px]">Nama Siswa</th>
+                                <th class="py-2 px-1 text-center">T1</th>
+                                <th class="py-2 px-1 text-center">T2</th>
+                                <th class="py-2 px-1 text-center">T3</th>
+                                <th class="py-2 px-1 text-center">T4</th>
+                                <th class="py-2 px-1 text-center">T5</th>
+                                <th class="py-2 px-1 text-center">T6</th>
+                                <th class="py-2 px-1 text-center">T7</th>
+                                <th class="py-2 px-1 text-center">T8</th>
+                                <th class="py-2 px-1 text-center">T9</th>
+                                <th class="py-2 px-1 text-center">T10</th>
+                                <th class="py-2.5 px-2 text-center bg-sky-100 text-sky-950">Rerata Tugas</th>
+                                <th class="py-2.5 px-1 text-center bg-amber-100 text-amber-950">ASAS/ASAT</th>
+                                <th class="py-2.5 px-2.5 text-center bg-emerald-100 text-emerald-950">Nilai Akhir</th>
+                                <th class="py-2.5 px-2 text-center">Predikat</th>
+                                <th class="py-2.5 px-2">Catatan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherGradesTableBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Teacher Tab 4: LEGGER NILAI (Tugas, ASAS/ASAT, Rapor + Urutkan Rank) -->
+            <div id="tTabContent-legger" class="teacher-tab-content hidden space-y-5">
+                <div class="bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-5">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4 no-print">
+                        <div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Legger Nilai Kelas 3 (12 Mata Pelajaran & Ranking)</h3>
+                            <p class="text-xs text-slate-500">Pilih jenis legger (<strong>Rata-rata Tugas</strong>, <strong>ASAS/ASAT</strong>, atau <strong>Rapor</strong>), filter materi tugas yang sudah terisi, urutkan berdasarkan peringkat, lalu cetak atau ekspor.</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <select id="leggerSemesterSelect" onchange="renderLeggerView()" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
+                                <option value="Ganjil">Semester Ganjil</option>
+                                <option value="Genap">Semester Genap</option>
+                            </select>
+                            <button type="button" onclick="toggleLeggerSortByRank()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="arrow-up-down" class="w-3.5 h-3.5"></i>
+                                <span id="leggerSortToggleLabel">Urutkan: Rank 1 → 26</span>
+                            </button>
+                            <button type="button" onclick="exportLeggerToExcel()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Ekspor Excel
+                            </button>
+                            <button type="button" onclick="exportElementToPNG('leggerPrintSheet', 'Legger_Nilai_Kelas3')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold cursor-pointer">PNG</button>
+                            <button type="button" onclick="exportElementToPDF('leggerPrintSheet', 'Legger_Nilai_Kelas3')" class="px-3.5 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tabs Legger & Material Filter -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 no-print">
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" id="leggerSubBtn-tugas" onclick="switchLeggerSubTab('tugas')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-mimblue-700 text-white shadow-xs cursor-pointer">
+                                1. Legger Nilai Tugas
+                            </button>
+                            <button type="button" id="leggerSubBtn-asas" onclick="switchLeggerSubTab('asas')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">
+                                2. Legger Nilai ASAS / ASAT
+                            </button>
+                            <button type="button" id="leggerSubBtn-rapor" onclick="switchLeggerSubTab('rapor')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">
+                                3. Legger Nilai Rapor
+                            </button>
+                        </div>
+
+                        <div id="leggerTugasMaterialFilterBox" class="flex items-center gap-2 bg-mimblue-50/70 border border-mimblue-200 rounded-xl px-3 py-1.5">
+                            <span class="text-[11px] font-extrabold text-mimblue-900 whitespace-nowrap">Materi / Tugas Terisi:</span>
+                            <select id="leggerTugasMaterialSelect" onchange="renderLeggerView()" class="bg-white border border-mimblue-200 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:outline-none">
+                                <option value="ALL_AVG">Rata-rata Semua Materi Aktif (T1–T10)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Manual Date Input for Legger Signature -->
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print">
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-700">
+                            <i data-lucide="calendar-edit" class="w-4 h-4 text-mimblue-700"></i>
+                            <span>Tanggal Penandatanganan Legger (Kosongkan agar titik-titik kosong untuk diisi manual):</span>
+                        </div>
+                        <input id="leggerManualDateInput" type="text" placeholder="Contoh: Slinga, 18 Desember 2026 (atau biarkan kosong)"
+                            oninput="updateLeggerSignatureDateText(this.value)"
+                            class="w-full sm:w-80 px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-mimblue-600">
+                    </div>
+
+                    <!-- Printable Legger Sheet -->
+                    <div id="leggerPrintSheet" class="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200 space-y-5">
+                        <div class="flex items-center justify-between flex-wrap gap-3 border-b-2 border-mimblue-700 pb-3">
+                            <div class="flex items-center gap-3.5">
+                                <img src="" alt="Logo MIM 1 Slinga" class="madrasah-logo-img w-12 h-12 rounded-full object-contain shrink-0">
+                                <div>
+                                    <h4 id="leggerPrintTitle" class="font-extrabold text-sm sm:text-base text-mimblue-900">LEGGER NILAI KELAS 3 — MIM 1 SLINGA</h4>
+                                    <p id="leggerPrintSubtitle" class="text-xs text-slate-500">Tahun Pelajaran 2025/2026 • Semester Ganjil</p>
+                                </div>
+                            </div>
+                            <span id="leggerOrderInfoBadge" class="px-3 py-1 rounded-full bg-mimblue-50 border border-mimblue-200 text-mimblue-900 text-[11px] font-extrabold">
+                                Urutan Nomor Absen Semula (1 → 26)
+                            </span>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full border-collapse text-[10px]">
+                                <thead id="leggerTableHead"></thead>
+                                <tbody id="leggerTableBody" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
+
+                        <div id="leggerSignatureBlock" class="pt-4 border-t border-slate-100"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Tab 5: ANALISIS BUTIR SOAL & KISI-KISI -->
+            <div id="tTabContent-itemanalysis" class="teacher-tab-content hidden bg-white rounded-3xl shadow-xs border border-slate-200 p-5 sm:p-7 space-y-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <h3 class="text-base sm:text-lg font-extrabold text-mimblue-900">Analisis Butir Soal, Kisi-Kisi & Ketuntasan Siswa</h3>
+                        <p class="text-xs text-slate-500">Impor atau susun kisi-kisi/indikator, tipe soal, kunci jawaban, skor maksimal, serta jawaban/skor 26 siswa untuk menganalisis tingkat kesukaran soal dan ketuntasan KKTP.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <select id="iaSubjectSelect" onchange="loadItemAnalysisForCurrentSelection()" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold"></select>
+                        <select id="iaExamTypeSelect" onchange="loadItemAnalysisForCurrentSelection()" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold">
+                            <option value="Tugas / Ulangan Harian">Tugas / Ulangan Harian</option>
+                            <option value="ASAS / ASAT">ASAS / ASAT</option>
+                        </select>
+                        <button type="button" onclick="downloadItemAnalysisTemplateXls()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold cursor-pointer">Template XLS</button>
+                        <label class="px-3 py-2 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">
+                            Impor Soal (.xlsx/.docx/.pdf)
+                            <input type="file" accept=".xlsx,.xls,.docx,.pdf" onchange="handleImportItemAnalysisFile(event)" class="hidden">
+                        </label>
+                        <button type="button" onclick="exportItemAnalysisExcel()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Ekspor Hasil (.xlsx)</button>
+                    </div>
+                </div>
+
+                <!-- Question Count & Quick Controls -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <span class="text-xs font-extrabold text-slate-800">Jumlah Butir Soal:</span>
+                        <input id="iaQuestionCountInput" type="number" min="1" max="60" value="10" class="w-20 px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-extrabold text-center">
+                        <button type="button" onclick="resizeItemAnalysisQuestions()" class="px-3.5 py-1.5 rounded-xl bg-mimblue-700 hover:bg-mimblue-800 text-white text-xs font-bold cursor-pointer">Terapkan Jumlah</button>
+                        <button type="button" onclick="addSingleItemQuestion()" class="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-mimblue-800 border border-mimblue-200 text-xs font-bold cursor-pointer">+ Tambah 1 Soal</button>
+                    </div>
+                    <span id="iaImportedFileStatus" class="text-[11px] font-bold text-mimblue-800"></span>
+                </div>
+
+                <!-- Kisi-Kisi & Kunci Jawaban Table -->
+                <div class="space
+</html>
